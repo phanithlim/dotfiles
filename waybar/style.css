@@ -106,7 +106,7 @@ window#waybar.empty #window {
 }  
 
 #clock {
-    color: @flamingo;
+    color: @rosewater;
     border-radius: 10px 10px 10px 10px;
     margin-left: 5px;
     border-right: 0px;

@@ -31,14 +31,29 @@
     },
     "hyprland/workspaces": {
         "disable-scroll": true,
-        "all-outputs": true,
-        "on-click": "activate"
+        "on-click": "activate",
+        "all-outputs": false
     },
+    // "hyprland/workspaces": {
+    //     "disable-scroll": true,
+    //     "format": "{icon}",
+    //     "format-icons": {
+    //         "urgent": "",
+    //         "active": "", // focused workspace on current monitor 
+    //         "visible": "", // focused workspace on other monitors
+    //         "default": "",
+    //         "empty": "" // persistent (created by this plugin)
+    //         },
+    //             "on-click": "activate",
+    //     "all-outputs": false
+    // },
 
     "hyprland/language": {
         "format": "  {}",
         "format-en": "ENG",
         "format-km": "KHM",
+        "tooltip": true,
+        "tooltip-format": "Current keyboard layout: {}",
         "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
     },
 
@@ -76,8 +91,9 @@
     },
 
     "clock": {
-         "format": "{:%a    %b-%d-%Y    %I:%M:%S %p}",
+        "format": "{:%a    %b-%d-%Y    %I:%M:%S %p}",
         "rotate": 0,
+        "interval": 1,
         "format-alt": "{󰸗  %d·%m·%y}",
         "tooltip-format": "<span>{calendar}</span>",
         "calendar": {
@@ -106,17 +122,25 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["󰂃", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        "tooltip": true,
+        "tooltip-format": "<span foreground='#cdd6f4'>Battery: </span><b><span foreground='#f9e2af'>{capacity}%</span></b>\n<span foreground='#cdd6f4'>Cycles: </span><b><span foreground='#94e2d5'>{cycles}</span></b>\n<span foreground='#cdd6f4'>Status: </span><b><span foreground='#fab387'>{health}</span></b>\n<span foreground='#cdd6f4'>Power: </span><b><span foreground='#89b4fa'>{power}W</span></b>",
+        "format": "{icon} <span foreground='#f9e2af'>{capacity}%</span>",
+        "format-charging": "<span foreground='#a6e3a1'> {capacity}%</span>",
+        "format-plugged": "<span foreground='#a6e3a1'> {capacity}%</span>",
+        "format-alt": "<span foreground='#cdd6f4'>{time}</span> {icon}",
+        "format-icons": ["󰂃", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "events": {
+            "on-discharging-warning": "notify-send -u normal 'Low Battery'",
+            "on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+            "on-charging-100": "notify-send -u normal 'Battery Full!'"
+        }
     },
 
     "pulseaudio": {
         "format": "{icon}  {volume}%",
-        "tooltip": false,
-        "format-muted": "  Muted",
+        "tooltip": true,
+        "tooltip-format": "<span foreground='#cdd6f4'>󰕾  Volume: </span><b><span foreground='#a6e3a1'>{volume}%</span></b>\n<span foreground='#cdd6f4'>󰍹  Device: </span><b><span foreground='#89b4fa'>{desc}</span></b>",
+        "format-muted": "<span foreground='#f38ba8'>  Muted</span>",
         "on-click": "pamixer -t",
         "on-scroll-up": "pamixer -i 1",
         "on-scroll-down": "pamixer -d 1",
@@ -128,14 +152,16 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["","", "", ""]
+            "default": ["","",""]
         }
     },
 
-    "pulseaudio#microphone": {
+   "pulseaudio#microphone": {
         "format": "{format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "  Muted",
+        "format-source": "<span foreground='#cdd6f4'> </span><b><span foreground='#f9e2af'>{volume}%</span></b>",
+        "format-source-muted": "<span foreground='#f38ba8'>  Muted</span>",
+        "tooltip": true,
+        "tooltip-format": "<span foreground='#cdd6f4'>  Volume: </span><b><span foreground='#f9e2af'>{volume}%</span></b>\n<span foreground='#cdd6f4'>󰍹  Source: </span><b><span foreground='#89b4fa'>{desc}</span></b>",
         "on-click": "pamixer --default-source -t",
         "on-scroll-up": "pamixer --default-source -i 5",
         "on-scroll-down": "pamixer --default-source -d 5",
