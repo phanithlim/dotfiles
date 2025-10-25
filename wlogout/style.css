@@ -1,3 +1,5 @@
+@import "theme/mocha.css";
+
 * {
 	font-family: JetBrains Mono;
 	font-size: 24px;
@@ -6,13 +8,16 @@
 }
 
 window {
-	background-color: #11111b
+	background-color: @base;
 }
 
 button {
     border-radius: 50px;
-	background-color: #11111B;
+	background-color: @base;
 	border-style: solid;
+	border-width: 0px;
+	border-color: @surface0;
+	outline-style: none;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 15%;
@@ -20,7 +25,7 @@ button {
 }
 
 button:focus, button:active, button:hover {
-	background-color: #202033;
+	background-color: @surface0;
 	outline-style: none;
 }
 
