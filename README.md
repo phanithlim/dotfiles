@@ -13,7 +13,7 @@ My personal dotfiles collection for a customized development environment on Arch
 
 ---
 
-## ⌨️ Keybindings
+## ⌨ Keybindings
 
 ### Applications
 | Keybinding | Action |
@@ -85,26 +85,26 @@ My personal dotfiles collection for a customized development environment on Arch
 
 ---
 
-## 📸 Screenshots
+## ⛶ Screenshots
 
 <div align="center">
 
 ![Desktop Environment](./assets/image1.png)
-*Desktop Environment*
+
 
 ![Terminal Setup](./assets/image2.png)
-*Terminal Setup*
+
 
 ![Desktop Environment](./assets/image3.png)
-*Desktop Customization*
+
 
 ![Terminal Setup](./assets/image4.png)
-*Workflow View*
+
 
 ![Desktop Environment](./assets/image5.png)
-*Theme Preview*
+
 
 ![Terminal Setup](./assets/image6.png)
-*Development Environment*
+
 
 </div>
