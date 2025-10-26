@@ -109,10 +109,11 @@
 
     "backlight": {
         "device": "intel_backlight",
+        "tooltip": false,
         "format": "{icon} {percent}%",
         "format-icons": ["󰃞", "󰃟", "󰃠"],
-        "on-scroll-up": "brightnessctl set 1%+",
-        "on-scroll-down": "brightnessctl set 1%-",
+        "on-scroll-up": "~/.config/waybar/scripts/brightnesscontrol.sh i",
+        "on-scroll-down": "~/.config/waybar/scripts/brightnesscontrol.sh d",
         "min-length": 6
     },
 
@@ -138,12 +139,12 @@
 
     "pulseaudio": {
         "format": "{icon}  {volume}%",
-        "tooltip": true,
+        "tooltip": false,
         "tooltip-format": "<span foreground='#cdd6f4'>󰕾  Volume: </span><b><span foreground='#a6e3a1'>{volume}%</span></b>\n<span foreground='#cdd6f4'>󰍹  Device: </span><b><span foreground='#89b4fa'>{desc}</span></b>",
         "format-muted": "<span foreground='#f38ba8'>  Muted</span>",
-        "on-click": "pamixer -t",
-        "on-scroll-up": "pamixer -i 1",
-        "on-scroll-down": "pamixer -d 1",
+        "on-click": "~/.config/waybar/scripts/volumecontrol.sh m",
+        "on-scroll-up": "~/.config/waybar/scripts/volumecontrol.sh i",
+        "on-scroll-down": "~/.config/waybar/scripts/volumecontrol.sh d",
         "scroll-step": 5,
         "format-icons": {
             "headphone": "",
