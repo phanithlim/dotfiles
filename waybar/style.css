@@ -22,25 +22,25 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: @red;
+    color: @green;
 }
 
-/* #workspaces button.focused {
+#workspaces button.focused {
     color: @red;
     background: @red    ;
     border-radius: 10px;
-} */
+}
 
 #workspaces button.urgent {
     color: @crust;
     background: @green;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 #workspaces button:hover {
     background: @overlay0;
-    color: @;
-    border-radius: 10px;
+    color: @green;
+    border-radius: 4px;
 }
 
 #window,
@@ -58,43 +58,42 @@ window#waybar {
     margin: 3px 0px;
     margin-top: 5px;
     background: @surface0;
-    /* border: 1px solid #181825; */
 }
 
 #backlight {
     color: @mauve;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 4px 0px 0px 4px;
 }
 
 #tray {
-    border-radius: 10px;
+    border-radius: 4px;
     margin-right: 10px;
 }
 
 #workspaces {
     background: @surface0;
-    border-radius: 10px;
+    border-radius: 4px;
     margin-left: 10px;
     padding-right: 0px;
     padding-left: 5px;
 }
 
 #cpu {
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 4px 4px 0px;
     margin-right: 10px;
     background: @surface0;
 }
 
 #memory {
     /* border-radius: 10px 0px 0px 10px; */
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 4px 4px 4px 4px;
     margin-right: 10px;
     color: @green;
     background: @surface0;
 }
 
 #window {
-    border-radius: 10px;
+    border-radius: 4px;
     margin-left: 10px;
     margin-right: 60px;
     color: @teal;
@@ -107,7 +106,7 @@ window#waybar.empty #window {
 
 #clock {
     color: @rosewater;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 4px;
     margin-left: 5px;
     border-right: 0px;
     background: @surface0;
@@ -115,7 +114,7 @@ window#waybar.empty #window {
 
 #network {
     color:  @pink;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 4px 0px 0px 4px;
     background: @surface0;
 }
 
@@ -132,7 +131,7 @@ window#waybar.empty #window {
 
 #pulseaudio.microphone {
     color: @sky;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 4px 4px 0px;
     border-left: 0px;
     border-right: 0px;
     margin-right: 5px;
@@ -140,7 +139,7 @@ window#waybar.empty #window {
 
 #battery {
     color:@yellow;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 4px 4px 0px;
     margin-right: 10px;
     background: @surface0;
 }

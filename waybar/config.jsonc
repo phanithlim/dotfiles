@@ -34,20 +34,6 @@
         "on-click": "activate",
         "all-outputs": false
     },
-    // "hyprland/workspaces": {
-    //     "disable-scroll": true,
-    //     "format": "{icon}",
-    //     "format-icons": {
-    //         "urgent": "",
-    //         "active": "", // focused workspace on current monitor 
-    //         "visible": "", // focused workspace on other monitors
-    //         "default": "",
-    //         "empty": "" // persistent (created by this plugin)
-    //         },
-    //             "on-click": "activate",
-    //     "all-outputs": false
-    // },
-
     "hyprland/language": {
         "format": "  {}",
         "format-en": "ENG",
@@ -63,19 +49,6 @@
         "icons": {
             "spotify": ""
         }
-    },
-
-    "custom/logo": {
-        "format" : "󰣇",
-            "tooltip": true,
-            "menu": "on-click",
-            "menu-file": "~/.config/waybar/power_menu.xml",
-            "menu-actions": {
-                "shutdown": "shutdown",
-                "reboot": "reboot",
-                "suspend": "systemctl suspend",
-                "hibernate": "systemctl hibernate"
-            }
     },
     
     "power-profiles-daemon": {
