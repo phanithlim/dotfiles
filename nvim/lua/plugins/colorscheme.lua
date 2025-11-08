@@ -1,35 +1,85 @@
 return {
-    -- colorscheme
-    { "ellisonleao/gruvbox.nvim" },
-    {
-        "sainnhe/sonokai",
-        priority = 1000,
-        config = function()
-            vim.g.sonokai_transparent_background = "1"
-            vim.g.sonokai_enable_italic = "1"
-            vim.g.sonokai_style = "andromeda"
-        end,
+  -- Default Theme
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
     },
-    {
-        "catppuccin/nvim",
-        lazy = true,
-        name = "catppuccin",
-        opts = {
-            flavour = "mocha",
-            transparent_background = true,
-            dim_inactive = {
-                enabled = false,
-                shade = "dark",
-                percentage = 0.15,
-            },
-        },
-    },
+  },
 
-    -- Default
-    {
-        "LazyVim/LazyVim",
-        opts = {
-            colorscheme = "catppuccin",
+  -- Colorscheme
+  { "ellisonleao/gruvbox.nvim" },
+  -- {
+  --     "catppuccin/nvim",
+  --     lazy = true,
+  --     name = "catppuccin",
+  --     opts = {
+  --         flavour = "mocha",
+  --         transparent_background = true,
+  --         dim_inactive = {
+  --             enabled = false,
+  --             shade = "dark",
+  --             percentage = 0.15,
+  --         },
+  --     },
+  -- },
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    name = "catppuccin",
+    opts = {
+      lsp_styles = {
+        underlines = {
+          errors = { "undercurl" },
+          hints = { "undercurl" },
+          warnings = { "undercurl" },
+          information = { "undercurl" },
         },
+      },
+      flavour = "mocha",
+      transparent_background = true,
+      dim_inactive = {
+        enabled = false,
+        shade = "dark",
+        percentage = 0.15,
+      },
+      integrations = {
+        aerial = true,
+        alpha = true,
+        cmp = true,
+        dashboard = true,
+        flash = true,
+        fzf = true,
+        grug_far = true,
+        gitsigns = true,
+        headlines = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        leap = true,
+        lsp_trouble = true,
+        mason = true,
+        mini = true,
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        neotree = true,
+        noice = true,
+        notify = true,
+        snacks = true,
+        telescope = true,
+        treesitter_context = true,
+        which_key = true,
+      },
     },
+    specs = {
+      {
+        "akinsho/bufferline.nvim",
+        optional = true,
+        opts = function(_, opts)
+          if (vim.g.colors_name or ""):find("catppuccin") then
+            opts.highlights = require("catppuccin.special.bufferline").get_theme()
+          end
+        end,
+      },
+    },
+  },
 }

@@ -10,14 +10,14 @@ keymap.set("n", "-", "<C-x>")
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
--- Save file and quit
-keymap.set("n", "<Leader>w", ":update<Return>", opts)
-keymap.set("n", "<Leader>q", ":quit<Return>", opts)
-keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
+-- -- Save file and quit
+-- keymap.set("n", "<Leader>w", ":update<Return>", opts)
+-- keymap.set("n", "<Leader>q", ":quit<Return>", opts)
+-- keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 
--- File explorer with NvimTree
-keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
-keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
+-- -- File explorer with NvimTree
+-- keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
+-- keymap.set("n", "<Leader>t", ":NvimTreeToggle<Return>", opts)
 
 -- Tabs
 -- keymap.set("n", "te", ":tabedit")
@@ -38,7 +38,5 @@ keymap.set("n", "<C-S-l>", "<C-w>>")
 keymap.set("n", "<C-S-k>", "<C-w>+")
 keymap.set("n", "<C-S-j>", "<C-w>-")
 
--- Diagnostics
-keymap.set("n", "<C-j>", function()
-  vim.diagnostic.jump({ count = 1 })
-end, opts)
+-- Telescope
+-- keymap.set("n", "<space>fb", ":Telescope file_browser<CR>", opts)
