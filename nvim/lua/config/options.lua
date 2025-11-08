@@ -5,7 +5,7 @@ vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 vim.opt.relativenumber = false
 vim.opt.number = true
-vim.g.snacks_animate = true
+vim.g.snacks_animate = false
 vim.opt.title = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -29,7 +29,7 @@ vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
 vim.g.lazyvim_picker = "telescope"
-vim.opt.tabstop = 4
+vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
