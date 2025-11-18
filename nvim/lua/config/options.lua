@@ -32,10 +32,15 @@ vim.g.lazyvim_picker = "telescope"
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.termguicolors = true
+-- vim.o.tabstop = 2
+-- vim.o.expandtab = true
+-- vim.o.softtabstop = 2
+-- vim.o.shiftwidth = 2
 
 -- Enable Language
 vim.g.lazyvim_python_lsp = "pyright"
 vim.g.lazyvim_python_ruff = "ruff"
-
+vim.g.lazygit_config = false
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })

@@ -23,6 +23,7 @@ return {
                 "markdown-toc",
                 "ninja",
                 "rst",
+                "json5",
             },
             query_linter = {
                 enable = true,
