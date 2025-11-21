@@ -22,6 +22,7 @@ return {
                 nls.builtins.formatting.goimports,
                 nls.builtins.formatting.gofumpt,
             })
+            table.insert(opts.sources, nls.builtins.formatting.biome)
         end,
     },
 }
