@@ -23,7 +23,6 @@ zf() {
 if [ -z "$SSH_AUTH_SOCK" ]; then
    eval "$(ssh-agent -s)" > /dev/null
 fi
-source ~/.config/scripts/header-gen.sh
 
 # ─── [ Omarchy Core ] ─────────────────────────────────────
 # All the default Omarchy aliases and functions
