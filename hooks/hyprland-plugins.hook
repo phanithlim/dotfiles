@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = hyprland
+Target = hyprland-git
+
+[Action]
+Description = Updating Hyprland plugins via hyprpm
+When = PostTransaction
+Exec = /usr/bin/sudo -u <YOURNAME> /home/<YOURNAME>/.config/update-hyprpm.sh
