@@ -36,7 +36,8 @@ return {
       end,
     },
     keys = {
-      { "<leader>jM", modulith_verify, desc = "Spring Modulith verify", ft = "java" },
+      { "<leader>j", "", desc = "+java" },
+      { "<leader>jM", modulith_verify, desc = "Spring Modulith verify" },
     },
   },
   {
