@@ -1,0 +1,49 @@
+-- transparent background
+vim.api.nvim_set_hl(0, "normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "normalfloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "floatborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "pmenu", { bg = "none" })
+vim.api.nvim_set_hl(0, "terminal", { bg = "none" })
+vim.api.nvim_set_hl(0, "endofbuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "foldcolumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "folded", { bg = "none" })
+vim.api.nvim_set_hl(0, "signcolumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "normalnc", { bg = "none" })
+vim.api.nvim_set_hl(0, "whichkeyfloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "telescopeborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "telescopenormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "telescopepromptborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "telescopeprompttitle", { bg = "none" })
+
+-- transparent background for neotree
+vim.api.nvim_set_hl(0, "neotreenormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "neotreenormalnc", { bg = "none" })
+vim.api.nvim_set_hl(0, "neotreevertsplit", { bg = "none" })
+vim.api.nvim_set_hl(0, "neotreewinseparator", { bg = "none" })
+vim.api.nvim_set_hl(0, "neotreeendofbuffer", { bg = "none" })
+
+-- transparent background for nvim-tree
+vim.api.nvim_set_hl(0, "nvimtreenormal", { bg = "none" })
+vim.api.nvim_set_hl(0, "nvimtreevertsplit", { bg = "none" })
+vim.api.nvim_set_hl(0, "nvimtreeendofbuffer", { bg = "none" })
+
+-- transparent notify background
+vim.api.nvim_set_hl(0, "notifyinfobody", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifyerrorbody", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifywarnbody", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifytracebody", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifydebugbody", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifyinfotitle", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifyerrortitle", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifywarntitle", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifytracetitle", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifydebugtitle", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifyinfoborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifyerrorborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifywarnborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifytraceborder", { bg = "none" })
+vim.api.nvim_set_hl(0, "notifydebugborder", { bg = "none" })
+
+-- transparent status bar
+vim.api.nvim_set_hl(0, "statusline", { bg = "none" })
+vim.api.nvim_set_hl(0, "statuslinenc", { bg = "none" })

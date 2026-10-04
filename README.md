@@ -1,110 +1,84 @@
-# 🏠 Dotfiles
+# Dotfiles
 
-My personal dotfiles collection for a customized development environment on Arch Linux.
+Omarchy (Arch + Hyprland) · Neovim · Neovide · tmux · Cornix LP keyboard
 
-## 📋 Table of Contents
-- [Keybindings](#-keybindings)
-  - [Applications](#applications)
-  - [Window Management](#window-management)
-  - [Workspace Navigation](#workspace-navigation)
-  - [System Controls](#system-controls)
-  - [Utilities](#utilities)
-- [Screenshots](#-screenshots)
+| Doc | |
+|---|---|
+| [Keybindings](docs/keybindings.md) | Hyprland, tmux, Neovim, Neovide |
+| [Keyboard](docs/keyboard-cornix.md) | Cornix LP layers, knobs, combos |
 
----
+## What's here
 
-## ⌨ Keybindings
+| Folder | Goes to |
+|---|---|
+| `hypr/` | `~/.config/hypr/` |
+| `omarchy/` | `~/.config/omarchy/` |
+| `nvim/` | `~/.config/nvim/` |
+| `neovide/` | `~/.config/neovide/` |
+| `tmux/` | `~/.config/tmux/` |
+| `ghostty/`, `kitty/` | `~/.config/ghostty/`, `~/.config/kitty/` |
+| `starship*.toml` | `~/.config/` |
+| `bin/` | `~/.local/bin/` |
+| `keyboard/cornix/*.vil` | Vial |
 
-### Applications
-| Keybinding | Action |
-|------------|--------|
-| `Super + T` | Open terminal |
-| `Super + B` | Open browser |
-| `Super + O` | Open notes application |
-| `Super + C` | Open primary editor |
-| `Super + F` | Open file manager |
-| `Super + A` | Open application menu |
-| `Super + E` | Open emoji picker (copy to clipboard) |
-| `Super + M` | Exit Hyprland |
+## Setup
 
-### Window Management
-| Keybinding | Action |
-|------------|--------|
-| `Super + Q` | Close active window |
-| `Super + W` | Toggle floating mode |
-| `Super + J` | Toggle split mode (Dwindle layout) |
-| `Super + Shift + F` | Toggle fullscreen |
-| `Super + Arrow Keys` | Move focus between windows |
-| `Super + Shift + Arrow Keys` | Resize active window |
-| `Super + Shift + X` | Swap window horizontally (toggle) |
-| `Super + Shift + Y` | Swap window vertically (toggle) |
-| `Super + Shift + V` | Set layout orientation to vertical |
-| `Super + Shift + H` | Set layout orientation to horizontal |
-| `Super + Z` (drag) | Move window with mouse |
-| `Super + X` (drag) | Resize window with mouse |
-| `Super + Left Click` (drag) | Move window |
-| `Super + Right Click` (drag) | Resize window |
+**1. Copy configs**
 
-### Workspace Navigation
-| Keybinding | Action |
-|------------|--------|
-| `Super + [1-9,0]` | Switch to workspace 1-10 |
-| `Super + Shift + [1-9,0]` | Move active window to workspace 1-10 (silent) |
-| `Super + Shift + S` | Move window to special workspace (scratchpad) |
-| `Super + Tab` | Next workspace |
-| `Super + Shift + Tab` | Previous workspace |
-| `Super + Scroll Up` | Previous workspace |
-| `Super + Scroll Down` | Next workspace |
+```bash
+cd ~/Projects/dotfiles
+cp hypr/* ~/.config/hypr/
+cp -r omarchy/* ~/.config/omarchy/
+rsync -a nvim/ ~/.config/nvim/
+cp neovide/config.toml ~/.config/neovide/
+cp tmux/tmux.conf ~/.config/tmux/
+cp ghostty/config ~/.config/ghostty/
+cp kitty/kitty.conf ~/.config/kitty/
+cp starship*.toml ~/.config/
+install -m 755 bin/tmux-sessionizer ~/.local/bin/
+```
 
-### System Controls
-| Keybinding | Action |
-|------------|--------|
-| `Brightness Up` | Increase screen brightness (+5%) |
-| `Brightness Down` | Decrease screen brightness (-5%) |
-| `Volume Up` | Increase volume (+5%) |
-| `Volume Down` | Decrease volume (-5%) |
-| `Mic Mute` | Toggle microphone mute |
-| `Audio Mute` | Toggle audio mute |
-| `Play/Pause` | Toggle media playback |
-| `Next Track` | Skip to next track |
-| `Previous Track` | Go to previous track |
+**2. Install plugins**
 
-### Utilities
-| Keybinding | Action |
-|------------|--------|
-| `Super + V` | Open clipboard history |
-| `Super + P` | Open color picker (copy to clipboard) |
-| `Super + L` | Lock screen |
-| `Super + N` | Change wallpaper (next) |
-| `Super + Shift + N` | Change wallpaper (previous) |
-| `Super + Escape` | Open logout menu (wlogout) |
-| `Ctrl + Escape` | Toggle Waybar |
-| `Print Screen` | Screenshot (full screen → clipboard) |
-| `Super + Print Screen` | Screenshot (active window → clipboard) |
-| `Super + Alt + Print Screen` | Screenshot (select area → clipboard) |
+```bash
+# Hyprland: per-monitor workspaces (branch must match your Hyprland version)
+git clone -b release/0.56.x https://github.com/zjeffer/split-monitor-workspaces ~/.config/hypr/plugins/split-monitor-workspaces
 
----
+# Bar: lock screen
+git clone https://github.com/SirJul1337/omarchy-lock-explorer.git ~/.config/omarchy/plugins/io.github.sirjul1337.lock-explorer
 
-## ⛶ Screenshots
+# tmux: plugin manager (then press prefix + I inside tmux)
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+```
 
-<div align="center">
+**3. Keyboard**: Vial → File → Load saved layout → `keyboard/cornix/mycurrent-cornix.vil`
 
-![Desktop Environment](./assets/image1.png)
+**4. Reload**
 
+| What | Command |
+|---|---|
+| Hyprland | `hyprctl reload` |
+| Bar | `omarchy restart shell` |
+| Terminals | `omarchy restart terminal` |
+| tmux | `prefix r` |
+| Neovim | restart |
 
-![Terminal Setup](./assets/image2.png)
+**5. Fix by hand**: lock-screen avatar path in `omarchy/shell.json`
 
+## Update from live configs
 
-![Desktop Environment](./assets/image3.png)
-
-
-![Terminal Setup](./assets/image4.png)
-
-
-![Desktop Environment](./assets/image5.png)
-
-
-![Terminal Setup](./assets/image6.png)
-
-
-</div>
+```bash
+cd ~/Projects/dotfiles
+cp ~/.config/hypr/{hyprland,bindings,input,looknfeel,monitors,autostart,split-monitor-workspaces}.lua ~/.config/hypr/{hyprsunset,xdph}.conf hypr/
+cp ~/.config/omarchy/shell.{json,toml} omarchy/
+cp -r ~/.config/omarchy/plugins/mlue.workspaces omarchy/plugins/
+rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/nvim/ nvim/
+cp ~/.config/neovide/config.toml neovide/
+cp ~/.config/tmux/tmux.conf tmux/
+cp ~/.config/ghostty/config ghostty/
+cp ~/.config/kitty/kitty.conf kitty/
+cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
+cp ~/.local/bin/tmux-sessionizer bin/
+cp ~/Documents/cornix/mycurrent-cornix.vil keyboard/cornix/
+python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix.vil   # paste over the layer tables in docs/keyboard-cornix.md
+```

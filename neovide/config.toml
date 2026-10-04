@@ -1,0 +1,7 @@
+fork = true
+frame = "full"
+maximized = false
+
+[font]
+normal = ["JetBrainsMono Nerd Font"]
+size = 14.0

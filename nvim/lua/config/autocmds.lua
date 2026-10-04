@@ -6,3 +6,12 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- Disable format-on-save for Java (jdtls formatting is slow / handled manually).
+-- `<leader>cf` still formats explicitly, since that forces a format.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "java",
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})

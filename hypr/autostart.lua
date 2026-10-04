@@ -1,0 +1,8 @@
+-- Extra autostart processes.
+-- o.launch_on_start("my-service")
+-- hl.on("hyprland.start", function()
+-- 	hl.exec_cmd("awww-daemon")
+-- 	hl.exec_cmd(
+-- 		"sleep 1; pkill swaybg; awww img ~/.config/omarchy/backgrounds/tokyo-night/1403028.jpg --transition-type any --transition-duration 1.5"
+-- 	)
+-- end)

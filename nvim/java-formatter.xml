@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles version="21">
+  <profile kind="CodeFormatterProfile" name="NoWrap" version="21">
+
+    <!-- ── Line width: never wrap ─────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.lineSplit" value="999"/>
+
+    <!-- ── Method declaration ─────────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_method_declaration_parameters" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_throws_clause_in_method_declaration" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_superinterfaces_in_type_declaration" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_superclass_in_type_declaration" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_type_parameters" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_type_arguments" value="16"/>
+
+    <!-- ── Method invocation & chaining ───────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_method_invocation" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_selector_in_method_invocation" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_explicit_constructor_call" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_allocation_expression" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_qualified_allocation_expression" value="16"/>
+
+    <!-- ── Expressions & operators ────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_binary_expression" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_conditional_expression" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_string_concatenation" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_expressions_in_array_initializer" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_assignment" value="16"/>
+
+    <!-- ── Annotations ────────────────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_enum_constants" value="16"/>
+
+    <!-- ── Constructor & resources ────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_resources_in_try" value="16"/>
+    <setting id="org.eclipse.jdt.core.formatter.alignment_for_union_type_in_multicatch" value="16"/>
+
+    <!-- ── Wrap operators: never wrap before ──────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_binary_operator" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_assignment" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_or_operator_multicatch" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_conditional_operator" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_string_concatenation" value="false"/>
+
+    <!-- ── Join lines ─────────────────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.join_wrapped_lines" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.join_lines_in_comments" value="false"/>
+
+    <!-- ── Compact blocks ─────────────────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.compact_else_if" value="true"/>
+
+    <!-- ── Keep existing line breaks ──────────────────────────────────── -->
+    <setting id="org.eclipse.jdt.core.formatter.number_of_empty_lines_to_preserve" value="1"/>
+
+  </profile>
+</profiles>
