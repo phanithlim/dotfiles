@@ -1,26 +1,46 @@
+local function modulith_verify()
+  local root = vim.fs.root(0, { "mvnw", "pom.xml" })
+  if not root then
+    return Snacks.notify.warn("Not in a Maven project")
+  end
+  local found = vim.fs.find(function(name, path)
+    if not name:match("%.java$") then
+      return false
+    end
+    local f = io.open(vim.fs.joinpath(path, name))
+    local text = f and f:read("*a") or ""
+    if f then
+      f:close()
+    end
+    return text:find("ApplicationModules", 1, true) ~= nil
+  end, { path = vim.fs.joinpath(root, "src/test"), limit = math.huge })
+  if #found == 0 then
+    return Snacks.notify.warn("No Modulith test found (a test using ApplicationModules)")
+  end
+  local classes = vim.tbl_map(function(f) return vim.fn.fnamemodify(f, ":t:r") end, found)
+  local mvn = vim.uv.fs_stat(vim.fs.joinpath(root, "mvnw")) and "./mvnw" or "mvn"
+  Snacks.terminal(
+    { mvn, "-q", "test", "-Dtest=" .. table.concat(classes, ","), "-Dsurefire.failIfNoSpecifiedTests=false" },
+    { cwd = root, interactive = false, win = { title = " Modulith verify " } }
+  )
+end
+
 return {
   {
-    "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      opts = opts or {}
-      local mason_path = vim.fn.stdpath("data") .. "/mason/packages/spring-boot-tools/"
-      local jar = vim.fn.glob(mason_path .. "language-server/spring-boot-language-server-*.jar")
-      if jar ~= "" then
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "jproperties", "yaml" },
-          callback = function(args)
-            local root = vim.fs.root(args.buf, { "pom.xml", "build.gradle", "build.gradle.kts" })
-            if not root then return end
-            vim.lsp.start({
-              name = "spring-boot",
-              cmd = { "java", "-jar", jar },
-              root_dir = root,
-              filetypes = { "jproperties", "yaml" },
-            })
-          end,
-        })
-      end
-      return opts
-    end,
+    "JavaHello/spring-boot.nvim",
+    ft = { "java", "yaml", "jproperties" },
+    dependencies = { "mfussenegger/nvim-jdtls" },
+    opts = {
+      project_filter = function(root_dir)
+        return require("spring_boot.util").has_spring_boot_dependency(root_dir)
+      end,
+    },
+    keys = {
+      { "<leader>jM", modulith_verify, desc = "Spring Modulith verify", ft = "java" },
+    },
+  },
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "vscode-spring-boot-tools" } },
   },
 }

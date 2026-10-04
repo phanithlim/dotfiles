@@ -20,6 +20,11 @@ return {
         if jar ~= "" then table.insert(bundles, jar) end
       end
 
+      local ok, spring_boot = pcall(require, "spring_boot")
+      if ok then
+        vim.list_extend(bundles, spring_boot.java_extensions())
+      end
+
       opts.init_options = { bundles = bundles }
 
       table.insert(opts.cmd, "--jvm-arg=-Xmx4g")
