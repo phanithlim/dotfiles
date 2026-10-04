@@ -19,10 +19,13 @@ local function modulith_verify()
   end
   local classes = vim.tbl_map(function(f) return vim.fn.fnamemodify(f, ":t:r") end, found)
   local mvn = vim.uv.fs_stat(vim.fs.joinpath(root, "mvnw")) and "./mvnw" or "mvn"
-  Snacks.terminal(
-    { mvn, "-q", "test", "-Dtest=" .. table.concat(classes, ","), "-Dsurefire.failIfNoSpecifiedTests=false" },
-    { cwd = root, interactive = false, win = { title = " Modulith verify " } }
-  )
+  local cmd = { mvn, "-q", "test", "-Dtest=" .. table.concat(classes, ","), "-Dsurefire.failIfNoSpecifiedTests=false" }
+  local opts = { cwd = root, interactive = false, win = { title = " Modulith verify " } }
+  local previous = Snacks.terminal.get(cmd, vim.tbl_extend("force", opts, { create = false }))
+  if previous then
+    previous:close()
+  end
+  Snacks.terminal.open(cmd, opts)
 end
 
 return {
