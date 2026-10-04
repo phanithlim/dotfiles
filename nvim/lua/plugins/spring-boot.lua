@@ -1,25 +1,36 @@
 local function modulith_verify()
-  local root = vim.fs.root(0, { "mvnw", "pom.xml" })
+  local root = vim.fs.root(0, { "mvnw", "gradlew", "settings.gradle", "settings.gradle.kts" })
+    or vim.fs.root(0, { "pom.xml", "build.gradle", "build.gradle.kts" })
   if not root then
-    return Snacks.notify.warn("Not in a Maven project")
+    return Snacks.notify.warn("Not in a Maven or Gradle project")
   end
-  local found = vim.fs.find(function(name, path)
-    if not name:match("%.java$") then
-      return false
-    end
-    local f = io.open(vim.fs.joinpath(path, name))
-    local text = f and f:read("*a") or ""
-    if f then
-      f:close()
-    end
-    return text:find("ApplicationModules", 1, true) ~= nil
-  end, { path = vim.fs.joinpath(root, "src/test"), limit = math.huge })
-  if #found == 0 then
+  local function has(name)
+    return vim.uv.fs_stat(vim.fs.joinpath(root, name)) ~= nil
+  end
+  local gradle = has("gradlew") or has("settings.gradle") or has("settings.gradle.kts")
+    or has("build.gradle") or has("build.gradle.kts")
+
+  local files = vim.fn.systemlist({
+    "rg", "-l", "--glob", "**/src/test/**/*.{java,kt}", "ApplicationModules", root,
+  })
+  if vim.v.shell_error ~= 0 or #files == 0 then
     return Snacks.notify.warn("No Modulith test found (a test using ApplicationModules)")
   end
-  local classes = vim.tbl_map(function(f) return vim.fn.fnamemodify(f, ":t:r") end, found)
-  local mvn = vim.uv.fs_stat(vim.fs.joinpath(root, "mvnw")) and "./mvnw" or "mvn"
-  local cmd = { mvn, "-q", "test", "-Dtest=" .. table.concat(classes, ","), "-Dsurefire.failIfNoSpecifiedTests=false" }
+
+  local cmd
+  if gradle then
+    cmd = { has("gradlew") and "./gradlew" or "gradle" }
+    for _, file in ipairs(files) do
+      local module = file:sub(#root + 2):match("^(.-)/?src/test/") or ""
+      local task = module == "" and "test" or (":" .. module:gsub("/", ":") .. ":test")
+      vim.list_extend(cmd, { task, "--tests", vim.fn.fnamemodify(file, ":t:r") })
+    end
+  else
+    local classes = vim.tbl_map(function(f) return vim.fn.fnamemodify(f, ":t:r") end, files)
+    cmd = { has("mvnw") and "./mvnw" or "mvn", "-q", "test", "-Dtest=" .. table.concat(classes, ","),
+      "-Dsurefire.failIfNoSpecifiedTests=false" }
+  end
+
   local opts = { cwd = root, interactive = false, win = { title = " Modulith verify " } }
   local previous = Snacks.terminal.get(cmd, vim.tbl_extend("force", opts, { create = false }))
   if previous then

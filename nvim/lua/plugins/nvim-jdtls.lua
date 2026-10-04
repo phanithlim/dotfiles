@@ -29,6 +29,17 @@ return {
 
       table.insert(opts.cmd, "--jvm-arg=-Xmx4g")
 
+      local function jdk(version)
+        return vim.fn.glob(vim.fn.expand("~/.sdkman/candidates/java/") .. version .. ".*", false, true)[1]
+      end
+      local runtimes = {}
+      for _, v in ipairs({ "17", "21", "25" }) do
+        local home = jdk(v)
+        if home then
+          table.insert(runtimes, { name = "JavaSE-" .. v, path = home, default = v == "21" or nil })
+        end
+      end
+
       opts.settings = {
         java = {
           format = {
@@ -43,9 +54,15 @@ return {
               enabled = true,
               activeProfiles = { "dev" },
             },
+            gradle = {
+              enabled = true,
+              wrapper = { enabled = true },
+              java = { home = jdk("21") },
+            },
           },
           configuration = {
             updateBuildConfiguration = "automatic",
+            runtimes = runtimes,
           },
           inlayHints = {
             parameterNames = { enabled = "all" },
