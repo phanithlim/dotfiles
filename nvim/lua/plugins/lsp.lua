@@ -15,17 +15,6 @@ return {
           },
         },
 
-        ts_ls = {
-          settings = {
-            typescript = {
-              format = {
-                placeOpenBraceOnNewLineForFunctions = false,
-                placeOpenBraceOnNewLineForControlBlocks = false,
-              },
-            },
-          },
-        },
-
         ruff = {
           init_options = {
             settings = {

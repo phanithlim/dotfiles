@@ -22,6 +22,8 @@ return {
 
       opts.init_options = { bundles = bundles }
 
+      table.insert(opts.cmd, "--jvm-arg=-Xmx4g")
+
       opts.settings = {
         java = {
           format = {
