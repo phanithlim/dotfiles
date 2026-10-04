@@ -1,6 +1,3 @@
--- tmux-style Ctrl-b prefix for Neovide, mirroring ~/.config/tmux/tmux.conf so the
--- same keystrokes work in Ghostty+tmux and in Neovide. Like tmux, the prefix waits
--- for the next key with no timeout; tabs stand in for tmux windows.
 local M = {}
 
 local function tab(cmd)
@@ -38,7 +35,6 @@ for i = 1, 9 do
 end
 
 local function prefix()
-  -- Keep noice's <C-b>: scroll an open hover/signature popup.
   local has_noice, noice_lsp = pcall(require, "noice.lsp")
   if has_noice and vim.api.nvim_get_mode().mode == "n" and noice_lsp.scroll(-4) then
     return
@@ -50,7 +46,6 @@ local function prefix()
 end
 
 function M.setup()
-  -- noice.nvim's normal-mode <C-b> is disabled in lua/plugins/neovide.lua.
   vim.keymap.set({ "n", "t" }, "<C-b>", prefix, { desc = "tmux-style prefix" })
 end
 

@@ -1,5 +1,3 @@
--- Top bar listing Harpoon files ("1 main.py · 2 cli.py"), current file highlighted.
--- Also shows tab numbers on the right when more than one tab is open.
 local M = {}
 
 local function set_highlights()
@@ -52,7 +50,6 @@ function M.render()
   return line
 end
 
--- Hide the bar entirely when there is nothing to show.
 function M.update()
   local show = #items() > 0 or vim.fn.tabpagenr("$") > 1
   vim.o.showtabline = show and 2 or 0

@@ -56,13 +56,11 @@ local function get_plugins(pom)
 end
 
 local function get_dependencies(pom)
-  -- get groupId:artifactId:version and optional scope
   local result = vim.fn.system(string.format([[
     xmllint --xpath '//*[local-name()="dependencies"]/*[local-name()="dependency"]' %s 2>/dev/null
   ]], pom))
 
   local deps = {}
-  -- parse each <dependency> block
   for block in result:gmatch("<[^>]*dependency[^>]*>(.-)<[^>]*dependency[^>]*>") do
     local group   = block:match('<[^>]*groupId[^>]*>([^<]+)<') or ""
     local artifact= block:match('<[^>]*artifactId[^>]*>([^<]+)<') or ""
@@ -142,7 +140,6 @@ local function build_lines(data)
   add("  Maven", { type = "header" })
   add("", {})
 
-  -- Lifecycle
   add_header("Lifecycle")
   for _, goal in ipairs(lifecycle_goals) do
     local idx = #lines
@@ -152,7 +149,6 @@ local function build_lines(data)
 
   add("", {})
 
-  -- Plugins
   add_header("Plugins")
   if #data.plugins == 0 then
     add("    (no plugins found)", {})
@@ -178,11 +174,9 @@ local function build_lines(data)
 
   add("", {})
 
-  -- Dependencies
   local dep_expanded = expanded["section:dependencies"]
   add_header("Dependencies")
   local dep_idx = #lines - 2  -- point to header line
-  -- make header toggleable
   selectable[#lines - 2] = { kind = "section", value = "dependencies" }
 
   if dep_expanded then
@@ -200,7 +194,6 @@ local function build_lines(data)
 
   add("", {})
 
-  -- Repositories
   local repo_expanded = expanded["section:repositories"]
   add_header("Repositories")
   selectable[#lines - 2] = { kind = "section", value = "repositories" }
@@ -316,7 +309,6 @@ function M.open()
 
   apply_highlights(meta)
 
-  -- Move to first selectable
   local first = nil
   for idx in pairs(selectable) do
     if first == nil or idx < first then first = idx end
@@ -327,7 +319,6 @@ function M.open()
 
   highlight_cursor()
 
-  -- Keymaps
   vim.keymap.set("n", "q", M.close, { buffer = buf, silent = true })
   vim.keymap.set("n", "<Esc>", M.close, { buffer = buf, silent = true })
 

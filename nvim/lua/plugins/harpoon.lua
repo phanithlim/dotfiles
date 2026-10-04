@@ -2,7 +2,6 @@ local function list()
   return require("harpoon"):list()
 end
 
--- Harpoon list in the snacks picker, with file preview and fuzzy search.
 local function pick()
   local items = {}
   for i = 1, list():length() do
@@ -24,7 +23,6 @@ local keys = {
   { "<C-n>", function() list():next() end, desc = "Harpoon Next" },
 }
 for i = 1, 4 do
-  -- <leader>1-4 and Alt+1-4 (Cornix layer 4 + A/S/D/F) jump; <leader>h1-4 puts this file in slot i.
   table.insert(keys, { "<leader>" .. i, function() list():select(i) end, desc = "Harpoon " .. i })
   table.insert(keys, { "<M-" .. i .. ">", function() list():select(i) end, desc = "Harpoon " .. i })
   table.insert(keys, { "<leader>h" .. i, function() list():replace_at(i) end, desc = "Harpoon Set Slot " .. i })
@@ -44,9 +42,6 @@ return {
         },
         settings = {
           save_on_toggle = true,
-          -- Key lists by git project root instead of the current cwd, so
-          -- marks stay stable regardless of where nvim was opened from or
-          -- whether some plugin changes the working directory mid-session.
           key = function()
             local root = vim.fs.root(0, ".git")
             return root or vim.loop.cwd()

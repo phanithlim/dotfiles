@@ -1,4 +1,3 @@
--- <C-/> opens the terminal as a centred float instead of a bottom split.
 return {
   {
     "folke/snacks.nvim",

@@ -1,5 +1,3 @@
--- Make terminal splits read as a separate panel: a darker background, a header
--- bar with the shell's folder, and left padding. Floating terminals are left alone.
 local M = {}
 
 local colors_file = vim.fn.expand("~/.local/state/omarchy/current/theme/colors.toml")
@@ -35,10 +33,8 @@ local function set_highlights()
   vim.api.nvim_set_hl(0, "TermPanelHeaderNC", { fg = fg("Comment"), bg = panel_bg })
 end
 
--- The shell keeps b:term_title as "user@host:~/path", which follows `cd`.
 function M.title()
   local title = vim.b.term_title or ""
-  -- Before the shell sets a title, term_title is the buffer name ("term://…:/bin/bash").
   local path = not title:find("^term://") and title:match(":(.+)$") or vim.fn.getcwd()
   return " TERMINAL · " .. vim.fn.fnamemodify(vim.fn.expand(path), ":t")
 end
@@ -67,7 +63,6 @@ end
 function M.setup()
   local group = vim.api.nvim_create_augroup("terminal_panel", { clear = true })
   vim.api.nvim_create_autocmd("ColorScheme", { group = group, callback = set_highlights })
-  -- Scheduled so it runs after snacks.nvim applies its own window options.
   vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter" }, {
     group = group,
     callback = function(args)
