@@ -1,4 +1,4 @@
-format = """$directory$git_branch$git_status$fill$cmd_duration$time$line_break$character"""
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 
 [character]
 success_symbol = "[󰄛 ❯](bold yellow)"
@@ -18,12 +18,12 @@ style = "dimmed"
 [git_branch]
 symbol = " "
 style = "bold magenta"
-format = "[$symbol$branch]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 truncation_length = 20
 
 [git_status]
 style = "bold yellow"
-format = '([$all_status$ahead_behind]($style) )'
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 conflicted = "!"
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -36,44 +36,44 @@ deleted = "-${count}"
 [cmd_duration]
 min_time = 2000
 style = "dimmed"
-format = "[$duration]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 disabled = false
 
 [time]
 disabled = false
 time_format = "%H:%M"
 style = "dimmed"
-format = "[$time]($style)"
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 
 [python]
 symbol = "py "
 style = "dimmed"
-format = "[$symbol$version]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 
 [nodejs]
 symbol = "node "
 style = "dimmed"
-format = "[$symbol$version]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 
 [rust]
 symbol = "rs "
 style = "dimmed"
-format = "[$symbol$version]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 
 [package]
 symbol = "pkg "
 style = "dimmed"
-format = "[$symbol$version]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 disabled = true
 
 [aws]
 symbol = "aws "
 style = "dimmed"
-format = "[$symbol$profile]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 disabled = true
 
 [terraform]
 symbol = "tf "
 style = "dimmed"
-format = "[$symbol$workspace]($style) "
+format = """$directory$git_branch$git_status$cmd_duration$time$line_break$character"""
 disabled = true

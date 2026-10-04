@@ -1,216 +1,80 @@
 # Dotfiles
 
-Personal configuration files for Arch Linux. This repository contains configurations for Hyprland, tmux, Starship prompt, and various utility scripts.
+My setup on [Omarchy](https://omarchy.org/) (Arch + Hyprland), driven from a
+Cornix LP split keyboard.
 
-## Overview
+## Docs
 
-This is a collection of configuration files tailored for a Hyprland-based workflow on Arch Linux, featuring a highly customized tmux setup with multiple plugins and a clean Starship prompt.
+| Doc | What's in it |
+|---|---|
+| [docs/keybindings.md](docs/keybindings.md) | Every key I use: Hyprland, tmux, Neovim, Neovide, terminals |
+| [docs/customizations.md](docs/customizations.md) | What I changed from Omarchy's defaults, and why |
+| [docs/keyboard-cornix.md](docs/keyboard-cornix.md) | Cornix LP layers, combos, macros and knobs |
 
-## Structure
+## Layout
 
-```
-.
-├── hypr/              # Hyprland window manager configuration
-├── tmux/              # Tmux terminal multiplexer setup
-├── hooks/             # Pacman hooks for system maintenance
-├── scripts/           # Utility scripts
-└── starship.toml      # Starship prompt configuration
-```
+| In this repo | Goes to | What |
+|---|---|---|
+| `hypr/` | `~/.config/hypr/` | Hyprland overrides (Lua) |
+| `omarchy/shell.json`, `omarchy/shell.toml` | `~/.config/omarchy/` | Quickshell bar, idle, lock screen |
+| `omarchy/plugins/mlue.workspaces/` | `~/.config/omarchy/plugins/` | Per-monitor workspace bar widget |
+| `nvim/` | `~/.config/nvim/` | Neovim (LazyVim) |
+| `neovide/config.toml` | `~/.config/neovide/` | Neovide |
+| `tmux/tmux.conf` | `~/.config/tmux/` | tmux |
+| `ghostty/config` | `~/.config/ghostty/` | Ghostty |
+| `kitty/kitty.conf` | `~/.config/kitty/` | kitty |
+| `starship.toml`, `starship-nvim.toml` | `~/.config/` | Prompt (shell / Neovim terminal) |
+| `bin/tmux-sessionizer` | `~/.local/bin/` | tmux project picker |
+| `.bashrc` | `~/` | Bash |
+| `keyboard/cornix/mycurrent-cornix.vil` | load in Vial | Cornix LP layout |
 
-## Components
+## Restore on a new machine
 
-### Hyprland Configuration
-
-Modular Hyprland configuration split into logical components:
-
-- **autostart.conf** - Startup applications and services
-- **bindings.conf** - Keyboard shortcuts and mouse bindings
-- **looknfeel.conf** - Visual styling and animations
-- **monitors.conf** - Multi-monitor setup
-- **window.conf** - Window rules and workspace behavior
-- **plugin-split-monitor-workspace.conf** - Split monitor workspace plugin settings
-
-All configs assume Hyprland with hyprpm for plugin management.
-
-### Tmux Setup
-
-Heavily customized tmux configuration featuring:
-
-**Core Settings:**
-- Mouse support enabled
-- 1,000,000 line history buffer
-- Status bar positioned at top
-- Smart window renumbering
-- System clipboard integration
-
-**Theme:**
-- Catppuccin color scheme (mocha variant)
-- tmux-dotbar for minimalist status bar
-- Dynamic color adaptation
-
-**Plugins:**
-- **tpm** - Plugin manager
-- **tmux-sensible** - Sensible defaults
-- **tmux-yank** - Enhanced copy/paste
-- **tmux-continuum** - Automatic session saving
-- **tmux-fzf** - Fuzzy finder integration
-- **tmux-fzf-url** - URL extraction and opening
-- **tmux-dotbar** - Minimalist status bar
-- **catppuccin/tmux** - Color theme
-
-### Starship Prompt
-
-Clean two-line prompt configuration:
-
-- Top line: Directory path with git information
-- Bottom line: Arch Linux icon with status indicator
-- Color-coded git status and error states
-- Fast response time (200ms timeout)
-
-### Scripts
-
-**header-gen.sh**
-Generates formatted comment headers for configuration files:
-- Box-style headers with borders
-- Line-style section dividers
-- Auto-centered text
-
-**scl.sh**
-SSH Config Manager for easy SSH connection management:
-- List all configured hosts
-- Quick connect with tab completion
-- Add/remove hosts interactively
-- Edit SSH config directly
-
-**update-hyprpm.sh**
-Updates Hyprland plugins via hyprpm. Used by pacman hook to rebuild plugins after Hyprland updates.
-
-### Pacman Hooks
-
-Automated system maintenance hooks:
-
-**hyprland-plugins.hook**
-Automatically rebuilds Hyprland plugins when Hyprland is upgraded to prevent compatibility issues.
-
-See [hooks/README.md](hooks/README.md) for detailed installation instructions.
-
-## Installation
-
-### Prerequisites
+These are copies, not symlinks. Copy each item back to the location in the
+table:
 
 ```bash
-# Core requirements
-sudo pacman -S hyprland tmux starship
-
-# Optional dependencies
-sudo pacman -S fzf libnotify
+cd ~/dotfiles
+cp hypr/*.lua hypr/*.conf ~/.config/hypr/
+cp omarchy/shell.json omarchy/shell.toml ~/.config/omarchy/
+cp -r omarchy/plugins/mlue.workspaces ~/.config/omarchy/plugins/
+rsync -a nvim/ ~/.config/nvim/
+cp neovide/config.toml ~/.config/neovide/
+cp tmux/tmux.conf ~/.config/tmux/
+cp ghostty/config ~/.config/ghostty/
+cp kitty/kitty.conf ~/.config/kitty/
+cp starship.toml starship-nvim.toml ~/.config/
+install -m 755 bin/tmux-sessionizer ~/.local/bin/
 ```
 
-### Quick Setup
+Three things live outside this repo and need installing:
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url> ~/.dotfiles
-   cd ~/.dotfiles
-   ```
+1. **split-monitor-workspaces** (Hyprland)
+2. **lock-explorer** (Omarchy shell)
+3. **tpm** (tmux)
 
-2. **Hyprland (manual symlink):**
-   ```bash
-   ln -sf ~/.dotfiles/hypr ~/.config/hypr
-   ```
+The commands for each are in [customizations.md](docs/customizations.md).
 
-3. **Tmux:**
-   ```bash
-   ln -sf ~/.dotfiles/tmux ~/.config/tmux
-   
-   # Install TPM (tmux plugin manager)
-   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-   
-   # Start tmux and install plugins
-   tmux
-   # Press: Ctrl+B then Shift+I
-   ```
+Then reload everything:
+- Hyprland: `hyprctl reload`
+- Bar: `omarchy restart shell`
+- Terminals: `omarchy restart terminal`
+- tmux: `prefix r`
+- Keyboard: Vial → **File → Load saved layout**
 
-4. **Starship:**
-   ```bash
-   ln -sf ~/.dotfiles/starship.toml ~/.config/starship.toml
-   
-   # Add to your shell RC file (.bashrc or .zshrc):
-   echo 'eval "$(starship init bash)"' >> ~/.bashrc
-   # or for zsh:
-   echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-   ```
-
-5. **Scripts (optional):**
-   ```bash
-   # Make scripts executable
-   chmod +x ~/.dotfiles/scripts/*.sh
-   
-   # Add to PATH or source in shell RC:
-   echo 'export PATH="$HOME/.dotfiles/scripts:$PATH"' >> ~/.bashrc
-   ```
-
-6. **Pacman Hooks (optional):**
-   ```bash
-   sudo cp hooks/hyprland-plugins.hook /etc/pacman.d/hooks/
-   # Edit the hook file to replace <YOURNAME> with your username
-   sudo nano /etc/pacman.d/hooks/hyprland-plugins.hook
-   ```
-
-## Configuration
-
-### Changing Tmux Theme
-
-Edit [tmux/tmux.conf](tmux/tmux.conf) line 29:
+## Update this repo from the live configs
 
 ```bash
-set -g @catppuccin_flavor 'mocha'  # Options: latte, frappe, macchiato, mocha
+cd ~/dotfiles
+cp ~/.config/hypr/{hyprland,bindings,input,looknfeel,monitors,autostart,split-monitor-workspaces}.lua ~/.config/hypr/{hyprsunset,xdph}.conf hypr/
+cp ~/.config/omarchy/shell.{json,toml} omarchy/
+cp -r ~/.config/omarchy/plugins/mlue.workspaces omarchy/plugins/
+rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/nvim/ nvim/
+cp ~/.config/neovide/config.toml neovide/
+cp ~/.config/tmux/tmux.conf tmux/
+cp ~/.config/ghostty/config ghostty/
+cp ~/.config/kitty/kitty.conf kitty/
+cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
+cp ~/.local/bin/tmux-sessionizer bin/
+cp ~/Documents/cornix/mycurrent-cornix.vil keyboard/cornix/
 ```
-
-### Modifying Starship Prompt
-
-Edit [starship.toml](starship.toml) to customize:
-- Character symbols and colors
-- Directory truncation length
-- Git branch display
-- Command timeout
-
-### Adjusting Hyprland
-
-Each aspect of Hyprland is modular:
-- Keybindings: Edit [hypr/bindings.conf](hypr/bindings.conf)
-- Appearance: Edit [hypr/looknfeel.conf](hypr/looknfeel.conf)
-- Monitors: Edit [hypr/monitors.conf](hypr/monitors.conf)
-
-## Usage
-
-### SSH Config Manager
-
-```bash
-scl ls              # List all configured hosts
-scl connect myhost  # Connect to a host
-scl add             # Add a new host interactively
-scl del myhost      # Remove a host
-scl edit            # Edit SSH config file
-```
-
-### Header Generator
-
-Source the script and use the functions:
-
-```bash
-source ~/.dotfiles/scripts/header-gen.sh
-gen-header "My Section"
-gen-line "Subsection"
-```
-
-## Notes
-
-- All configurations assume a Catppuccin color scheme across tools
-- Tmux prefix is set to default Ctrl+B
-- Hyprland configurations expect hyprpm for plugin management
-- SSH config manager assumes standard SSH config format
-
-## License
-
-Personal configuration files. Use at your own discretion.
