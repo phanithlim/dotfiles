@@ -1,0 +1,32 @@
+[
+  {
+    "key": "ctrl+/",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+/",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  }
+]

@@ -1,0 +1,7 @@
+{
+    "diagnostics.disable": [
+        "duplicate-set-field",
+        "return-type-mismatch",
+        "param-type-mismatch"
+    ]
+}
