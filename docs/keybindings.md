@@ -90,7 +90,7 @@ Leader = `Space`. LazyVim defaults also apply.
 | `<leader>-` | Oil file browser |
 | `<leader>o` | Code outline |
 | `<leader>sj` | Jump list |
-| `<leader>jM` | Spring Modulith verify (runs the `ApplicationModules` tests) |
+| `<leader>jM` | Spring Modulith verify: runs the `ApplicationModules` tests with Maven or Gradle |
 | `<leader>jp` | Switch Maven profile |
 
 ## Explorer
