@@ -1,18 +1,14 @@
--- ~/.config/nvim/ftplugin/java.lua
-
 local jdtls = require("jdtls")
 
 local DEFAULT_PROFILE = "dev"
 local sdkman_base     = vim.fn.expand("~/.sdkman/candidates/java/")
 
--- ── Profile → Java version mapping ───────────────────────────────────────
 local profile_java = {
   dev        = "17",
   native     = "21",
   nativeTest = "21",
 }
 
--- ── Helpers ───────────────────────────────────────────────────────────────
 local function active_profile()
   return vim.g.java_maven_profile or DEFAULT_PROFILE
 end
@@ -56,7 +52,6 @@ local function workspace_dir()
     .. project .. "-" .. active_profile() .. "-" .. sdkman_current_version()
 end
 
--- ── Start jdtls ───────────────────────────────────────────────────────────
 local function start_jdtls()
   local config = {
     cmd = { "jdtls", "-data", workspace_dir() },
@@ -97,9 +92,6 @@ vim.notify(
   vim.log.levels.INFO
 )
 
--- ── Auto-merge project .env into java DAP launch configs ──────────────────
--- Mirrors IntelliJ's "Environment variables: <path>/.env" run-config field,
--- without ever copying secrets into launch.json.
 local function parse_dotenv(path)
   local env = {}
   local f = io.open(path, "r")
@@ -131,7 +123,6 @@ require("dap").listeners.on_config["java_dotenv"] = function(config)
   return config
 end
 
--- ── :JdtProfile ───────────────────────────────────────────────────────────
 vim.api.nvim_create_user_command("JdtProfile", function(args)
   local profiles = vim.tbl_keys(profile_java)
   table.sort(profiles)
@@ -158,7 +149,6 @@ end, {
   desc = "Switch Maven profile",
 })
 
--- ── :JdtJava ─────────────────────────────────────────────────────────────
 vim.api.nvim_create_user_command("JdtJava", function(args)
   local versions = sdkman_installed_versions()
   local cur = sdkman_current_version()
@@ -191,7 +181,6 @@ end, {
   desc = "Switch Java version",
 })
 
--- ── :JdtStatus ───────────────────────────────────────────────────────────
 vim.api.nvim_create_user_command("JdtStatus", function()
   vim.notify(string.format(
     "profile: %s\njava:    %s",

@@ -1,9 +1,7 @@
--- -- ~/.config/nvim/lua/plugins/lsp-fixes.lua
 return {
   "neovim/nvim-lspconfig",
   opts = function(_, opts)
     opts = opts or {}
-    -- This is the one fixing your specific error
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)

@@ -1,9 +1,3 @@
--- Clipboard for sessions whose yanks may need to reach another machine:
--- every copy is emitted as OSC 52 (inside tmux this becomes a tmux buffer,
--- rebroadcast to every attached client, local or SSH). Paste prefers the
--- local Wayland clipboard when one is available, so content copied in other
--- apps remains pasteable; without a display, paste is an OSC 52 query that
--- tmux (or the terminal) answers.
 local M = {}
 
 local function proc_lines(pid, file)

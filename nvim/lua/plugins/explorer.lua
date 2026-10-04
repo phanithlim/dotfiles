@@ -26,9 +26,6 @@ return {
     "folke/snacks.nvim",
     opts = {
       explorer = { enabled = false },
-      dashboard = { enabled = false },
-      -- <leader>e explorer: show dotfiles by default (H toggles, I shows gitignored),
-      -- plus Y copy path, O open folder in Oil, F find files in folder.
       picker = {
         sources = {
           explorer = {

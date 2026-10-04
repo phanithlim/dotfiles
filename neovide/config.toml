@@ -3,5 +3,5 @@ frame = "full"
 maximized = false
 
 [font]
-normal = ["JetBrainsMono Nerd Font"]
+normal = ["JetBrainsMono Nerd Font", "Noto Sans Khmer Condensed"]
 size = 14.0

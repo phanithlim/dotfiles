@@ -1,4 +1,3 @@
--- Make highlight groups transparent while preserving their other attributes
 local function make_transparent(name)
 	local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name, link = false })
 	if ok then
@@ -8,7 +7,6 @@ local function make_transparent(name)
 end
 
 local groups = {
-	-- transparent background
 	"Normal",
 	"NormalFloat",
 	"FloatBorder",
@@ -26,17 +24,14 @@ local groups = {
 	"TelescopeNormal",
 	"TelescopePromptBorder",
 	"TelescopePromptTitle",
-	-- neotree
 	"NeoTreeNormal",
 	"NeoTreeNormalNC",
 	"NeoTreeVertSplit",
 	"NeoTreeWinSeparator",
 	"NeoTreeEndOfBuffer",
-	-- nvim-tree
 	"NvimTreeNormal",
 	"NvimTreeVertSplit",
 	"NvimTreeEndOfBuffer",
-	-- notify
 	"NotifyINFOBody",
 	"NotifyERRORBody",
 	"NotifyWARNBody",

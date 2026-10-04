@@ -1,5 +1,3 @@
--- Give :terminal buffers the Omarchy theme palette when the colorscheme
--- doesn't set vim.g.terminal_color_* itself (otherwise ANSI blue is unreadable).
 local M = {}
 
 local colors_file = vim.fn.expand("~/.local/state/omarchy/current/theme/colors.toml")
