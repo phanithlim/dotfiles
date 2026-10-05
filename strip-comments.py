@@ -19,6 +19,8 @@ def style(path):
         return "lua"
     if ext == ".qml":
         return "slash"
+    if name == "ideavimrc":
+        return "vim"
     if ext in HASH or name in HASH_FILES:
         return "hash"
     return None
@@ -102,6 +104,8 @@ for root, dirs, files in os.walk("."):
             new = strip_lua(lines)
         elif kind == "slash":
             new = strip_prefix(lines, "//")
+        elif kind == "vim":
+            new = strip_prefix(lines, '"')
         elif path.endswith(".py"):
             new = strip_python(lines)
         else:

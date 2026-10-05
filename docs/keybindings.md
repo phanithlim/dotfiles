@@ -1,6 +1,6 @@
 # Keybindings
 
-[Hyprland](#hyprland) · [tmux](#tmux) · [Neovim](#neovim) · [Explorer](#explorer) · [Neovide](#neovide) · [Terminal](#terminal)
+[Hyprland](#hyprland) · [tmux](#tmux) · [Neovim](#neovim) · [Explorer](#explorer) · [Neovide](#neovide) · [IntelliJ](#intellij) · [Terminal](#terminal)
 
 **[L2 + H]** = Cornix: hold layer 2, tap H. See [keyboard-cornix.md](keyboard-cornix.md).
 
@@ -135,6 +135,25 @@ Neovim keys, plus tmux keys on `Ctrl-b` (tabs = tmux windows).
 | `Ctrl-b x` / `X` | Close split / tab |
 | `Ctrl-b g` | Lazygit |
 | `Ctrl + = / - / 0` | Zoom |
+
+## IntelliJ
+
+IdeaVim with LazyVim-style keys (`ideavim/ideavimrc`). Same as Neovim unless listed.
+
+| Keys | Action |
+|---|---|
+| `Tab` / `Shift + Tab`, `Shift + l` / `Shift + h` | Next / previous editor tab |
+| `<leader>h1…h4` | Mark this file as 1–4 (numbered bookmark) |
+| `Alt + 1…4` | Jump to file 1–4 **[L4 + A/S/D/F]** |
+| `<leader>hh` | All bookmarks |
+| `Ctrl + o` / `Ctrl + i` | Back / forward, including IDE jumps |
+| `s` | Jump anywhere (AceJump) |
+| `gd` / `gr` / `gI` | Definition / usages / implementation |
+| `<leader>ca` / `<leader>cr` / `<leader>cf` | Code action / rename / format |
+| `<leader>e` | Project tree |
+| `Ctrl + /` | Terminal |
+
+Set by hand in Settings: install the **Which-Key** plugin, smooth caret and smooth scrolling on, quick documentation on mouse move off, and **Track action IDs** on (Editor → Vim) to find action names for new keys.
 
 ## Terminal
 
