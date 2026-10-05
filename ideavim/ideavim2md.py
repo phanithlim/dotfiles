@@ -157,7 +157,7 @@ for i, line in enumerate(lines):
     seen[ident] = row
     current["rows"].append(row)
 
-out = ["# IntelliJ (IdeaVim) keybindings", "",
+out = ["# IdeaVim (IntelliJ) keybindings", "",
        "Config: [`ideavim/ideavimrc`](../ideavim/ideavimrc) → `~/.ideavimrc`. Leader is `Space`.",
        "Mode: `n` normal, `v` visual, `i` insert. **[L4 + A]** = Cornix: hold layer 4, tap A.", ""]
 for sec in sections:

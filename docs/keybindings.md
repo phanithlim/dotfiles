@@ -145,7 +145,7 @@ Neovim keys, plus tmux keys on `Ctrl-b` (tabs = tmux windows).
 
 ## IntelliJ
 
-All IdeaVim keys: **[intellij.md](intellij.md)**. They mirror the Neovim keys above (leader = `Space`).
+All IdeaVim keys: **[ideavim.md](ideavim.md)**. They mirror the Neovim keys above (leader = `Space`).
 
 ## Terminal
 
