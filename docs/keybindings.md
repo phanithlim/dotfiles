@@ -92,6 +92,13 @@ Leader = `Space`. LazyVim defaults also apply.
 | `<leader>sj` | Jump list |
 | `<leader>jM` | Spring Modulith verify: runs the `ApplicationModules` tests with Maven or Gradle |
 | `<leader>jp` | Switch Maven profile |
+| `<leader>m` / `<leader>mm` | Maven / Maven panel |
+| `<leader>sv` / `<leader>sh` | Split right / below |
+| `<leader>sq` / `<leader>se` | Close split / equalize splits |
+| `<leader>fb` | Buffers |
+| `<leader>cv` | Pick Python virtualenv (Python files) |
+
+**Dashboard** (start screen): `f` find file · `g` find text · `n` new file · `c` config · `r` recent · `s` restore session · `l` Lazy · `q` quit.
 
 ## Explorer
 
