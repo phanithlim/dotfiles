@@ -1,6 +1,6 @@
 # Dotfiles
 
-Omarchy (Arch + Hyprland) · Neovim · Neovide · tmux · Cornix LP keyboard
+![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=flat-square&logo=archlinux&logoColor=white) ![Omarchy](https://img.shields.io/badge/Omarchy-1e1e2e?style=flat-square) ![Hyprland](https://img.shields.io/badge/Hyprland-58E1FF?style=flat-square&logo=hyprland&logoColor=black) ![Neovim](https://img.shields.io/badge/Neovim-57A143?style=flat-square&logo=neovim&logoColor=white) ![LazyVim](https://img.shields.io/badge/LazyVim-2E7DE9?style=flat-square) ![tmux](https://img.shields.io/badge/tmux-1BB91F?style=flat-square&logo=tmux&logoColor=white) ![kitty](https://img.shields.io/badge/kitty-4C4C4C?style=flat-square) ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat-square&logo=intellijidea&logoColor=white) ![Catppuccin](https://img.shields.io/badge/Catppuccin-F5C2E7?style=flat-square) ![Cornix LP](https://img.shields.io/badge/Cornix_LP-FAB387?style=flat-square)
 
 ![Cornix LP](assets/cornix.webp)
 
