@@ -56,6 +56,13 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+vim.filetype.add({
+  pattern = {
+    ["Jenkinsfile[._-].*"] = "groovy",
+    [".*%.[jJ]enkinsfile"] = "groovy",
+  },
+})
+
 vim.g.lazyvim_eslint_auto_format = true
 vim.g.lazyvim_prettier_needs_config = false
 vim.lsp.commands["setContext"] = function() end
