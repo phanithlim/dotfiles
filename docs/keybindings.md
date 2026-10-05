@@ -138,22 +138,7 @@ Neovim keys, plus tmux keys on `Ctrl-b` (tabs = tmux windows).
 
 ## IntelliJ
 
-IdeaVim with LazyVim-style keys (`ideavim/ideavimrc`). Same as Neovim unless listed.
-
-| Keys | Action |
-|---|---|
-| `Tab` / `Shift + Tab`, `Shift + l` / `Shift + h` | Next / previous editor tab |
-| `<leader>h1…h4` | Mark this file as 1–4 (numbered bookmark) |
-| `Alt + 1…4` | Jump to file 1–4 **[L4 + A/S/D/F]** |
-| `<leader>hh` | All bookmarks |
-| `Ctrl + o` / `Ctrl + i` | Back / forward, including IDE jumps |
-| `s` | Jump anywhere (AceJump) |
-| `gd` / `gr` / `gI` | Definition / usages / implementation |
-| `<leader>ca` / `<leader>cr` / `<leader>cf` | Code action / rename / format |
-| `<leader>e` | Project tree |
-| `Ctrl + /` | Terminal |
-
-Set by hand in Settings: install the **Which-Key** plugin, smooth caret and smooth scrolling on, quick documentation on mouse move off, and **Track action IDs** on (Editor → Vim) to find action names for new keys.
+All IdeaVim keys: **[intellij.md](intellij.md)**. They mirror the Neovim keys above (leader = `Space`).
 
 ## Terminal
 
