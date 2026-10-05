@@ -6,7 +6,7 @@ Omarchy (Arch + Hyprland) · Neovim · Neovide · tmux · Cornix LP keyboard
 
 | Doc | |
 |---|---|
-| [Keybindings](docs/keybindings.md) | Hyprland, tmux, Neovim, Neovide |
+| [Keybindings](docs/keybindings.md) | Hyprland, tmux, Neovim, Neovide, IntelliJ |
 | [Keyboard](docs/keyboard-cornix.md) | Cornix LP layers, knobs, combos |
 
 ## What's here
@@ -21,6 +21,7 @@ Omarchy (Arch + Hyprland) · Neovim · Neovide · tmux · Cornix LP keyboard
 | `ghostty/`, `kitty/` | `~/.config/ghostty/`, `~/.config/kitty/` |
 | `starship*.toml` | `~/.config/` |
 | `bin/` | `~/.local/bin/` |
+| `ideavim/ideavimrc` | `~/.ideavimrc` (IntelliJ) |
 | `keyboard/cornix/*.vil` | Vial |
 
 ## Setup
@@ -38,6 +39,7 @@ cp ghostty/config ~/.config/ghostty/
 cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
 install -m 755 bin/tmux-sessionizer ~/.local/bin/
+cp ideavim/ideavimrc ~/.ideavimrc
 ```
 
 **2. Install plugins**
@@ -83,6 +85,7 @@ cp ~/.config/kitty/kitty.conf kitty/
 cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-sessionizer   # drops private project folders
 cp ~/Documents/cornix/mycurrent-cornix.vil keyboard/cornix/
+cp ~/.ideavimrc ideavim/ideavimrc
 python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix.vil   # paste over the layer tables in docs/keyboard-cornix.md
 python3 strip-comments.py   # repo copies are kept without comments
 ```

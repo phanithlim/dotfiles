@@ -1,0 +1,208 @@
+let mapleader = " "
+set scrolloff=10
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set clipboard+=unnamed
+set clipboard+=ideaput      " paste through the IDE (fixes imports, like Ctrl+V)
+set ideajoin                " J joins lines the smart way (strings, comments)
+set idearefactormode=keep   " stay in Normal mode after rename/extract
+set number
+set relativenumber
+set showmode
+set visualbell
+
+set which-key
+set notimeout
+
+set surround
+set argtextobj
+set easymotion
+set textobj-entire
+set highlightedyank
+set NERDTree
+set commentary
+set exchange
+set matchit
+
+nnoremap <esc> :nohlsearch<CR>
+nnoremap <leader>ur :nohlsearch<CR>
+inoremap jk <Esc>
+
+nnoremap <C-s> :action SaveAll<CR>
+inoremap <C-s> <Esc>:action SaveAll<CR>
+
+nmap <A-j> <Action>(MoveLineDown)
+nmap <A-k> <Action>(MoveLineUp)
+vmap <A-j> <Action>(MoveLineDown)
+vmap <A-k> <Action>(MoveLineUp)
+
+sethandler <A-j> a:vim
+sethandler <A-k> a:vim
+
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap <leader>qq :action Exit<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap <leader>\| :action SplitVertically<CR>
+nnoremap <leader>- :action SplitHorizontally<CR>
+nnoremap <leader>wd :action Unsplit<CR>
+nnoremap <leader>wm :action HideAllWindows<CR>
+
+nnoremap [b    :action PreviousTab<CR>
+nnoremap ]b    :action NextTab<CR>
+nmap <Tab>   <Action>(NextTab)
+nmap <S-Tab> <Action>(PreviousTab)
+nmap <S-l>   <Action>(NextTab)
+nmap <S-h>   <Action>(PreviousTab)
+nnoremap <leader>bb :action Switcher<CR>
+nnoremap <leader>bd :action CloseContent<CR>
+nnoremap <leader>bo :action CloseAllEditorsButActive<CR>
+nnoremap <leader>bp :action PinActiveEditorTab<CR>
+
+nnoremap <leader>e  :NERDTreeFocus<CR>
+nnoremap <leader>E  :NERDTreeToggle<CR>
+nnoremap <leader>fe :NERDTreeFocus<CR>
+
+nnoremap <leader><leader> :action GotoFile<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fF :action SearchEverywhere<CR>
+nnoremap <leader>fr :action RecentFiles<CR>
+nnoremap <leader>fb :action Switcher<CR>
+nnoremap <leader>fn :action NewFile<CR>
+nnoremap <leader>fp :action ManageRecentProjects<CR>
+nnoremap <leader>ft :action ActivateTerminalToolWindow<CR>
+
+nnoremap <leader>/  :action FindInPath<CR>
+nnoremap <leader>sg :action FindInPath<CR>
+nnoremap <leader>sr :action ReplaceInPath<CR>
+nnoremap <leader>sw viw:action FindInPath<CR>
+vmap <leader>sw <Action>(FindInPath)
+nnoremap <leader>ss :action FileStructurePopup<CR>
+nnoremap <leader>sS :action GotoSymbol<CR>
+nnoremap <leader>sc :action GotoAction<CR>
+nnoremap <leader>sC :action GotoAction<CR>
+nnoremap <leader>sk :action GotoAction<CR>
+nnoremap <leader>sm :action ShowBookmarks<CR>
+nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
+nnoremap <leader>st :action ActivateTODOToolWindow<CR>
+nnoremap <leader>sj :action RecentLocations<CR>
+
+nmap <leader>h1 <Action>(ToggleBookmark1)
+nmap <leader>h2 <Action>(ToggleBookmark2)
+nmap <leader>h3 <Action>(ToggleBookmark3)
+nmap <leader>h4 <Action>(ToggleBookmark4)
+nmap <A-1> <Action>(GotoBookmark1)
+nmap <A-2> <Action>(GotoBookmark2)
+nmap <A-3> <Action>(GotoBookmark3)
+nmap <A-4> <Action>(GotoBookmark4)
+nmap <leader>hh <Action>(ShowBookmarks)
+
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+
+nmap s <Action>(AceAction)
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action GotoTypeDeclaration<CR>
+nnoremap gr :action ShowUsages<CR>
+nnoremap gR :action FindUsages<CR>
+nnoremap gI :action GotoImplementation<CR>
+nnoremap gy :action GotoTypeDeclaration<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap K  :action QuickJavaDoc<CR>
+nnoremap gK :action ParameterInfo<CR>
+inoremap <C-k> <Esc>:action ParameterInfo<CR>a
+
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+vmap <leader>ca <Action>(ShowIntentionActions)
+nnoremap <leader>cr :action RenameElement<CR>
+nnoremap <leader>cR :action RenameFile<CR>
+nnoremap <leader>cf :action ReformatCode<CR>
+vmap <leader>cf <Action>(ReformatCode)
+nnoremap <leader>co :action OptimizeImports<CR>
+nnoremap <leader>cd :action ShowErrorDescription<CR>
+nnoremap <leader>cs :action ActivateStructureToolWindow<CR>
+nnoremap <leader>cg :action Generate<CR>
+
+nnoremap <leader>rf :action ExtractMethod<CR>
+vmap <leader>rf <Action>(ExtractMethod)
+nnoremap <leader>rx :action IntroduceVariable<CR>
+vmap <leader>rx <Action>(IntroduceVariable)
+nnoremap <leader>ri :action Inline<CR>
+nnoremap <leader>rs :action Refactorings.QuickListPopupAction<CR>
+
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]e :action GotoNextError<CR>
+nnoremap [e :action GotoPreviousError<CR>
+nnoremap <leader>xx :action ActivateProblemsViewToolWindow<CR>
+
+nnoremap <leader>gg :action ActivateCommitToolWindow<CR>
+nnoremap <leader>gs :action ActivateVersionControlToolWindow<CR>
+nnoremap <leader>gl :action Vcs.Show.Log<CR>
+nnoremap <leader>gf :action Vcs.ShowHistoryForBlock<CR>
+nnoremap <leader>gb :action Annotate<CR>
+nnoremap <leader>gB :action Github.Open.In.Browser<CR>
+nnoremap ]h :action VcsShowNextChangeMarker<CR>
+nnoremap [h :action VcsShowPrevChangeMarker<CR>
+nnoremap <leader>ghr :action Vcs.RollbackChangedLines<CR>
+nnoremap <leader>ghp :action VcsShowCurrentChangeMarker<CR>
+
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <leader>dB :action AddConditionalBreakpoint<CR>
+nnoremap <leader>dc :action Resume<CR>
+nnoremap <leader>dC :action RunToCursor<CR>
+nnoremap <leader>di :action StepInto<CR>
+nnoremap <leader>dO :action StepOver<CR>
+nnoremap <leader>do :action StepOut<CR>
+nnoremap <leader>dt :action Stop<CR>
+nnoremap <leader>dd :action Debug<CR>
+nnoremap <leader>du :action ActivateDebugToolWindow<CR>
+nnoremap <leader>de :action EvaluateExpression<CR>
+vmap <leader>de <Action>(EvaluateExpression)
+
+nnoremap <leader>tr :action ContextRun<CR>
+nnoremap <leader>tt :action RunClass<CR>
+nnoremap <leader>tl :action Rerun<CR>
+nnoremap <leader>td :action ContextDebug<CR>
+nnoremap <leader>ts :action ActivateRunToolWindow<CR>
+
+nnoremap <leader>uw :action EditorToggleUseSoftWraps<CR>
+nnoremap <leader>ul :action EditorToggleShowLineNumbers<CR>
+nnoremap <leader>uL :set relativenumber!<CR>
+nnoremap <leader>uz :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>uZ :action ToggleZenMode<CR>
+nnoremap <leader>uf :action ToggleFullScreen<CR>
+
+nnoremap <leader><tab>] :action NextTab<CR>
+nnoremap <leader><tab>[ :action PreviousTab<CR>
+nnoremap <leader><tab>d :action CloseContent<CR>
+nnoremap <leader><tab>o :action CloseAllEditorsButActive<CR>
+
+nnoremap <C-/> :action ActivateTerminalToolWindow<CR>
+nnoremap <C-_> :action ActivateTerminalToolWindow<CR>
+
+nnoremap <leader>mg :action ActivateMavenToolWindow<CR>
+nnoremap <leader>mc :action HideActiveWindow<CR>
+
+sethandler <C-s> a:vim
+sethandler <C-h> a:vim
+sethandler <C-j> a:vim
+sethandler <C-k> a:vim
+sethandler <C-l> a:vim
+sethandler <C-/> a:vim
+sethandler <C-_> a:vim
+sethandler <C-o> a:vim
+sethandler <C-i> a:vim
+sethandler <A-1> a:vim
+sethandler <A-2> a:vim
+sethandler <A-3> a:vim
+sethandler <A-4> a:vim
