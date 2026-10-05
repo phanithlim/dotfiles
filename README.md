@@ -8,6 +8,7 @@ Omarchy (Arch + Hyprland) · Neovim · Neovide · tmux · Cornix LP keyboard
 |---|---|
 | [Keybindings](docs/keybindings.md) | Hyprland, tmux, Neovim, Neovide, IntelliJ |
 | [Keyboard](docs/keyboard-cornix.md) | Cornix LP layers, knobs, combos |
+| [IntelliJ](docs/intellij.md) | IdeaVim keys and IntelliJ settings |
 
 ## What's here
 
@@ -86,6 +87,7 @@ cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-sessionizer   # drops private project folders
 cp ~/Documents/cornix/mycurrent-cornix.vil keyboard/cornix/
 cp ~/.ideavimrc ideavim/ideavimrc
+python3 ideavim/ideavim2md.py ~/.ideavimrc > docs/intellij.md   # IdeaVim key notes
 python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix.vil   # paste over the layer tables in docs/keyboard-cornix.md
 python3 strip-comments.py   # repo copies are kept without comments
 ```
