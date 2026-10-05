@@ -17,7 +17,10 @@ return {
         vim.fn.glob(mason_path .. "java-test/extension/server/*.jar", 1), "\n"
       )
       for _, jar in ipairs(test_jars) do
-        if jar ~= "" then table.insert(bundles, jar) end
+        local name = vim.fn.fnamemodify(jar, ":t")
+        if jar ~= "" and name ~= "com.microsoft.java.test.runner-jar-with-dependencies.jar" and name ~= "jacocoagent.jar" then
+          table.insert(bundles, jar)
+        end
       end
 
       local ok, spring_boot = pcall(require, "spring_boot")
@@ -58,6 +61,7 @@ return {
               enabled = true,
               wrapper = { enabled = true },
               java = { home = jdk("21") },
+              annotationProcessing = { enabled = false },
             },
           },
           configuration = {
