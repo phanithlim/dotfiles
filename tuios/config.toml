@@ -9,7 +9,7 @@ hide_scrollbar = true
 scrollback_lines = 10000
 scroll_lines = 3
 kitty_placeholders = ''
-auto_enter_terminal_on_focus = 'off'
+auto_enter_terminal_on_focus = 'targeted'
 click_to_type = 'double'
 dockbar_position = 'top'
 preferred_shell = ''
@@ -33,7 +33,7 @@ max_fps = 120
 dock_workspace_tab_format = '{name}'
 dock_pill_caps = true
 glyphs = 'clean'
-gap = 0
+gap = 1
 tiling_scheme = 'longest_side'
 master_ratio = 50
 scroll_column_width = 55
@@ -85,7 +85,7 @@ warning_duration = 0
 error_duration = 0
 
 [notifications.agent]
-enabled = false
+enabled = true
 sound_mode = ''
 command = ''
 quiet_hours = ''
@@ -104,7 +104,7 @@ leader_key = 'ctrl+b'
 [keybindings.window_management]
 close_window = ['w', 'x']
 copy_selection = ['c']
-focus_sidebar = ['s']
+focus_sidebar = []
 minimize_window = ['m']
 new_session = ['N']
 new_window = ['n']
@@ -182,6 +182,7 @@ unsnap = ['u']
 [keybindings.mode_control]
 enter_terminal_mode = ['i', 'enter']
 enter_window_mode = ['esc']
+hold_window_mode = ['f13']
 open_settings = [',']
 quit = ['q']
 toggle_help = ['?']
@@ -250,7 +251,7 @@ prefix_settings = [',']
 prefix_split_horizontal = ['-']
 prefix_split_vertical = ['|', '\']
 prefix_tape = ['T']
-prefix_toggle_sidebar = ['b']
+prefix_toggle_sidebar = []
 prefix_toggle_tiling = ['space']
 prefix_window = ['t']
 prefix_workspace = ['w']
@@ -358,7 +359,7 @@ terminal_scroll_down = ['shift+down']
 terminal_scroll_up = ['shift+up']
 
 [keybindings.global]
-command_palette = ['ctrl+p']
+command_palette = ['ctrl+shift+p']
 launcher = ['alt+space']
 
 [[keybindings.command]]
@@ -483,7 +484,7 @@ agent_detect_seconds = 0
 agent_binaries = []
 respond_from_shell = false
 resume_agents = 'ask'
-persist_scrollback_lines = 0
+persist_scrollback_lines = 5000
 persist_scrollback_kb = 0
 window_size = 'latest'
 
@@ -543,12 +544,12 @@ corner = 'bottom-right'
 [dock]
 left = ['mode', 'workspaces']
 center = ['windows']
-right = ['clock']
+right = ['custom/branch', 'clock']
 
 [dock.clock]
 format = '󰥔 Mon 15:04'
 
 [dock.custom]
-[dock.custom.where]
-command = '~/.config/tuios/dock/where.sh'
-refresh = '2s'
+[dock.custom.branch]
+command = 'git -C "$(tuios list-windows --json | jq -r ".windows[] | select(.focused) | .cwd")" branch --show-current 2>/dev/null | sed "s/^/ /"'
+refresh = 'event:after-focus-change'
