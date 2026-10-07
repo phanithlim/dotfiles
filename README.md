@@ -19,6 +19,7 @@
 | `nvim/` | `~/.config/nvim/` |
 | `neovide/` | `~/.config/neovide/` |
 | `tmux/` | `~/.config/tmux/` |
+| `tuios/` | `~/.config/tuios/` |
 | `ghostty/`, `kitty/` | `~/.config/ghostty/`, `~/.config/kitty/` |
 | `starship*.toml` | `~/.config/` |
 | `bin/` | `~/.local/bin/` |
@@ -36,6 +37,7 @@ cp -r omarchy/* ~/.config/omarchy/
 rsync -a nvim/ ~/.config/nvim/
 cp neovide/config.toml ~/.config/neovide/
 cp -r tmux/tmux.conf tmux/scripts ~/.config/tmux/
+mkdir -p ~/.config/tuios && cp -r tuios/* ~/.config/tuios/
 cp ghostty/config ~/.config/ghostty/
 cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
@@ -66,6 +68,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 | Bar | `omarchy restart shell` |
 | Terminals | `omarchy restart terminal` |
 | tmux | `prefix r` |
+| tuios | automatic on save |
 | Neovim | restart |
 
 **5. Fix by hand**: lock-screen avatar path in `omarchy/shell.json`
@@ -81,6 +84,7 @@ cp ~/.config/omarchy/hooks/theme-set.d/tmux-colors omarchy/hooks/theme-set.d/
 rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/nvim/ nvim/
 cp ~/.config/neovide/config.toml neovide/
 cp -r ~/.config/tmux/tmux.conf ~/.config/tmux/scripts tmux/
+cp -r ~/.config/tuios/config.toml ~/.config/tuios/glyphs ~/.config/tuios/scripts tuios/
 cp ~/.config/ghostty/config ghostty/
 cp ~/.config/kitty/kitty.conf kitty/
 cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
