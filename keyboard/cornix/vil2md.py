@@ -5,6 +5,8 @@ N = {"ESCAPE":"Esc","LCTRL":"Ctrl","LSHIFT":"Shift","CAPSLOCK":"Caps","LGUI":"Su
      "BTN3":"Mid-click","UP":"↑","DOWN":"↓","LEFT":"←","RIGHT":"→","VOLD":"Vol-","VOLU":"Vol+","WH_U":"Wheel↑","WH_D":"Wheel↓","TRNS":"▽"}
 MOD = {"LGUI":"Super+","LCTL":"Ctrl+","LALT":"Alt+","LSFT":"Shift+","SGUI":"Super+Shift+","LCG":"Ctrl+Super+","LAG":"Super+Alt+"}
 TAPHOLD = {"LGUI_T":"Super","LCTL_T":"Ctrl"}
+SHIFTED = {"1":"!","2":"@","3":"#","4":"$","5":"%","6":"^","7":"&","8":"*","9":"(","0":")","MINUS":"_","EQUAL":"+",
+           "LBRACKET":"{","RBRACKET":"}","BSLASH":"|","SCOLON":":","QUOTE":'"',"GRAVE":"~","COMMA":"<","DOT":">","SLASH":"?"}
 def name(k):
     if k in ("KC_NO", -1, None): return ""
     if not isinstance(k, str): return str(k)
@@ -13,18 +15,30 @@ def name(k):
         f, a = m.groups()
         if f == "MO": return f"**L{a}**"
         if f in TAPHOLD: return f"{name(a)}/{TAPHOLD[f]}"
+        if f == "LSFT" and a.replace("KC_", "") in SHIFTED: return SHIFTED[a.replace("KC_", "")]
         if f == "OSM": return "1×" + {"MOD_LGUI":"Super","MOD_LALT":"Alt","MOD_LCTL":"Ctrl","MOD_LSFT":"Shift"}.get(a, a)
         if f in MOD: return MOD[f] + name(a)
         return k
-    if re.fullmatch(r"M\d+", k): return f"Macro {k[1:]}"
+    if re.fullmatch(r"M\d+", k): return MACROS.get(k, f"Macro {k[1:]}")
     if k.startswith("USER"): return f"User {k[4:]}"
     if k.startswith("0x"):
         v = int(k, 16)
+        if v == 0x7C73: return "Caps Word"
         mods = "".join(n for bit, n in ((8, "Super+"), (1, "Ctrl+"), (4, "Alt+"), (2, "Shift+")) if (v >> 8) & bit)
         basic = {0x0F: "L", 0x28: "Enter", 0x2C: "Space"}.get(v & 0xFF)
         return mods + basic if mods and basic else f"`{k}`"
     k = k.replace("KC_", "")
     return N.get(k, k)
+MACROS = {}
+def typed(m):
+    out, shift = "", False
+    for a in m:
+        if a[0] in ("down", "up") and "KC_LSHIFT" in a: shift = a[0] == "down"
+        elif a[0] == "tap" and len(a) == 2:
+            k = a[1].replace("KC_", "")
+            out += SHIFTED.get(k, "") if shift else N.get(k, k.lower())
+        else: return None
+    return out
 def cell(s): return s.replace("|", "\\|") or "·"
 def side(layer, rows, reverse):
     out = []
@@ -35,6 +49,9 @@ def side(layer, rows, reverse):
     return out
 if __name__ == "__main__":
     d = json.load(open(sys.argv[1]))
+    for i, m in enumerate(d["macro"]):
+        t = typed(m) if m else None
+        if t: MACROS[f"M{i}"] = f"`{t}`"
     knobs = []
     for i, layer in enumerate(d["layout"]):
         if all(x in ("KC_NO", -1, "KC_MUTE", "KC_BTN3", "KC_TRNS") for row in layer for x in row): continue
@@ -53,7 +70,9 @@ if __name__ == "__main__":
     print("\n### Combos\n")
     print("| Press together | Sends |\n|---|---|")
     for c in d["combo"]:
-        if c[-1] != "KC_NO":
+        if c[-1] != "KC_NO" and not re.fullmatch(r"M\d+", c[-1]):
+            print(f"| {' + '.join(name(x) for x in c[:4] if x != 'KC_NO')} | {name(c[-1])} |")
+        elif c[-1] != "KC_NO":
             idx = int(c[-1][1:])
             m = d["macro"][idx]
             taps = [ "+".join(name(x) for x in a[1:]) for a in m if a[0] == "tap" ]

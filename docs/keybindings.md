@@ -97,6 +97,9 @@ Leader = `Space`. LazyVim defaults also apply.
 | `<leader>sq` / `<leader>se` | Close split / equalize splits |
 | `<leader>fb` | Buffers |
 | `<leader>cv` | Pick Python virtualenv (Python files) |
+| `<leader>tt` / `<leader>tr` | Tests: run file / run nearest (pytest, JUnit) |
+| `<leader>tl` / `<leader>td` | Tests: rerun last / debug nearest |
+| `<leader>ts` / `<leader>to` | Tests: summary panel / output of the test |
 
 **Dashboard** (start screen): `f` find file · `g` find text · `n` new file · `c` config · `r` recent · `s` restore session · `l` Lazy · `q` quit.
 

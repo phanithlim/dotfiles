@@ -1,13 +1,14 @@
 # Cornix LP keyboard
 
-Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-cornix.vil`
+Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-cornix-symbols.vil`
+(the previous layout is still in `keyboard/cornix/mycurrent-cornix.vil`)
 
 ## Layers
 
 | Hold | Layer | For |
 |---|---|---|
 | — | 0 | Typing |
-| `L5` thumb | 1 | Numbers, symbols, arrows on H/J/K/L |
+| `L5` thumb | 1 | Numbers, code symbols (no Shift needed), arrows on H/J/K/L |
 | `R3` thumb | 2 | Hyprland: workspaces, focus, swap (+ Shift) |
 | `L4` thumb | 3 | Move window to workspace, one-shot mods, resize |
 | `R2` thumb | 4 | Apps, menus, Harpoon on A/S/D/F, Caps Lock |
@@ -16,11 +17,16 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 
 | Key | Does |
 |---|---|
+| Bottom-left key | Tab |
+| L1 + bottom-left key | Caps Word: capitals until the next space or symbol (`MAX_SIZE`) |
+| L1 + right inner thumb (Macro 3) | Types `->` |
+| L1 + R2 / R3 thumbs | `'` / `\` |
 | L4 + A/S/D/F | Harpoon file 1–4 (Alt+1–4) |
 | L4 + outer left thumb | Caps Lock |
 | L4 + right inner thumb (Macro 0) | English ⇄ Khmer |
 | L2 + M | Window laptop ⇄ external monitor |
 | Combo A+B / S+B | Previous / next tmux window or Neovide tab |
+| Combo J+K | Esc |
 
 ### Layer 0
 
@@ -29,16 +35,16 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 | Esc | Q | W | E | R | T | | Y | U | I | O | P | Bksp |
 | Ctrl | A | S | D | F | G | | H | J | K | L | ; | Enter |
 | Shift | Z | X | C | V | B | | N | M | , | . | ↑ | / |
-| Esc | Super | Alt | **L3** | **L1** | Space/Super | | Space/Ctrl | **L4** | **L2** | ← | ↓ | → |
+| Tab | Super | Alt | **L3** | **L1** | Space/Super | | Space/Ctrl | **L4** | **L2** | ← | ↓ | → |
 
 ### Layer 1
 
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Tab | 1 | 2 | 3 | 4 | 5 | | 6 | 7 | 8 | 9 | 0 | Bksp |
-| ` | [ | ] | ' | ; | - | | ← | ↓ | ↑ | → | \ | = |
-| ▽ | · | · | · | · | · | | · | · | · | · | · | · |
-| · | · | · | · | · | · | | · | · | · | · | · | Del |
+| ~ | 1 | 2 | 3 | 4 | 5 | | 6 | 7 | 8 | 9 | 0 | Bksp |
+| ` | _ | - | = | + | * | | ← | ↓ | ↑ | → | : | " |
+| ▽ | @ | \| | & | ! | # | | ( | ) | { | } | [ | ] |
+| Caps Word | · | · | · | · | · | | `->` | ' | \ | · | · | Del |
 
 ### Layer 2
 
@@ -83,11 +89,12 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 |---|---|
 | A + B | Ctrl+B Ctrl+P |
 | S + B | Ctrl+B Ctrl+N |
+| J + K | Esc |
 
 `·` = empty, `▽` = same as layer 0, `1×` = one-shot modifier.
 
 Rebuild these tables after changing the layout:
 
 ```bash
-python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix.vil
+python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil
 ```
