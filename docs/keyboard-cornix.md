@@ -27,9 +27,7 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 | L2 + M | Window laptop ⇄ external monitor |
 | Combo A+B / S+B | Previous / next tmux window or Neovide tab |
 | Combo J+K | Esc |
-
 ### Layer 0
-
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Esc | Q | W | E | R | T | | Y | U | I | O | P | Bksp |
@@ -41,7 +39,7 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ~ | 1 | 2 | 3 | 4 | 5 | | 6 | 7 | 8 | 9 | 0 | Bksp |
+| Tab | 1 | 2 | 3 | 4 | 5 | | 6 | 7 | 8 | 9 | 0 | Bksp |
 | ` | _ | - | = | + | * | | ← | ↓ | ↑ | → | : | " |
 | ▽ | @ | \| | & | ! | # | | ( | ) | { | } | [ | ] |
 | Caps Word | · | · | · | · | · | | `->` | ' | \ | · | · | Del |
