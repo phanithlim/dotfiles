@@ -1,0 +1,8 @@
+{
+  "cssTheme": "",
+  "accentColor": "#333d42",
+  "showViewHeader": false,
+  "enabledCssSnippets": [
+    "vim-mode"
+  ]
+}
