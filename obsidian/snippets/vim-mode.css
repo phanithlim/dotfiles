@@ -1,0 +1,15 @@
+/* Normal / visual mode: solid blue block cursor */
+.cm-editor .cm-fat-cursor {
+  background: var(--color-blue) !important;
+  color: var(--background-primary) !important;
+  outline: none !important;
+}
+.cm-editor:not(.cm-focused) .cm-fat-cursor {
+  background: transparent !important;
+  outline: 1px solid var(--color-blue) !important;
+}
+
+/* Insert mode: thick green bar */
+.markdown-source-view.mod-cm6 .cm-cursor {
+  border-left: 3px solid var(--color-green) !important;
+}

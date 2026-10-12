@@ -25,6 +25,7 @@
 | `bin/` | `~/.local/bin/` |
 | `ideavim/ideavimrc` | `~/.ideavimrc` (IntelliJ) |
 | `keyboard/cornix/*.vil` | Vial |
+| `obsidian/` | vault: `.obsidian.vimrc` in the vault root, the rest in `.obsidian/` |
 
 ## Setup
 
@@ -43,6 +44,7 @@ cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
 install -m 755 bin/tmux-sessionizer ~/.local/bin/
 cp ideavim/ideavimrc ~/.ideavimrc
+V=~/Documents/brain/mluespace; cp obsidian/.obsidian.vimrc $V/ && cp -r obsidian/{*.json,snippets,plugins} $V/.obsidian/
 ```
 
 **2. Install plugins**
@@ -53,6 +55,9 @@ git clone -b release/0.56.x https://github.com/zjeffer/split-monitor-workspaces 
 
 # Bar: lock screen
 git clone https://github.com/SirJul1337/omarchy-lock-explorer.git ~/.config/omarchy/plugins/io.github.sirjul1337.lock-explorer
+
+# Obsidian: Vimrc Support plugin (then turn it on in Settings → Community plugins)
+gh release download -R esm7/obsidian-vimrc-support -p main.js -p manifest.json -D ~/Documents/brain/mluespace/.obsidian/plugins/obsidian-vimrc-support --clobber
 
 # tmux: plugin manager (then press prefix + I inside tmux)
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
@@ -91,6 +96,7 @@ cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-sessionizer   # drops private project folders
 cp ~/Documents/cornix/mycurrent-cornix-symbols.vil keyboard/cornix/
 cp ~/.ideavimrc ideavim/ideavimrc
+V=~/Documents/brain/mluespace; cp $V/.obsidian.vimrc obsidian/ && cp $V/.obsidian/{app,appearance,hotkeys}.json obsidian/ && cp $V/.obsidian/snippets/vim-mode.css obsidian/snippets/ && cp $V/.obsidian/plugins/obsidian-vimrc-support/data.json obsidian/plugins/obsidian-vimrc-support/
 python3 ideavim/ideavim2md.py ~/.ideavimrc > docs/ideavim.md   # IdeaVim key notes
 python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil   # paste over the layer tables in docs/keyboard-cornix.md
 python3 strip-comments.py   # repo copies are kept without comments
