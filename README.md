@@ -58,7 +58,7 @@ git clone https://github.com/SirJul1337/omarchy-lock-explorer.git ~/.config/omar
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 ```
 
-**3. Keyboard**: Vial → File → Load saved layout → `keyboard/cornix/mycurrent-cornix.vil`
+**3. Keyboard**: Vial → File → Load saved layout → `keyboard/cornix/mycurrent-cornix-symbols.vil`
 
 **4. Reload**
 
@@ -89,9 +89,9 @@ cp ~/.config/ghostty/config ghostty/
 cp ~/.config/kitty/kitty.conf kitty/
 cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-sessionizer   # drops private project folders
-cp ~/Documents/cornix/mycurrent-cornix.vil keyboard/cornix/
+cp ~/Documents/cornix/mycurrent-cornix-symbols.vil keyboard/cornix/
 cp ~/.ideavimrc ideavim/ideavimrc
 python3 ideavim/ideavim2md.py ~/.ideavimrc > docs/ideavim.md   # IdeaVim key notes
-python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix.vil   # paste over the layer tables in docs/keyboard-cornix.md
+python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil   # paste over the layer tables in docs/keyboard-cornix.md
 python3 strip-comments.py   # repo copies are kept without comments
 ```
