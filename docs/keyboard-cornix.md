@@ -25,6 +25,9 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 | L4 + outer left thumb | Caps Lock |
 | L4 + right inner thumb (Macro 0) | English ⇄ Khmer |
 | L2 + M | Window laptop ⇄ external monitor |
+| L3 + Esc | Hyprland layout dwindle ⇄ scrolling (Super+Alt+L) |
+| L3 + G / H | Window wider / narrower (Super+- / Super+=) |
+| L3 + B / N | Window taller / shorter (Super+Shift+= / Super+Shift+-) |
 | Combo A+B / S+B | Previous / next tmux window or Neovide tab |
 | Combo J+K | Esc |
 ### Layer 0
