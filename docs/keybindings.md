@@ -21,6 +21,7 @@
 | `Super + right-drag` | Resize with the mouse |
 | `Super + Alt + L` | Toggle dwindle ⇄ scrolling layout (per workspace) **[L3 + Esc]** |
 | `Super + S` | Scratchpad |
+| `Super + Ctrl + /` | Cornix cheat sheet, `q` to close **[L2 + /]** |
 
 **Workspaces & monitors**
 

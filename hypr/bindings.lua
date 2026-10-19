@@ -19,3 +19,9 @@ o.bind("SUPER + SHIFT + O", "Obsidian", {
 })
 
 o.bind("SUPER + N", "Neovide", { launch = "neovide" })
+
+o.window("cornix.cheatsheet", { float = true, center = true, size = { 1600, 900 } })
+o.bind("SUPER + CTRL + SLASH", "Cornix cheat sheet", {
+	launch = "xdg-terminal-exec --app-id=cornix.cheatsheet --title=Cornix -e glow --pager --width 200 ~/Projects/dotfiles/docs/keyboard-cornix.md",
+	focus = "cornix.cheatsheet",
+})
