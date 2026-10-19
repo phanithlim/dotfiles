@@ -15,7 +15,11 @@
 | `Super + W` | Close **[L4 + W]** |
 | `Super + T` | Float / tile **[L4]** |
 | `Super + F` | Full screen **[L4]** |
-| `Super + - / =` | Resize (add `Shift` for height) **[L3]** |
+| `Super + - / =` | Wider / narrower **[L3 + G / H]** |
+| `Super + Shift + = / -` | Taller / shorter **[L3 + B / N]** |
+| `Super + Alt` or `Ctrl` + `- / =` | Resize in small (25px) / large (300px) steps |
+| `Super + right-drag` | Resize with the mouse |
+| `Super + Alt + L` | Toggle dwindle ⇄ scrolling layout (per workspace) **[L3 + Esc]** |
 | `Super + S` | Scratchpad |
 
 **Workspaces & monitors**
