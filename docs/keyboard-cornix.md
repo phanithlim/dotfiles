@@ -25,6 +25,7 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 | L4 + outer left thumb | Caps Lock |
 | L4 + right inner thumb (Macro 0) | English ⇄ Khmer |
 | L2 + M | Window laptop ⇄ external monitor |
+| L2 + / | Open this cheat sheet in a floating window (Ctrl+Super+/, q to close) |
 | L3 + Esc | Hyprland layout dwindle ⇄ scrolling (Super+Alt+L) |
 | L3 + G / H | Window wider / narrower (Super+- / Super+=) |
 | L3 + B / N | Window taller / shorter (Super+Shift+= / Super+Shift+-) |
@@ -53,7 +54,7 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Super+Tab | Super+1 | Super+2 | Super+3 | Super+4 | Super+5 | | Super+6 | Super+7 | Super+8 | Super+9 | Super+0 | Print |
 | User 00 | · | · | · | · | · | | Super+H | Super+J | Super+K | Super+L | · | Super+Enter |
-| ▽ | · | · | · | · | · | | · | Super+M | · | · | · | · |
+| ▽ | · | · | · | · | · | | · | Super+M | · | · | · | Ctrl+Super+/ |
 | · | · | · | · | · | · | | · | · | · | · | · | · |
 
 ### Layer 3

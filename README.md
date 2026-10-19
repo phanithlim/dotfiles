@@ -99,5 +99,6 @@ cp ~/.ideavimrc ideavim/ideavimrc
 V=~/Documents/brain/mluespace; cp $V/.obsidian.vimrc obsidian/ && cp $V/.obsidian/{app,appearance,hotkeys}.json obsidian/ && cp $V/.obsidian/snippets/vim-mode.css obsidian/snippets/ && cp $V/.obsidian/plugins/obsidian-vimrc-support/data.json obsidian/plugins/obsidian-vimrc-support/
 python3 ideavim/ideavim2md.py ~/.ideavimrc > docs/ideavim.md   # IdeaVim key notes
 python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil   # paste over the layer tables in docs/keyboard-cornix.md
+python3 -B keyboard/cornix/cheatsheet.py keyboard/cornix/mycurrent-cornix-symbols.vil > docs/cornix-cheatsheet.md   # Super+Ctrl+/ cheat sheet
 python3 strip-comments.py   # repo copies are kept without comments
 ```
