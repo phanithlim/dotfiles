@@ -108,6 +108,18 @@ Leader = `Space`. LazyVim defaults also apply.
 
 **Dashboard** (start screen): `f` find file · `g` find text · `n` new file · `c` config · `r` recent · `s` restore session · `l` Lazy · `q` quit.
 
+**Surround** (mini.surround). The cursor can be anywhere inside the surrounding.
+
+| Keys | Action |
+|---|---|
+| `gsa` + motion + char | Add: `gsaiw"` → `"word"`, `gsaiw(` → `( word )`, `gsaiwt` → tag, `gsaiwf` → function call |
+| `gsa` + char (visual) | Add around the selection |
+| `gsd` + char | Delete: `gsd"`, `gsd)`, `gsdt` (tag) |
+| `gsr` + old + new | Replace: `gsr"'` → `'word'`, `gsr)]` → `[word]` |
+| `gsf` / `gsF` | Jump to next / previous surrounding |
+| `gsh` | Highlight surrounding |
+| `gsn` | Change how many lines to search |
+
 ## Explorer
 
 `<leader>e` opens it. Hidden files are shown by default. `?` lists every key.
