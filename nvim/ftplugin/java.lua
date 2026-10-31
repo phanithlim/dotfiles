@@ -13,8 +13,13 @@ local function active_profile()
   return vim.g.java_maven_profile or DEFAULT_PROFILE
 end
 
+local function java_home()
+  return vim.uv.fs_realpath(vim.env.JAVA_HOME or (sdkman_base .. "current"))
+end
+
 local function sdkman_current_version()
-  return vim.trim(vim.fn.system("readlink " .. sdkman_base .. "current | xargs basename 2>/dev/null"))
+  local home = java_home()
+  return home and vim.fn.fnamemodify(home, ":t") or ""
 end
 
 local function sdkman_installed_versions()
@@ -70,6 +75,12 @@ local function start_jdtls()
             enabled = true,
             activeProfiles = { active_profile() },
           },
+          gradle = {
+            enabled = true,
+            wrapper = { enabled = true },
+            arguments = "--init-script " .. vim.fn.stdpath("config") .. "/jdtls/kotlin-classes.gradle",
+            java = { home = java_home() },
+          },
         },
         configuration = {
           runtimes = build_runtimes(),
@@ -123,9 +134,25 @@ require("dap").listeners.on_config["java_dotenv"] = function(config)
   return config
 end
 
-vim.api.nvim_create_user_command("JdtProfile", function(args)
-  local profiles = vim.tbl_keys(profile_java)
+local function maven_profiles()
+  local root = vim.fs.root(0, { "mvnw", "pom.xml" })
+  local pom = root and vim.fs.joinpath(root, "pom.xml")
+  local profiles = {}
+  if pom and vim.uv.fs_stat(pom) then
+    local text = table.concat(vim.fn.readfile(pom), "\n")
+    for block in text:gmatch("<profile>(.-)</profile>") do
+      table.insert(profiles, block:match("<id>%s*(.-)%s*</id>"))
+    end
+  end
+  if #profiles == 0 then
+    profiles = vim.tbl_keys(profile_java)
+  end
   table.sort(profiles)
+  return profiles
+end
+
+vim.api.nvim_create_user_command("JdtProfile", function(args)
+  local profiles = maven_profiles()
 
   local function switch(selected)
     vim.g.java_maven_profile = selected
@@ -145,7 +172,7 @@ vim.api.nvim_create_user_command("JdtProfile", function(args)
   end)
 end, {
   nargs = "?",
-  complete = function() return vim.tbl_keys(profile_java) end,
+  complete = function() return maven_profiles() end,
   desc = "Switch Maven profile",
 })
 
@@ -154,13 +181,9 @@ vim.api.nvim_create_user_command("JdtJava", function(args)
   local cur = sdkman_current_version()
 
   local function switch(ver)
-    local cmd = string.format(
-      "bash -c 'export SDKMAN_DIR=%s && source %s/bin/sdkman-init.sh && sdk use java %s'",
-      vim.fn.expand("~/.sdkman"),
-      vim.fn.expand("~/.sdkman"),
-      ver
-    )
-    vim.fn.system(cmd)
+    local home = sdkman_base .. ver
+    vim.env.JAVA_HOME = home
+    vim.env.PATH = home .. "/bin:" .. vim.env.PATH
     vim.notify("Java → " .. ver .. "\nRestarting...", vim.log.levels.INFO)
     vim.cmd("JdtWipeDataAndRestart")
   end

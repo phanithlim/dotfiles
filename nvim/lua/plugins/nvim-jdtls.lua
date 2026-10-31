@@ -60,7 +60,8 @@ return {
             gradle = {
               enabled = true,
               wrapper = { enabled = true },
-              java = { home = jdk("21") },
+              arguments = "--init-script " .. vim.fn.stdpath("config") .. "/jdtls/kotlin-classes.gradle",
+              java = { home = vim.uv.fs_realpath(vim.env.JAVA_HOME or "") or jdk("21") },
               annotationProcessing = { enabled = false },
             },
           },

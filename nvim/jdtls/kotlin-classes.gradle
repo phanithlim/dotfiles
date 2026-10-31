@@ -1,0 +1,15 @@
+// Gradle init script used only by jdtls (java.import.gradle.arguments).
+// jdtls cannot compile Kotlin, so a Kotlin project in the workspace (e.g. a Kotlin includeBuild)
+// exposes no types and Java imports of it fail to resolve. Add the Kotlin
+// compiler output as an exported class folder so dependent Java projects see the compiled classes.
+// The classes come from a normal Gradle build (./gradlew build / bootRun).
+allprojects {
+    pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+        apply plugin: "eclipse"
+        eclipse.classpath.file.whenMerged { classpath ->
+            def lib = new org.gradle.plugins.ide.eclipse.model.Library(fileReference(file("build/classes/kotlin/main")))
+            lib.exported = true
+            classpath.entries.add(lib)
+        }
+    }
+}
