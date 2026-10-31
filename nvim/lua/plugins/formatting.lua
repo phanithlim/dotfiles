@@ -17,6 +17,7 @@ return {
       markdown = { "prettier" },
       graphql = { "prettier" },
       xml = { "xmllint" },
+      java = { "google-java-format" },
     },
     formatters = {
       xmllint = {

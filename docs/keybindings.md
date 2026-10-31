@@ -65,6 +65,7 @@ Prefix `Ctrl-b` **[hold right Space + B]**
 |---|---|
 | `Ctrl + H/J/K/L` | Move between panes and Neovim splits |
 | `prefix c` | New window |
+| `prefix ,` | Rename window (empty prompt) |
 | `prefix Tab` | Last window |
 | `prefix Ctrl-p` / `Ctrl-n` | Previous / next window **[combo A+B / S+B]** |
 | `prefix \|` / `_` | Split side / down |
@@ -89,14 +90,24 @@ Leader = `Space`. LazyVim defaults also apply.
 | `<leader>h1…h4` | Harpoon: put file in slot |
 | `<leader>hh` | Harpoon: picker |
 | `Ctrl + e` | Harpoon: menu |
-| `Ctrl + /` | Floating terminal |
+| `Ctrl + /` | Terminal panel: show / hide (reopens the last tab) |
 | `Ctrl + s` | Save without format |
 | `Tab` / `Shift + Tab` | Next / previous buffer |
 | `<leader>-` | Oil file browser |
 | `<leader>o` | Code outline |
 | `<leader>sj` | Jump list |
+| `<leader>jr` | Java: run project (`bootRun` / `spring-boot:run`, loads `.env` + `.secrets/<profile>/.env`) |
+| `<leader>jf` | Java: run current file |
+| `<leader>jb` / `<leader>jc` | Java: build / clean |
+| `<leader>jt` / `<leader>jT` | Java: test all / test current class |
+| `<leader>jp` | Spring profile (from `application-*` files, or `Custom…` like `dev,local`) |
+| `<leader>jm` | Maven profile (from `pom.xml`) |
+| `<leader>jv` / `<leader>js` | Java version / status |
 | `<leader>jM` | Spring Modulith verify: runs the `ApplicationModules` tests with Maven or Gradle |
-| `<leader>jp` | Switch Maven profile |
+| `gr` / `gI` | References / implementations |
+| `gai` / `gao` | Calls: who calls this / what it calls in the project (`gaO` = all, incl. JDK and Lombok) |
+| `<leader>ghb` / `<leader>ghB` | Git blame: line popup / whole file |
+| `<leader>gb` / `<leader>gf` | Git history: line / file |
 | `<leader>m` / `<leader>mm` | Maven / Maven panel |
 | `<leader>sv` / `<leader>sh` | Split right / below |
 | `<leader>sq` / `<leader>se` | Close split / equalize splits |
@@ -105,6 +116,8 @@ Leader = `Space`. LazyVim defaults also apply.
 | `<leader>tt` / `<leader>tr` | Tests: run file / run nearest (pytest, JUnit) |
 | `<leader>tl` / `<leader>td` | Tests: rerun last / debug nearest |
 | `<leader>ts` / `<leader>to` | Tests: summary panel / output of the test |
+
+**Terminal panel** (inside the terminal): `Alt + t` new tab · `Alt + h` / `l` previous / next tab · `Alt + 1…9` go to tab · `Alt + x` close tab · click a tab to switch. `<leader>j` tasks open in their own tab with `running` / `done` / `exit N`.
 
 **Dashboard** (start screen): `f` find file · `g` find text · `n` new file · `c` config · `r` recent · `s` restore session · `l` Lazy · `q` quit.
 
@@ -123,6 +136,8 @@ Leader = `Space`. LazyVim defaults also apply.
 ## Explorer
 
 `<leader>e` opens it. Hidden files are shown by default. `?` lists every key.
+
+Java sources: package chains are compacted (`kh.gov.app`), Spring Modulith modules get `󰏗` (+ `displayName`), internal packages `󰉐`, files show `C` `I` `E` `R` `@` and no `.java`.
 
 | Key | Action |
 |---|---|

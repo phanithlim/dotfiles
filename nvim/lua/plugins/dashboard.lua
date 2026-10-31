@@ -108,22 +108,6 @@ return {
           menu_sections(),
           { text = { { "“" .. quote[1] .. "”", hl = "Comment" } }, align = "center" },
           { text = { { "— " .. quote[2], hl = "Comment" } }, align = "center" },
-          { pane = 2, icon = "\u{f017} ", title = "Recent Files", section = "recent_files", cwd = true, limit = 6, indent = 2, padding = 1 },
-          { pane = 2, icon = "\u{f07b} ", title = "Projects", section = "projects", limit = 5, indent = 2, padding = 1 },
-          function()
-            return {
-              pane = 2,
-              icon = "\u{e702} ",
-              title = "Git Status",
-              section = "terminal",
-              enabled = Snacks.git.get_root() ~= nil,
-              cmd = "git status --short --branch --renames",
-              height = 6,
-              indent = 3,
-              padding = 1,
-              ttl = 5 * 60,
-            }
-          end,
         },
       },
     },
