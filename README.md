@@ -22,6 +22,7 @@
 | `tmux/` | `~/.config/tmux/` |
 | `tuios/` | `~/.config/tuios/` |
 | `herdr/` | `~/.config/herdr/` |
+| `lazydocker/` | `~/.config/lazydocker/` |
 | `ghostty/`, `kitty/` | `~/.config/ghostty/`, `~/.config/kitty/` |
 | `starship*.toml` | `~/.config/` |
 | `bin/` | `~/.local/bin/` |
@@ -33,6 +34,10 @@
 
 **1. Copy configs**
 
+`./restore.sh` previews what would change. `./restore.sh --apply` backs up the files it replaces, copies everything below, reloads and checks Hyprland.
+
+Or by hand:
+
 ```bash
 cd ~/Projects/dotfiles
 cp hypr/* ~/.config/hypr/
@@ -42,10 +47,11 @@ cp neovide/config.toml ~/.config/neovide/
 cp -r tmux/tmux.conf tmux/scripts ~/.config/tmux/
 mkdir -p ~/.config/tuios && cp -r tuios/* ~/.config/tuios/
 mkdir -p ~/.config/herdr && cp herdr/config.toml ~/.config/herdr/
+mkdir -p ~/.config/lazydocker && cp lazydocker/config.yml ~/.config/lazydocker/
 cp ghostty/config ~/.config/ghostty/
 cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
-install -m 755 bin/tmux-sessionizer ~/.local/bin/
+install -m 755 bin/tmux-sessionizer bin/herdr-sessionizer ~/.local/bin/
 cp ideavim/ideavimrc ~/.ideavimrc
 V=~/Documents/brain/mluespace; cp obsidian/.obsidian.vimrc $V/ && cp -r obsidian/{*.json,snippets,plugins} $V/.obsidian/
 ```
@@ -87,17 +93,19 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 cd ~/Projects/dotfiles
 cp ~/.config/hypr/{hyprland,bindings,input,looknfeel,monitors,autostart,split-monitor-workspaces}.lua ~/.config/hypr/{hyprsunset,xdph}.conf hypr/
 cp ~/.config/omarchy/shell.{json,toml} omarchy/
-cp -r ~/.config/omarchy/plugins/mlue.workspaces omarchy/plugins/
+cp -r ~/.config/omarchy/plugins/mlue.workspaces ~/.config/omarchy/plugins/mlue.keyboard-layout omarchy/plugins/
 cp ~/.config/omarchy/hooks/theme-set.d/tmux-colors omarchy/hooks/theme-set.d/
 rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/nvim/ nvim/
 cp ~/.config/neovide/config.toml neovide/
 cp -r ~/.config/tmux/tmux.conf ~/.config/tmux/scripts tmux/
 cp -r ~/.config/tuios/config.toml ~/.config/tuios/glyphs ~/.config/tuios/scripts tuios/
 cp ~/.config/herdr/config.toml herdr/
+cp ~/.config/lazydocker/config.yml lazydocker/
 cp ~/.config/ghostty/config ghostty/
 cp ~/.config/kitty/kitty.conf kitty/
 cp ~/.config/starship.toml ~/.config/starship-nvim.toml .
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-sessionizer   # drops private project folders
+sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/herdr-sessionizer > bin/herdr-sessionizer   # drops private project folders
 cp ~/Documents/cornix/mycurrent-cornix-symbols.vil keyboard/cornix/
 cp ~/.ideavimrc ideavim/ideavimrc
 V=~/Documents/brain/mluespace; cp $V/.obsidian.vimrc obsidian/ && cp $V/.obsidian/{app,appearance,hotkeys}.json obsidian/ && cp $V/.obsidian/snippets/vim-mode.css obsidian/snippets/ && cp $V/.obsidian/plugins/obsidian-vimrc-support/data.json obsidian/plugins/obsidian-vimrc-support/

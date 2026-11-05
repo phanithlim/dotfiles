@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Pick a project and open it as a herdr space. If a space with that name
+# already exists, jump to it instead of making a second one.
+#
+#   herdr-sessionizer          Choose a project with fzf
+#   herdr-sessionizer <path>   Open that folder
+
+if [[ $# -eq 1 ]]; then
+  selected=$1
+else
+  selected=$(
+    (
+      find ~/Documents/tsc \
+        ~/Documents/ai ~/Documents/projects -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+      find ~/.config/nvim ~/.config/tmux -mindepth 0 -maxdepth 0 -type d 2>/dev/null
+    ) | fzf --reverse --header 'Open project'
+  )
+fi
+
+[[ -z $selected ]] && exit 0
+
+name=$(basename "$selected" | tr . _)
+
+existing=$(herdr workspace list |
+  jq -r --arg name "$name" '.result.workspaces[] | select(.label == $name) | .workspace_id' |
+  head -1)
+
+if [[ -n $existing ]]; then
+  herdr workspace focus "$existing" >/dev/null
+else
+  herdr workspace create --cwd "$selected" --label "$name" --focus >/dev/null
+fi

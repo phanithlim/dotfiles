@@ -142,6 +142,12 @@ local function toggle_window_monitor()
   hl.dispatch(hl.dsp.window.move({ workspace = tostring(target.active_workspace.id), follow = true }))
 end
 
-o.bind("SUPER + M", "Move window to other monitor (laptop ⇄ external)", toggle_window_monitor)
+o.rebind("SUPER + M", "Move window to other monitor (laptop ⇄ external)", toggle_window_monitor)
 
 o.bind("SUPER + CTRL + G", "Grab rogue windows", smw.grab_rogue_windows())
+
+local grab_rogue_windows = smw.grab_rogue_windows()
+
+hl.on("monitor.removed", function()
+  hl.timer(grab_rogue_windows, { type = "oneshot", timeout = 1500 })
+end)

@@ -96,7 +96,7 @@ for root, dirs, files in os.walk("."):
     for name in files:
         path = os.path.join(root, name)
         kind = style(path)
-        if not kind or os.path.islink(path) or name == "strip-comments.py":
+        if not kind or os.path.islink(path) or name in ("strip-comments.py", "restore.sh"):
             continue
         text = open(path, encoding="utf-8").read()
         lines = text.split("\n")
