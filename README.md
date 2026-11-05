@@ -32,6 +32,12 @@
 
 ## Setup
 
+**Notes first:** they live in a private repo, so clone it before copying the Obsidian configs:
+
+```bash
+gh repo clone phanithlim/docs ~/Documents/brain/mluespace
+```
+
 **1. Copy configs**
 
 `./restore.sh` previews what would change. `./restore.sh --apply` backs up the files it replaces, copies everything below, reloads and checks Hyprland.
@@ -72,8 +78,10 @@ gh release download -R ryotaushio/obsidian-pdf-plus -p main.js -p manifest.json 
 gh release download -R YishenTu/claudian -p main.js -p manifest.json -p styles.css -D $P/realclaudian --clobber
 gh release download -R johansan/notebook-navigator -p main.js -p manifest.json -p styles.css -D $P/notebook-navigator --clobber
 gh release download -R Vinzent03/obsidian-git -p main.js -p manifest.json -p styles.css -D $P/obsidian-git --clobber
-# Obsidian: Inter font and git access for the vault (notes live in phanithlim/docs)
+# Obsidian: fonts (Inter for text, DepartureMono for code)
 omarchy pkg add inter-font
+gh release download -R ryanoasis/nerd-fonts -p DepartureMono.zip -D /tmp --clobber && unzip -o /tmp/DepartureMono.zip -d ~/.local/share/fonts && fc-cache -f
+# Obsidian: git access for the vault (Obsidian Git commits and pushes every 10 minutes)
 git -C ~/Documents/brain/mluespace config credential.helper '!gh auth git-credential'
 
 # tmux: plugin manager (then press prefix + I inside tmux)
@@ -89,6 +97,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 | Hyprland | `hyprctl reload` |
 | Bar | `omarchy restart shell` |
 | Terminals | `omarchy restart terminal` |
+| Obsidian | `Ctrl+P`, then Reload app without saving |
 | tmux | `prefix r` |
 | tuios | automatic on save |
 | Neovim | restart |
