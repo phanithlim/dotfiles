@@ -9,6 +9,7 @@
 | [Keybindings](docs/keybindings.md) | Hyprland, tmux, Neovim, Neovide, IntelliJ |
 | [Keyboard](docs/keyboard-cornix.md) | Cornix LP layers, knobs, combos |
 | [IdeaVim](docs/ideavim.md) | IdeaVim keys and IntelliJ settings |
+| [Troubleshooting](docs/troubleshooting.md) | Slow Neovim in herdr, Hyprland reload fallback |
 
 ## What's here
 
@@ -20,6 +21,7 @@
 | `neovide/` | `~/.config/neovide/` |
 | `tmux/` | `~/.config/tmux/` |
 | `tuios/` | `~/.config/tuios/` |
+| `herdr/` | `~/.config/herdr/` |
 | `ghostty/`, `kitty/` | `~/.config/ghostty/`, `~/.config/kitty/` |
 | `starship*.toml` | `~/.config/` |
 | `bin/` | `~/.local/bin/` |
@@ -39,6 +41,7 @@ rsync -a nvim/ ~/.config/nvim/
 cp neovide/config.toml ~/.config/neovide/
 cp -r tmux/tmux.conf tmux/scripts ~/.config/tmux/
 mkdir -p ~/.config/tuios && cp -r tuios/* ~/.config/tuios/
+mkdir -p ~/.config/herdr && cp herdr/config.toml ~/.config/herdr/
 cp ghostty/config ~/.config/ghostty/
 cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
@@ -90,6 +93,7 @@ rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/
 cp ~/.config/neovide/config.toml neovide/
 cp -r ~/.config/tmux/tmux.conf ~/.config/tmux/scripts tmux/
 cp -r ~/.config/tuios/config.toml ~/.config/tuios/glyphs ~/.config/tuios/scripts tuios/
+cp ~/.config/herdr/config.toml herdr/
 cp ~/.config/ghostty/config ghostty/
 cp ~/.config/kitty/kitty.conf kitty/
 cp ~/.config/starship.toml ~/.config/starship-nvim.toml .

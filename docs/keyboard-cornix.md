@@ -29,7 +29,12 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 | L3 + Esc | Hyprland layout dwindle ⇄ scrolling (Super+Alt+L) |
 | L3 + G / H | Window wider / narrower (Super+- / Super+=) |
 | L3 + B / N | Window taller / shorter (Super+Shift+= / Super+Shift+-) |
-| Combo A+B / S+B | Previous / next tmux window or Neovide tab |
+| Right inner thumb (Ctrl) + Alt + H/J/K/L | Resize herdr pane (Ctrl+Alt+H/J/K/L) |
+| Ctrl+B, then U / I | Previous / next herdr space |
+| Ctrl+B, then A | Next herdr agent |
+| Ctrl+B, then D / V | Split herdr pane down / side |
+| Ctrl+B, then R | Herdr resize mode |
+| Combo A+B / S+B | Previous / next tmux window, herdr tab or Neovide tab |
 | Combo J+K | Esc |
 ### Layer 0
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |

@@ -54,6 +54,11 @@ if __name__ == "__main__":
         enc = d["encoder_layout"][i][0]
         if [name(x) for x in enc] != ["Vol-", "Vol+"]:
             out.append(f"- In **{n}**, left knob: {label(enc[0])} / {label(enc[1])}")
+    out += ["", "## herdr", "", "Prefix = right inner thumb (Ctrl) + B, release, then tap the key.", "",
+            "- Prefix U / I: previous / next space · Prefix A: next agent",
+            "- Prefix D / V: split down / side · Prefix R: resize mode",
+            "- Combos A + B / S + B: previous / next tab",
+            "- Ctrl + Alt + H / J / K / L: resize pane"]
     out += ["", "## Combos", "", "J + K → Esc · A + B / S + B → previous / next tmux window",
             "", "`1×` = applies to the next key only · BT = Bluetooth device"]
     print("\n".join(out))
