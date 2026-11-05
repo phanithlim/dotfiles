@@ -1,8 +1,10 @@
 {
-  "cssTheme": "",
-  "accentColor": "#333d42",
-  "showViewHeader": false,
+  "textFontFamily": "Inter Variable",
+  "interfaceFontFamily": "Inter Variable",
+  "monospaceFontFamily": "DepartureMono Nerd Font Mono",
   "enabledCssSnippets": [
-    "vim-mode"
-  ]
+    "github-style"
+  ],
+  "cssTheme": "",
+  "theme": "obsidian"
 }

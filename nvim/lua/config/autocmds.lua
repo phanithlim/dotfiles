@@ -8,3 +8,5 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[args.buf].softtabstop = width
   end,
 })
+
+require("config.notes")

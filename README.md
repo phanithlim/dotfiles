@@ -28,7 +28,7 @@
 | `bin/` | `~/.local/bin/` |
 | `ideavim/ideavimrc` | `~/.ideavimrc` (IntelliJ) |
 | `keyboard/cornix/*.vil` | Vial |
-| `obsidian/` | vault: `.obsidian.vimrc` in the vault root, the rest in `.obsidian/` |
+| `obsidian/` | vault: `.obsidian.vimrc` and `.marksman.toml` in the vault root, the rest in `.obsidian/` |
 
 ## Setup
 
@@ -53,7 +53,7 @@ cp kitty/kitty.conf ~/.config/kitty/
 cp starship*.toml ~/.config/
 install -m 755 bin/tmux-sessionizer bin/herdr-sessionizer ~/.local/bin/
 cp ideavim/ideavimrc ~/.ideavimrc
-V=~/Documents/brain/mluespace; cp obsidian/.obsidian.vimrc $V/ && cp -r obsidian/{*.json,snippets,plugins} $V/.obsidian/
+V=~/Documents/brain/mluespace; cp obsidian/.obsidian.vimrc obsidian/.marksman.toml $V/ && cp -r obsidian/{*.json,snippets,plugins} $V/.obsidian/
 ```
 
 **2. Install plugins**
@@ -65,8 +65,16 @@ git clone -b release/0.56.x https://github.com/zjeffer/split-monitor-workspaces 
 # Bar: lock screen
 git clone https://github.com/SirJul1337/omarchy-lock-explorer.git ~/.config/omarchy/plugins/io.github.sirjul1337.lock-explorer
 
-# Obsidian: Vimrc Support plugin (then turn it on in Settings → Community plugins)
-gh release download -R esm7/obsidian-vimrc-support -p main.js -p manifest.json -D ~/Documents/brain/mluespace/.obsidian/plugins/obsidian-vimrc-support --clobber
+# Obsidian: plugins (then turn them on in Settings -> Community plugins)
+P=~/Documents/brain/mluespace/.obsidian/plugins
+gh release download -R zsviczian/obsidian-excalidraw-plugin -p main.js -p manifest.json -p styles.css -D $P/obsidian-excalidraw-plugin --clobber
+gh release download -R ryotaushio/obsidian-pdf-plus -p main.js -p manifest.json -p styles.css -D $P/pdf-plus --clobber
+gh release download -R YishenTu/claudian -p main.js -p manifest.json -p styles.css -D $P/realclaudian --clobber
+gh release download -R johansan/notebook-navigator -p main.js -p manifest.json -p styles.css -D $P/notebook-navigator --clobber
+gh release download -R Vinzent03/obsidian-git -p main.js -p manifest.json -p styles.css -D $P/obsidian-git --clobber
+# Obsidian: Inter font and git access for the vault (notes live in phanithlim/docs)
+omarchy pkg add inter-font
+git -C ~/Documents/brain/mluespace config credential.helper '!gh auth git-credential'
 
 # tmux: plugin manager (then press prefix + I inside tmux)
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
@@ -108,7 +116,7 @@ sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/tmux-sessionizer > bin/tmux-se
 sed -E 's| ~/Documents/tsc/[^ ]+||g' ~/.local/bin/herdr-sessionizer > bin/herdr-sessionizer   # drops private project folders
 cp ~/Documents/cornix/mycurrent-cornix-symbols.vil keyboard/cornix/
 cp ~/.ideavimrc ideavim/ideavimrc
-V=~/Documents/brain/mluespace; cp $V/.obsidian.vimrc obsidian/ && cp $V/.obsidian/{app,appearance,hotkeys}.json obsidian/ && cp $V/.obsidian/snippets/vim-mode.css obsidian/snippets/ && cp $V/.obsidian/plugins/obsidian-vimrc-support/data.json obsidian/plugins/obsidian-vimrc-support/
+V=~/Documents/brain/mluespace; cp $V/.obsidian.vimrc $V/.marksman.toml obsidian/ && cp $V/.obsidian/{app,appearance,hotkeys,community-plugins,templates,daily-notes}.json obsidian/ && cp $V/.obsidian/snippets/*.css obsidian/snippets/ && for p in notebook-navigator obsidian-git obsidian-excalidraw-plugin; do cp $V/.obsidian/plugins/$p/data.json obsidian/plugins/$p/; done
 python3 ideavim/ideavim2md.py ~/.ideavimrc > docs/ideavim.md   # IdeaVim key notes
 python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil   # paste over the layer tables in docs/keyboard-cornix.md
 python3 -B keyboard/cornix/cheatsheet.py keyboard/cornix/mycurrent-cornix-symbols.vil > docs/cornix-cheatsheet.md   # Super+Ctrl+/ cheat sheet

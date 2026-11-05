@@ -11,6 +11,7 @@ enabled = false
 pane_history = false
 
 [ui]
+pane_scrollbars = false
 tab_bar_right = [{ type = "zoom" }, { type = "datetime", format = "%a %H:%M" }]
 tab_bar_right_separator = "  "
 sidebar_collapsed_mode = "hidden"
@@ -24,6 +25,7 @@ auto_switch = false
 
 [theme.custom]
 panel_bg = "reset"
+overlay0 = "#565f89"
 
 [keys]
 resize_pane_left = "ctrl+alt+h"

@@ -1,10 +1,9 @@
 {
   "promptDelete": false,
-  "attachmentFolderPath": "assets",
-  "vimMode": true,
-  "strictLineBreaks": true,
-  "livePreview": false,
-  "showInlineTitle": false,
+  "attachmentFolderPath": "Assets",
+  "vimMode": false,
   "alwaysUpdateLinks": true,
-  "defaultViewMode": "source"
+  "showInlineTitle": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "Inbox"
 }

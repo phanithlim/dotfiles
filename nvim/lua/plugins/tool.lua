@@ -130,7 +130,7 @@ return {
   {
     "3rd/image.nvim",
     build = false,
-    ft = { "markdown", "norg", "typst" },
+    ft = { "norg", "typst" },
     opts = {
       processor = "magick_cli",
     },
