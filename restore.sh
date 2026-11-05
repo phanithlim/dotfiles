@@ -46,9 +46,13 @@ copy ideavim/ideavimrc     "$HOME/.ideavimrc"
 # Obsidian: only if the vault is on this computer.
 if [ -d "$VAULT" ]; then
   copy obsidian/.obsidian.vimrc "$VAULT/"
+  copy obsidian/.marksman.toml  "$VAULT/"
   copy obsidian/app.json        "$VAULT/.obsidian/"
   copy obsidian/appearance.json "$VAULT/.obsidian/"
   copy obsidian/hotkeys.json    "$VAULT/.obsidian/"
+  copy obsidian/community-plugins.json "$VAULT/.obsidian/"
+  copy obsidian/templates.json  "$VAULT/.obsidian/"
+  copy obsidian/daily-notes.json "$VAULT/.obsidian/"
   copy obsidian/snippets/       "$VAULT/.obsidian/snippets/"
   copy obsidian/plugins/        "$VAULT/.obsidian/plugins/"
 fi
