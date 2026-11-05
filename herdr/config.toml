@@ -1,0 +1,41 @@
+onboarding = false
+
+[update]
+version_check = false
+manifest_check = false
+
+[ui.sound]
+enabled = false
+
+[experimental]
+pane_history = false
+
+[ui]
+tab_bar_right = [{ type = "zoom" }, { type = "datetime", format = "%a %H:%M" }]
+tab_bar_right_separator = "  "
+sidebar_collapsed_mode = "hidden"
+agent_panel_sort = "priority"
+show_agent_labels_on_pane_borders = false
+
+status_indicators = "symbols"
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[theme.custom]
+panel_bg = "#1e1e2e"
+
+[keys]
+resize_pane_left = "ctrl+alt+h"
+resize_pane_down = "ctrl+alt+j"
+resize_pane_up = "ctrl+alt+k"
+resize_pane_right = "ctrl+alt+l"
+previous_tab = "prefix+ctrl+p"
+next_tab = "prefix+ctrl+n"
+previous_workspace = "prefix+u"
+next_workspace = "prefix+i"
+next_agent = "prefix+a"
+split_horizontal = "prefix+d"
+
+[ui.toast]
+delivery = "herdr"

@@ -1,19 +1,48 @@
 {
   "bar": {
-    "centerAnchor": "omarchy.clock",
+    "background": "none",
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
-        },
-        {
-          "id": "omarchy.clock",
           "format": "ddd d MMM h:mm AP",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
           "verticalFormat": "h\n—\nmm\nAP"
-        },
+        }
+      ],
+      "centerBegin": [
+        {
+          "id": "omarchy.indicators"
+        }
+      ],
+      "centerEnd": [
         {
           "id": "omarchy.keyboard-layout"
+        },
+        {
+          "cities": [
+            {
+              "name": "Phnom Penh",
+              "zone": "Asia/Phnom_Penh"
+            },
+            {
+              "name": "Los Angeles",
+              "zone": "America/Los_Angeles"
+            },
+            {
+              "name": "New York",
+              "zone": "America/New_York"
+            },
+            {
+              "name": "London",
+              "zone": "Europe/London"
+            },
+            {
+              "name": "Dubai",
+              "zone": "Asia/Dubai"
+            }
+          ],
+          "id": "omarchy.elsewhen"
         },
         {
           "id": "omarchy.weather"
@@ -53,28 +82,29 @@
           "id": "omarchy.power",
           "showPercentage": true
         }
-      ]
+      ],
+      "tray": []
     },
-    "position": "top",
-    "transparent": true
+    "position": "top"
   },
+  "cloneSourceRestores": [
+    "io.github.sirjul1337.lock-explorer"
+  ],
+  "disabledPlugins": [
+    "omarchy.lock"
+  ],
   "idle": {
     "lock": 300,
     "screensaver": 150
   },
   "plugins": [
     {
-      "id": "io.github.sirjul1337.lock-explorer",
-      "design": "editorial",
       "avatar": "/home/mlue/Downloads/ChatGPT Image Sep 2, 2026, 04_17_58 PM.png",
-      "boot": "terminal"
+      "boot": "terminal",
+      "design": "editorial",
+      "id": "io.github.sirjul1337.lock-explorer",
+      "keepDisplayOn": true
     }
   ],
-  "version": 1,
-  "disabledPlugins": [
-    "omarchy.lock"
-  ],
-  "cloneSourceRestores": [
-    "io.github.sirjul1337.lock-explorer"
-  ]
+  "version": 1
 }

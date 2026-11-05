@@ -52,6 +52,15 @@ Add **Shift** to Focus ←↓↑→ to swap windows.
 - In **NAV**, left knob: Prev WS / Next WS
 - In **APP**, left knob: Prev / Next
 
+## herdr
+
+Prefix = right inner thumb (Ctrl) + B, release, then tap the key.
+
+- Prefix U / I: previous / next space · Prefix A: next agent
+- Prefix D / V: split down / side · Prefix R: resize mode
+- Combos A + B / S + B: previous / next tab
+- Ctrl + Alt + H / J / K / L: resize pane
+
 ## Combos
 
 J + K → Esc · A + B / S + B → previous / next tmux window
