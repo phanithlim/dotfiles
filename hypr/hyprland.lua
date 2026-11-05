@@ -20,4 +20,7 @@ o.window({ class = "^(org-kse-KSE)$", title = "KeyStore Explorer" }, { maximize 
 o.window({ class = "^(org-kse-KSE)$", title = ".+" }, { float = true, center = true })
 o.window({ class = "^(org-kse-KSE)$", title = "^$" }, { float = true })
 
+o.window({ class = "^steam$", title = "^Steam$" }, { float = false })
+o.window({ class = "^steam$", title = "^Steam Big Picture Mode$" }, { fullscreen = true, suppress_event = "maximize unfullscreen" })
+
 o.window(".*", { opacity = "1 1" })

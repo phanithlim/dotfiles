@@ -19,11 +19,11 @@ show_agent_labels_on_pane_borders = false
 
 status_indicators = "symbols"
 [theme]
-name = "catppuccin"
+name = "terminal"
 auto_switch = false
 
 [theme.custom]
-panel_bg = "#1e1e2e"
+panel_bg = "reset"
 
 [keys]
 resize_pane_left = "ctrl+alt+h"
@@ -39,3 +39,24 @@ split_horizontal = "prefix+d"
 
 [ui.toast]
 delivery = "herdr"
+
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "/home/mlue/.local/bin/herdr-sessionizer"
+width = "60%"
+height = "60%"
+
+[[keys.command]]
+key = "prefix+p"
+type = "popup"
+command = "bash"
+width = "70%"
+height = "60%"
+
+[[keys.command]]
+key = "prefix+m"
+type = "popup"
+command = "/usr/bin/lazydocker"
+width = "90%"
+height = "90%"

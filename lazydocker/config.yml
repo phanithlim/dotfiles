@@ -1,0 +1,13 @@
+gui:
+  border: rounded
+  expandFocusedSidePanel: true
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - default
+    selectedLineBgColor:
+      - underline
+    optionsTextColor:
+      - blue

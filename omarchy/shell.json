@@ -4,7 +4,7 @@
     "layout": {
       "center": [
         {
-          "format": "ddd d MMM h:mm AP",
+          "format": "dddd HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "id": "omarchy.clock",
           "verticalFormat": "h\n—\nmm\nAP"
@@ -17,32 +17,7 @@
       ],
       "centerEnd": [
         {
-          "id": "omarchy.keyboard-layout"
-        },
-        {
-          "cities": [
-            {
-              "name": "Phnom Penh",
-              "zone": "Asia/Phnom_Penh"
-            },
-            {
-              "name": "Los Angeles",
-              "zone": "America/Los_Angeles"
-            },
-            {
-              "name": "New York",
-              "zone": "America/New_York"
-            },
-            {
-              "name": "London",
-              "zone": "Europe/London"
-            },
-            {
-              "name": "Dubai",
-              "zone": "Asia/Dubai"
-            }
-          ],
-          "id": "omarchy.elsewhen"
+          "id": "mlue.keyboard-layout"
         },
         {
           "id": "omarchy.weather"
@@ -93,6 +68,9 @@
   "disabledPlugins": [
     "omarchy.lock"
   ],
+  "dock": {
+    "position": "left"
+  },
   "idle": {
     "lock": 300,
     "screensaver": 150

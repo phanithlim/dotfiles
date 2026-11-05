@@ -91,9 +91,12 @@ BarWidget {
 
         bar: root.bar
 
-        text: focused
-          ? "[" + root.workspaceLabel(modelData) + "]"
-          : root.workspaceLabel(modelData)
+        readonly property color pillColor: root.bar ? root.bar.barForeground : Color.foreground
+
+        text: root.workspaceLabel(modelData)
+        foreground: focused
+          ? (pillColor.hslLightness > 0.5 ? "#101315" : "#f5f5f5")
+          : pillColor
 
         opacity: occupied || focused ? 1 : 0.5
         horizontalMargin: 6
@@ -103,6 +106,16 @@ BarWidget {
           : Math.max(Style.space(20), Math.ceil(slotMetrics.width) + Style.space(4))
         fixedHeight: root.barSize
         onPressed: function() { root.focusWorkspace(modelData) }
+
+        Rectangle {
+          z: -1
+          visible: slot.focused
+          anchors.centerIn: parent
+          height: Math.round(Style.font.body * 1.2)
+          width: Math.round(height * 1.65)
+          radius: height / 2
+          color: slot.pillColor
+        }
       }
     }
   }
