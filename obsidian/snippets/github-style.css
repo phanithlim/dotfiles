@@ -162,3 +162,35 @@ body {
 .markdown-source-view.mod-cm6 .code-block-flair {
   display: none;
 }
+
+/* Smaller code on phones, so fewer lines wrap. */
+body.is-mobile .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock,
+body.is-mobile .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock span {
+  font-size: 12px;
+}
+body.is-mobile .markdown-rendered pre code {
+  font-size: 12px;
+}
+
+/* Phones have no hover, so keep the copy buttons visible. */
+body.is-mobile .markdown-source-view.mod-cm6 .code-block-flair {
+  display: inline-block;
+}
+body.is-mobile .markdown-rendered pre .copy-code-button {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* The label sits on the first row, so that row must not clip it. */
+body.is-mobile .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
+  overflow: visible !important;
+}
+
+/* Keep the copy button in the corner while the code scrolls sideways. */
+.markdown-rendered .el-pre {
+  position: relative;
+}
+.markdown-rendered pre {
+  position: static;
+}
