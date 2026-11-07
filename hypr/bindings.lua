@@ -19,6 +19,7 @@ o.bind("SUPER + SHIFT + O", "Obsidian", {
 })
 
 o.bind("SUPER + N", "Neovide", { launch = "neovide" })
+o.rebind("SUPER + SHIFT + N", "Neovide", { launch = "neovide" })
 
 o.window("cornix.cheatsheet", { float = true, center = true, size = { 1600, 900 } })
 o.bind("SUPER + CTRL + SLASH", "Cornix cheat sheet", {

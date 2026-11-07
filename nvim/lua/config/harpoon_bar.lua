@@ -44,7 +44,15 @@ function M.render()
     local current_tab = vim.fn.tabpagenr()
     line = line .. "%="
     for t = 1, tabs do
-      line = line .. ("%%%dT%%#%s# %d %%T"):format(t, t == current_tab and "HarpoonBarActiveNumber" or "HarpoonBarNumber", t)
+      local active = t == current_tab
+      local name = vim.fn.fnamemodify(vim.fn.getcwd(-1, t), ":t"):gsub("%%", "%%%%")
+      line = line .. ("%%%dT%%#%s# %d %%#%s#%s %%T"):format(
+        t,
+        active and "HarpoonBarActiveNumber" or "HarpoonBarNumber",
+        t,
+        active and "HarpoonBarActiveFile" or "HarpoonBarFile",
+        name
+      )
     end
   end
   return line
