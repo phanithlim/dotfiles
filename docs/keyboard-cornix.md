@@ -16,9 +16,9 @@ Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next age
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Esc | Q | W | E | R | T | | Y | U | I | O | P | Bksp |
-| Ctrl | A | S | D | F | G | | H | J | K | L | ; | Enter |
-| Shift | Z | X | C | V | B | | N | M | , | . | ↑ | / |
-| Tab | Super | Alt | **L3** | **L1** | Space/Super | | Space/Alt | **L4** | **L2** | ← | ↓ | → |
+| Alt | A | S | D | F | G | | H | J | K | L | ; | Enter |
+| Shift | Z | X | C | V | B | | N | M | , | . | ↑ | //Shift |
+| Tab | Super | Alt | **L3** | **L1** | Space/Super | | Space/Ctrl | **L4** | **L2** | ← | ↓ | → |
 
 ### Layer 1
 
@@ -77,6 +77,6 @@ Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next age
 
 Switch language (English / Khmer): Super+I (Omarchy's input language switch).
 
-`·` = empty, `▽` = same as layer 0, `1×` = one-shot modifier.
+`A/B` = tap A, hold B. `·` = empty, `▽` = same as layer 0, `1×` = one-shot modifier.
 
-Load in Vial: File → Load saved layout → `keyboard/cornix/mycurrent-cornix-alt.vil` (the previous layout is `mycurrent-cornix-symbols.vil`). Edit these tables by hand after a change.
+Load in Vial: File → Load saved layout → `keyboard/cornix/cornix.vil`, and save to the same name after a change (older layouts are in git history). In Vial, turn on Permissive Hold (QMK Settings → Tap-Hold) so fast Space+key still gives Ctrl. Edit these tables by hand after a change.
