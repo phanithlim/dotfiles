@@ -28,4 +28,4 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm   # the
 echo 'source ~/Projects/dotfiles/bash/kitty-padding.sh' >> ~/.bashrc
 ```
 
-Then load `keyboard/cornix/mycurrent-cornix-alt.vil` in Vial, and fix the lock-screen avatar path in `omarchy/shell.json`.
+Then load `keyboard/cornix/cornix.vil` in Vial, and fix the lock-screen avatar path in `omarchy/shell.json`.

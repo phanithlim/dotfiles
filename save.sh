@@ -45,7 +45,7 @@ for s in tmux-sessionizer herdr-sessionizer; do
 done
 
 # Keyboard layout (saved from Vial).
-cp "$HOME"/Documents/cornix/mycurrent-cornix-alt.vil keyboard/cornix/
+cp "$HOME"/Documents/cornix/cornix.vil keyboard/cornix/
 
 # Obsidian: only if the vault is on this computer.
 if [ -d "$VAULT" ]; then
