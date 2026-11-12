@@ -86,6 +86,6 @@ if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
 fi
 
 echo
-echo "Still to do by hand (see README and docs/troubleshooting.md):"
-echo "  - Add the kitty fix to ~/.bashrc if it is not there yet"
+echo "Still to do by hand (see README):"
+echo "  - Source bash/kitty-padding.sh from ~/.bashrc"
 echo "  - Install plugins, load the keyboard layout, set the lock-screen avatar"
