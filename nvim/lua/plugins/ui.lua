@@ -19,6 +19,9 @@ return {
   {
     "folke/noice.nvim",
     opts = {
+      lsp = {
+        progress = { enabled = false },
+      },
       routes = {
         {
           filter = {
@@ -29,6 +32,10 @@ return {
         },
       },
     },
+  },
+  {
+    "nvim-neotest/neotest",
+    opts = { output = { open_on_run = false } },
   },
   { "nvimdev/dashboard-nvim", enabled = false },
   { "iamcco/markdown-preview.nvim", enabled = false },

@@ -28,6 +28,7 @@ panel_bg = "reset"
 overlay0 = "#565f89"
 
 [keys]
+edit_scrollback = ""
 resize_pane_left = "ctrl+alt+h"
 resize_pane_down = "ctrl+alt+j"
 resize_pane_up = "ctrl+alt+k"

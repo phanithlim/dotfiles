@@ -3,6 +3,7 @@
   "interfaceFontFamily": "Inter Variable",
   "monospaceFontFamily": "DepartureMono Nerd Font Mono",
   "enabledCssSnippets": [
+    "embedded-fonts",
     "github-style"
   ],
   "cssTheme": "",

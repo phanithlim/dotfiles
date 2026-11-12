@@ -110,7 +110,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 cd ~/Projects/dotfiles
 cp ~/.config/hypr/{hyprland,bindings,input,looknfeel,monitors,autostart,split-monitor-workspaces}.lua ~/.config/hypr/{hyprsunset,xdph}.conf hypr/
 cp ~/.config/omarchy/shell.{json,toml} omarchy/
-cp -r ~/.config/omarchy/plugins/mlue.workspaces ~/.config/omarchy/plugins/mlue.keyboard-layout omarchy/plugins/
+cp -r ~/.config/omarchy/plugins/mlue.workspaces ~/.config/omarchy/plugins/mlue.keyboard-layout ~/.config/omarchy/plugins/mlue.menu omarchy/plugins/
 cp ~/.config/omarchy/hooks/theme-set.d/tmux-colors omarchy/hooks/theme-set.d/
 rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' ~/.config/nvim/ nvim/
 cp ~/.config/neovide/config.toml neovide/

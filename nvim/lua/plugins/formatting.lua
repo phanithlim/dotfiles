@@ -20,6 +20,10 @@ return {
       java = { "google-java-format" },
     },
     formatters = {
+      sqlfluff = {
+        args = { "format", "--dialect=postgres", "-" },
+        require_cwd = false,
+      },
       xmllint = {
         command = "xmllint",
         args = { "--format", "--indent-spaces", "2", "-" },
