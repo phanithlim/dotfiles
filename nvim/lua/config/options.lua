@@ -39,6 +39,7 @@ vim.opt.splitkeep = "cursor"
 
 vim.opt.backup = false
 vim.opt.scrolloff = 10
+vim.opt.mousescroll = "ver:2,hor:6"
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.wildignore:append({ "*/node_modules/*", "*/.git/*" })
 

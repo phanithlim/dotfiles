@@ -18,6 +18,18 @@ return {
 			return theme
 		end
 
+		-- Lualine skips floats by checking win_gettype() == "popup", but a floating preview window
+		-- (oil's) reports "preview", so lualine drew a statusline in it. Never set one on a float.
+		local nvim_opts = require("lualine.utils.nvim_opts")
+		local set = nvim_opts.set
+		nvim_opts.set = function(name, val, o)
+			if o and o.window and vim.api.nvim_win_is_valid(o.window)
+				and vim.api.nvim_win_get_config(o.window).relative ~= "" then
+				return
+			end
+			return set(name, val, o)
+		end
+
 		local progress = require("config.lsp_progress")
 		progress.setup()
 		table.insert(opts.sections.lualine_x, 1, {

@@ -43,6 +43,14 @@ return {
       picker = {
         matcher = { frecency = true },
         formatters = { file = { filename_first = true } },
+        -- preview scroll on Alt+D / Alt+U, like oil and the docs popups
+        win = {
+          input = { keys = {
+            ["<a-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["<a-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+          } },
+          list = { keys = { ["<a-d>"] = "preview_scroll_down", ["<a-u>"] = "preview_scroll_up" } },
+        },
         sources = {
           files = file_source(),
           git_files = file_source(),
