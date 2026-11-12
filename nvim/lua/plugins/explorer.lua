@@ -1,5 +1,11 @@
-local packages, java_kinds, app_roots = {}, {}, {}
+-- IntelliJ-like Java view in the explorer:
+--   * a module is a folder with @ApplicationModule, or (Modulith's default) a direct sub-package
+--     of the @SpringBootApplication / @Modulithic package
+--   * folders inside a module are internal (lock) unless marked @NamedInterface (open lock)
+--   * .java files show their icon from config/java_icons.lua and no extension
+local packages, app_roots = {}, {}
 
+-- is <dir> the package of the @SpringBootApplication / @Modulithic class?
 local function is_app_root(dir)
   if app_roots[dir] == nil then
     app_roots[dir] = false
@@ -14,6 +20,7 @@ local function is_app_root(dir)
   return app_roots[dir]
 end
 
+-- "module" / "named" / false, plus the displayName, from <dir>/package-info.java
 local function package_info(dir)
   if packages[dir] == nil then
     packages[dir] = false
@@ -45,36 +52,9 @@ local function inside_module(dir)
   return false
 end
 
-local type_icons = {
-  class = { "C", "SnacksPickerJavaClass" },
-  interface = { "I", "SnacksPickerJavaInterface" },
-  enum = { "E", "SnacksPickerJavaEnum" },
-  record = { "R", "SnacksPickerJavaRecord" },
-  annotation = { "@", "SnacksPickerJavaAnnotation" },
-}
-
-local function java_kind(file)
-  if java_kinds[file] == nil then
-    java_kinds[file] = false
-    local name = vim.fn.fnamemodify(file, ":t:r")
-    local text = table.concat(vim.fn.readfile(file, "", 200), "\n"):gsub("/%*.-%*/", ""):gsub("//[^\n]*", "")
-    local best
-    for _, kind in ipairs({ "class", "interface", "enum", "record" }) do
-      local pos = text:find("%f[%w]" .. kind .. "%s+" .. name .. "%f[^%w_]")
-      if pos and (not best or pos < best.pos) then
-        best = { pos = pos, kind = (kind == "interface" and text:sub(pos - 1, pos - 1) == "@") and "annotation" or kind }
-      end
-    end
-    java_kinds[file] = best and best.kind or false
-  end
-  return java_kinds[file]
-end
-
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*.java",
-  callback = function(args)
-    local file = vim.fn.fnamemodify(args.file, ":p")
-    java_kinds[file] = nil
+  callback = function()
     packages, app_roots = {}, {}
   end,
 })
@@ -82,39 +62,54 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 local function set_hl()
   local function hl(name, link) vim.api.nvim_set_hl(0, name, { link = link, default = true }) end
   hl("SnacksPickerSpringModule", "String")
-  hl("SnacksPickerSpringInternal", "DiagnosticError")
-  hl("SnacksPickerJavaClass", "Function")
-  hl("SnacksPickerJavaInterface", "String")
-  hl("SnacksPickerJavaEnum", "Keyword")
-  hl("SnacksPickerJavaRecord", "Type")
-  hl("SnacksPickerJavaAnnotation", "Special")
+  hl("SnacksPickerSpringNamed", "Function")
+  -- most folders in a module are internal, so use a quiet color (Comment without the italic)
+  local comment = vim.api.nvim_get_hl(0, { name = "Comment", link = false })
+  vim.api.nvim_set_hl(0, "SnacksPickerSpringInternal", { fg = comment.fg, ctermfg = comment.ctermfg, default = true })
 end
 set_hl()
 vim.api.nvim_create_autocmd("ColorScheme", { callback = set_hl })
 
 local function explorer_format(item, picker)
+  local theme = require("config.icon_themes").get()
   local java = item.file and item.file:find("/src/%w+/java/") ~= nil
-  local icon, name
+  local base = item.file and vim.fn.fnamemodify(item.file, ":t")
+  local icon, name, name_hl
 
   if java and item.dir then
     local info = package_info(item.file)
     if info and info.kind == "module" then
-      icon = { "󰏗", "SnacksPickerSpringModule" }
-      if info.name and info.name:lower() ~= vim.fn.fnamemodify(item.file, ":t"):lower() then
+      icon = { theme.ascii and "M" or "󰚝", "SnacksPickerSpringModule" }
+      if info.name and info.name:lower() ~= base:lower() then
         item.comment = info.name
       end
+    elseif info and info.kind == "named" then
+      icon = { theme.ascii and "+" or "󰉑", "SnacksPickerSpringNamed" } -- md-folder_lock_open
     elseif not info and inside_module(item.file) then
-      icon = { "󰉐", "SnacksPickerSpringInternal" }
+      icon = { theme.ascii and "-" or "󰉐", "SnacksPickerSpringInternal" }
     end
-  elseif java and item.file:match("%.java$") and not item.file:match("%-info%.java$") then
-    local kind = java_kind(item.file)
-    icon = kind and type_icons[kind]
-    name = icon and vim.fn.fnamemodify(item.file, ":t:r")
+  elseif item.file and not item.dir then
+    icon = require("config.java_icons").icon(item.file)
+    if icon and java and base:match("%.java$") and not base:match("%-info%.java$") then
+      name = vim.fn.fnamemodify(base, ":r")
+    end
+  end
+
+  if item.dir and (theme.rich or theme.ascii) then
+    local glyph, hl, is_default = require("mini.icons").get("directory", base)
+    -- snacks shows one icon for every open folder; keep the folder's own one
+    if not icon and item.open and (theme.ascii or not is_default) then
+      icon = { glyph, hl }
+    end
+    if hl == "IconThemeDim" then
+      name_hl = hl
+    end
   end
 
   name = name or item.compact
   local ret = Snacks.picker.format.file(item, picker)
-  if icon or name then
+  if icon or name or name_hl then
+    -- the file icon is the segment right before the file name
     for i, seg in ipairs(ret) do
       if seg.field == "file" and i > 1 then
         if icon then
@@ -123,6 +118,9 @@ local function explorer_format(item, picker)
         if name then
           seg[1] = name
         end
+        if name_hl then
+          seg[2] = name_hl
+        end
         break
       end
     end
@@ -130,6 +128,10 @@ local function explorer_format(item, picker)
   return ret
 end
 
+-- Compact package chains in Java/Kotlin source trees, like IntelliJ's "Compact Middle Packages":
+-- src/main/java/com/example/shop shows as one row "com.example.shop". A package folder whose only
+-- entry is one sub-folder is skipped and its name prefixed to the child. Opening the row opens the
+-- whole chain; closing it collapses the whole chain. Search results keep the plain tree.
 local function single_subdir(path)
   local fs = vim.uv.fs_scandir(path)
   if not fs then
@@ -160,6 +162,7 @@ local function explorer_finder(opts, ctx)
       if via then
         item.parent = via.parent
         item.compact = via.prefix .. "." .. vim.fn.fnamemodify(item.file, ":t")
+        -- the merged row takes the place of the chain's first folder among its siblings
         local head = via.head
         item.last = nil
         setmetatable(item, { __index = function(_, key) return key == "last" and head.last or nil end })
@@ -172,6 +175,7 @@ local function explorer_finder(opts, ctx)
       local prefix = item.compact or vim.fn.fnamemodify(item.file, ":t")
 
       if not item.open then
+        -- collapsed: label the row with the whole chain
         local path, label = item.file .. "/" .. child, prefix .. "." .. child
         while true do
           local next_dir = single_subdir(path)
@@ -184,10 +188,12 @@ local function explorer_finder(opts, ctx)
         return cb(item)
       end
 
+      -- open: hide this folder and keep the chain open down to the real package
       local head = via and via.head or item
       local node = Tree:node(item.file .. "/" .. child)
       if node and not node.open then
         if opened_by_chain[node.path] then
+          -- the user closed the merged row: collapse from the top of the chain
           opened_by_chain[node.path] = nil
           Tree:close(head.file)
         else
@@ -232,6 +238,7 @@ return {
         sources = {
           explorer = {
             hidden = true,
+            diagnostics_open = true,
             format = explorer_format,
             finder = explorer_finder,
             actions = {

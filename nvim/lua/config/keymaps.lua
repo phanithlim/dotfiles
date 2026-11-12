@@ -12,5 +12,6 @@ vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "Equalize splits" })
 vim.keymap.set("n", "<leader>m", "<cmd>Maven<cr>", { desc = "Maven" })
 
 require("config.java_tasks").setup()
+require("config.icon_themes").setup()
 vim.keymap.set({ "n", "t" }, "<C-/>", function() require("config.terminal_panel").toggle() end, { desc = "Terminal panel" })
 vim.keymap.set({ "n", "t" }, "<C-_>", function() require("config.terminal_panel").toggle() end, { desc = "which_key_ignore" })

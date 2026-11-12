@@ -1,3 +1,6 @@
+-- Outgoing calls limited to the project's own code: drops JDK/library methods (jdt://, jars)
+-- and generated methods (Lombok @Builder/@Getter… point at a line holding only annotations;
+-- record accessors point at `@NotNull String name,` and are kept).
 local function project_outgoing_calls()
   local root = vim.fs.root(0, { "gradlew", "mvnw", "settings.gradle.kts", "pom.xml", ".git" }) or vim.fn.getcwd()
   local files = {}
@@ -46,6 +49,7 @@ return {
           },
         },
 
+        -- KLS's bundled Kotlin compiler can't parse Java 25 version strings, so pin it to JDK 21
         kotlin_language_server = {
           cmd_env = {
             JAVA_HOME = vim.fn.glob(vim.fn.expand("~/.sdkman/candidates/java/") .. "21.*", false, true)[1],

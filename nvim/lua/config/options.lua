@@ -63,6 +63,8 @@ vim.filetype.add({
   },
 })
 
+-- The built-in SQL ftplugin maps insert-mode <Left>/<Right> to sqlcomplete
+-- drill functions, which breaks arrow keys (and hjkl-as-arrows layouts).
 vim.g.omni_sql_no_default_maps = 1
 
 vim.g.lazyvim_eslint_auto_format = true

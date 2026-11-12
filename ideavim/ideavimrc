@@ -1,3 +1,9 @@
+" ============================================================================
+"                    IDEAVIM CONFIG — LazyVim-style keymaps
+"          https://www.lazyvim.org/keymaps mapped to IntelliJ actions
+" ============================================================================
+
+"" -- General Settings --
 let mapleader = " "
 set scrolloff=10
 set incsearch
@@ -13,9 +19,11 @@ set relativenumber
 set showmode
 set visualbell
 
+" Which-Key style popup (requires the "Which-Key" IdeaVim extension plugin)
 set which-key
 set notimeout
 
+"" -- Plugins & Extensions --
 set surround
 set argtextobj
 set easymotion
@@ -26,13 +34,20 @@ set commentary
 set exchange
 set matchit
 
+" ----------------------------------------------------------------------------
+" GENERAL (LazyVim: General)
+" ----------------------------------------------------------------------------
+" Clear search highlight with <esc>
 nnoremap <esc> :nohlsearch<CR>
 nnoremap <leader>ur :nohlsearch<CR>
 inoremap jk <Esc>
 
+" Save file with Ctrl-s
 nnoremap <C-s> :action SaveAll<CR>
 inoremap <C-s> <Esc>:action SaveAll<CR>
 
+" Move lines up/down with Alt-j / Alt-k
+" Note: <Action>() only works with map/nmap/vmap, NOT noremap
 nmap <A-j> <Action>(MoveLineDown)
 nmap <A-k> <Action>(MoveLineUp)
 vmap <A-j> <Action>(MoveLineDown)
@@ -41,21 +56,31 @@ vmap <A-k> <Action>(MoveLineUp)
 sethandler <A-j> a:vim
 sethandler <A-k> a:vim
 
+" Better indenting (stay in visual mode)
 vnoremap < <gv
 vnoremap > >gv
 
+" Quit all
 nnoremap <leader>qq :action Exit<CR>
 
+" ----------------------------------------------------------------------------
+" NAVIGATION & WINDOWS
+" ----------------------------------------------------------------------------
+" Move between splits with Ctrl + hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Splits (LazyVim: <leader>| and <leader>-)
 nnoremap <leader>\| :action SplitVertically<CR>
 nnoremap <leader>- :action SplitHorizontally<CR>
 nnoremap <leader>wd :action Unsplit<CR>
 nnoremap <leader>wm :action HideAllWindows<CR>
 
+" ----------------------------------------------------------------------------
+" BUFFERS & TABS (LazyVim: <S-h>/<S-l>, [b, ]b, <leader>b...)
+" ----------------------------------------------------------------------------
 nnoremap [b    :action PreviousTab<CR>
 nnoremap ]b    :action NextTab<CR>
 nmap <Tab>   <Action>(NextTab)
@@ -67,10 +92,17 @@ nnoremap <leader>bd :action CloseContent<CR>
 nnoremap <leader>bo :action CloseAllEditorsButActive<CR>
 nnoremap <leader>bp :action PinActiveEditorTab<CR>
 
+" ----------------------------------------------------------------------------
+" FILES & PICKERS (LazyVim: snacks picker)
+" ----------------------------------------------------------------------------
+" Explorer
+"   <leader>e  -> focus the project sidebar (opens if needed, never closes)
+"   <leader>E  -> toggle the sidebar open/closed  (leader + Shift + e)
 nnoremap <leader>e  :NERDTreeFocus<CR>
 nnoremap <leader>E  :NERDTreeToggle<CR>
 nnoremap <leader>fe :NERDTreeFocus<CR>
 
+" Find files / buffers / recent
 nnoremap <leader><leader> :action GotoFile<CR>
 nnoremap <leader>ff :action GotoFile<CR>
 nnoremap <leader>fF :action SearchEverywhere<CR>
@@ -80,6 +112,9 @@ nnoremap <leader>fn :action NewFile<CR>
 nnoremap <leader>fp :action ManageRecentProjects<CR>
 nnoremap <leader>ft :action ActivateTerminalToolWindow<CR>
 
+" ----------------------------------------------------------------------------
+" SEARCH (LazyVim: <leader>s...)
+" ----------------------------------------------------------------------------
 nnoremap <leader>/  :action FindInPath<CR>
 nnoremap <leader>sg :action FindInPath<CR>
 nnoremap <leader>sr :action ReplaceInPath<CR>
@@ -95,6 +130,10 @@ nnoremap <leader>sd :action ActivateProblemsViewToolWindow<CR>
 nnoremap <leader>st :action ActivateTODOToolWindow<CR>
 nnoremap <leader>sj :action RecentLocations<CR>
 
+" ----------------------------------------------------------------------------
+" HARPOON-STYLE FILES (same keys as Neovim; IntelliJ numbered bookmarks)
+" ----------------------------------------------------------------------------
+" <leader>h1-4 marks this file as 1-4, Alt+1-4 (Cornix L4 + A/S/D/F) jumps to it
 nmap <leader>h1 <Action>(ToggleBookmark1)
 nmap <leader>h2 <Action>(ToggleBookmark2)
 nmap <leader>h3 <Action>(ToggleBookmark3)
@@ -105,11 +144,20 @@ nmap <A-3> <Action>(GotoBookmark3)
 nmap <A-4> <Action>(GotoBookmark4)
 nmap <leader>hh <Action>(ShowBookmarks)
 
+" ----------------------------------------------------------------------------
+" JUMPS: Ctrl-o / Ctrl-i also follow IDE jumps (gd, usages), not only vim jumps
+" ----------------------------------------------------------------------------
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
 
+" ----------------------------------------------------------------------------
+" FLASH / EASYMOTION (LazyVim: flash.nvim `s`)
+" ----------------------------------------------------------------------------
 nmap s <Action>(AceAction)
 
+" ----------------------------------------------------------------------------
+" LSP / CODE (LazyVim: LSP + <leader>c...)
+" ----------------------------------------------------------------------------
 nnoremap gd :action GotoDeclaration<CR>
 nnoremap gD :action GotoTypeDeclaration<CR>
 nnoremap gr :action ShowUsages<CR>
@@ -132,6 +180,7 @@ nnoremap <leader>cd :action ShowErrorDescription<CR>
 nnoremap <leader>cs :action ActivateStructureToolWindow<CR>
 nnoremap <leader>cg :action Generate<CR>
 
+" Refactoring (LazyVim: refactoring.nvim <leader>r...)
 nnoremap <leader>rf :action ExtractMethod<CR>
 vmap <leader>rf <Action>(ExtractMethod)
 nnoremap <leader>rx :action IntroduceVariable<CR>
@@ -139,12 +188,18 @@ vmap <leader>rx <Action>(IntroduceVariable)
 nnoremap <leader>ri :action Inline<CR>
 nnoremap <leader>rs :action Refactorings.QuickListPopupAction<CR>
 
+" ----------------------------------------------------------------------------
+" DIAGNOSTICS (LazyVim: ]d, [d, ]e, [e, <leader>x...)
+" ----------------------------------------------------------------------------
 nnoremap ]d :action GotoNextError<CR>
 nnoremap [d :action GotoPreviousError<CR>
 nnoremap ]e :action GotoNextError<CR>
 nnoremap [e :action GotoPreviousError<CR>
 nnoremap <leader>xx :action ActivateProblemsViewToolWindow<CR>
 
+" ----------------------------------------------------------------------------
+" GIT (LazyVim: <leader>g...)
+" ----------------------------------------------------------------------------
 nnoremap <leader>gg :action ActivateCommitToolWindow<CR>
 nnoremap <leader>gs :action ActivateVersionControlToolWindow<CR>
 nnoremap <leader>gl :action Vcs.Show.Log<CR>
@@ -156,6 +211,9 @@ nnoremap [h :action VcsShowPrevChangeMarker<CR>
 nnoremap <leader>ghr :action Vcs.RollbackChangedLines<CR>
 nnoremap <leader>ghp :action VcsShowCurrentChangeMarker<CR>
 
+" ----------------------------------------------------------------------------
+" DEBUG (LazyVim: nvim-dap <leader>d...)
+" ----------------------------------------------------------------------------
 nnoremap <leader>db :action ToggleLineBreakpoint<CR>
 nnoremap <leader>dB :action AddConditionalBreakpoint<CR>
 nnoremap <leader>dc :action Resume<CR>
@@ -169,12 +227,18 @@ nnoremap <leader>du :action ActivateDebugToolWindow<CR>
 nnoremap <leader>de :action EvaluateExpression<CR>
 vmap <leader>de <Action>(EvaluateExpression)
 
+" ----------------------------------------------------------------------------
+" TEST (LazyVim: neotest <leader>t...)
+" ----------------------------------------------------------------------------
 nnoremap <leader>tr :action ContextRun<CR>
 nnoremap <leader>tt :action RunClass<CR>
 nnoremap <leader>tl :action Rerun<CR>
 nnoremap <leader>td :action ContextDebug<CR>
 nnoremap <leader>ts :action ActivateRunToolWindow<CR>
 
+" ----------------------------------------------------------------------------
+" UI TOGGLES (LazyVim: <leader>u...)
+" ----------------------------------------------------------------------------
 nnoremap <leader>uw :action EditorToggleUseSoftWraps<CR>
 nnoremap <leader>ul :action EditorToggleShowLineNumbers<CR>
 nnoremap <leader>uL :set relativenumber!<CR>
@@ -182,17 +246,31 @@ nnoremap <leader>uz :action ToggleDistractionFreeMode<CR>
 nnoremap <leader>uZ :action ToggleZenMode<CR>
 nnoremap <leader>uf :action ToggleFullScreen<CR>
 
+" ----------------------------------------------------------------------------
+" TABS (LazyVim: <leader><tab>...)
+" ----------------------------------------------------------------------------
 nnoremap <leader><tab>] :action NextTab<CR>
 nnoremap <leader><tab>[ :action PreviousTab<CR>
 nnoremap <leader><tab>d :action CloseContent<CR>
 nnoremap <leader><tab>o :action CloseAllEditorsButActive<CR>
 
+" ----------------------------------------------------------------------------
+" TERMINAL (LazyVim: <c-/>)
+" ----------------------------------------------------------------------------
 nnoremap <C-/> :action ActivateTerminalToolWindow<CR>
 nnoremap <C-_> :action ActivateTerminalToolWindow<CR>
 
+" ----------------------------------------------------------------------------
+" TOOLS (your existing Maven maps, kept)
+" ----------------------------------------------------------------------------
 nnoremap <leader>mg :action ActivateMavenToolWindow<CR>
 nnoremap <leader>mc :action HideActiveWindow<CR>
 
+" ----------------------------------------------------------------------------
+" IDE HANDLING
+" ----------------------------------------------------------------------------
+" Let the IDE handle common conflicting shortcuts sensibly; run
+" :actionlist <pattern> inside the IDE to discover more action IDs.
 sethandler <C-s> a:vim
 sethandler <C-h> a:vim
 sethandler <C-j> a:vim

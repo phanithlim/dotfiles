@@ -52,8 +52,11 @@ local function shorten(text, max)
   return #text > max and (text:sub(1, max - 1) .. "…") or text
 end
 
+-- label, dir and whether the terminal is a plain shell (vs. a task command)
 local function info(buf)
+  -- terminal buffers are named term://<cwd>//<pid>:<cmd>
   local cwd, cmd = vim.api.nvim_buf_get_name(buf):match("^term://(.-)//%d+:(.*)$")
+  -- the buffer name drops the args of list commands; snacks keeps the full one
   local snacks = vim.b[buf].snacks_terminal
   if snacks and snacks.cmd then
     cmd = type(snacks.cmd) == "table" and table.concat(snacks.cmd, " ") or snacks.cmd
@@ -67,6 +70,7 @@ local function info(buf)
   return label, dir, is_shell
 end
 
+-- compact tab name: program + non-flag args, paths shortened ("gradlew run", "java Main.java")
 local function tab_name(buf)
   local words = {}
   for word in info(buf):gmatch("%S+") do
@@ -77,6 +81,7 @@ local function tab_name(buf)
   return table.concat(words, " ")
 end
 
+-- snacks terminals in creation order; each one is a tab of the panel
 local function tabs()
   local list = Snacks.terminal.list()
   table.sort(list, function(a, b) return a.buf < b.buf end)
@@ -93,6 +98,7 @@ local function status(buf)
   return "%#TermPanelErr# exit " .. code .. " "
 end
 
+-- winbar: [ 󰆍 TERMINAL ] [1 bash] [2 gradlew run]          <exit status>
 function M.title()
   local win = vim.g.statusline_winid or vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_win_get_buf(win)
@@ -109,7 +115,8 @@ function M.title()
       table.insert(parts, ("%%%d@v:lua.TermPanelClick@%s %d %s %%X"):format(t.buf, hl, i, escape(shorten(tab_name(t.buf), 24))))
     end
   end
-  vim.list_extend(parts, { "%=", is_shell and "" or status(buf) })
+  local hint = vim.b[buf].term_hint and ("%#TermPanelDim#" .. vim.b[buf].term_hint .. "  ") or ""
+  vim.list_extend(parts, { "%=", is_shell and "" or (hint .. status(buf)) })
   return table.concat(parts)
 end
 
@@ -126,6 +133,7 @@ local function show(t)
   t:show():focus()
 end
 
+-- open a terminal as a new tab instead of stacking another split
 function M.open(cmd, opts)
   hide_visible()
   local id = 0
@@ -161,6 +169,7 @@ function M.close()
   local cur = vim.api.nvim_get_current_buf()
   for i, t in ipairs(list) do
     if t.buf == cur then
+      -- killing the job on purpose exits with -1; drop snacks' "exited with code" warning
       for _, au in ipairs(vim.api.nvim_get_autocmds({ event = "TermClose", buffer = t.buf })) do
         vim.api.nvim_del_autocmd(au.id)
       end
@@ -176,6 +185,7 @@ end
 
 local last_buf
 
+-- <C-/>: focus the panel, hide it when already focused, or reopen the last tab
 function M.toggle()
   local visible = vim.tbl_filter(function(t) return t:win_valid() end, tabs())
   if #visible > 0 then
@@ -188,14 +198,15 @@ function M.toggle()
     end
     return
   end
-  local list = tabs()
-  for _, t in ipairs(list) do
+  -- reopen a shell; task tabs (build, test, ...) are reached with <A-1..9>
+  local shells = vim.tbl_filter(function(t) return select(3, info(t.buf)) end, tabs())
+  for _, t in ipairs(shells) do
     if t.buf == last_buf then
       return show(t)
     end
   end
-  if #list > 0 then
-    return show(list[#list])
+  if #shells > 0 then
+    return show(shells[#shells])
   end
   M.new()
 end
@@ -212,12 +223,15 @@ local function tab_keys(buf)
   local function map(lhs, fn, desc)
     vim.keymap.set({ "n", "t" }, lhs, fn, { buffer = buf, desc = desc })
   end
-  map("<A-t>", M.new, "Terminal: new tab")
-  map("<A-x>", M.close, "Terminal: close tab")
-  map("<A-l>", function() M.cycle(1) end, "Terminal: next tab")
-  map("<A-h>", function() M.cycle(-1) end, "Terminal: previous tab")
-  for n = 1, 9 do
-    map("<A-" .. n .. ">", function() M.go(n) end, "Terminal: tab " .. n)
+  -- Alt keys, or Ctrl+Space then the letter (Alt is hard to reach on some keyboards)
+  for _, prefix in ipairs({ "<A-%s>", "<C-Space>%s" }) do
+    map(prefix:format("t"), M.new, "Terminal: new tab")
+    map(prefix:format("x"), M.close, "Terminal: close tab")
+    map(prefix:format("l"), function() M.cycle(1) end, "Terminal: next tab")
+    map(prefix:format("h"), function() M.cycle(-1) end, "Terminal: previous tab")
+    for n = 1, 9 do
+      map(prefix:format(n), function() M.go(n) end, "Terminal: tab " .. n)
+    end
   end
 end
 

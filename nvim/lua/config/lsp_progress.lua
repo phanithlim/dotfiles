@@ -1,3 +1,5 @@
+-- One short LSP progress item for the status line, such as "⠋ jdtls 67%".
+-- It replaces Noice's progress list, which covers the code with one line per task.
 local M = {}
 
 local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -61,6 +63,7 @@ function M.status()
     return ""
   end
   local frame = spinner[math.floor(vim.uv.hrtime() / 1e8) % #spinner + 1]
+  -- "%%" because a lone "%" is special in a status line and breaks the whole bar.
   local percent = task.percentage and (" " .. task.percentage .. "%%") or ""
   return frame .. " " .. task.name .. percent
 end

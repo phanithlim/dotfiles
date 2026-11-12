@@ -1,3 +1,7 @@
+-- 12-hour times in the git log pickers (<leader>gl, gf, gb). Git's "human" date is 24-hour:
+--   "Fri 16:33"        -> "Fri 4:33PM"      (this week)
+--   "Mon Oct 26 22:59" -> "Oct 26 10:59PM"  (older; weekday dropped to fit the 16-char column)
+-- Dates without a time ("Sep 30 2025", "2 hours ago") are left as they are.
 local function twelve_hour(item)
   if not item.date then
     return

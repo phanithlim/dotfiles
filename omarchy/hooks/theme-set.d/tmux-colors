@@ -1,2 +1,3 @@
 #!/bin/bash
+# Recolour the tmux bar from the new Omarchy theme.
 ~/.config/tmux/scripts/omarchy-colors.sh

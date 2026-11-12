@@ -1,3 +1,15 @@
+-- Independent, per-monitor workspaces (awesome/dwm style).
+-- https://github.com/zjeffer/split-monitor-workspaces
+--
+-- Each monitor gets its own 1..10. Under the hood the first monitor owns
+-- workspace IDs 1-10, the second 11-20, and so on.
+--
+-- Update after every Hyprland release:
+--   cd ~/.config/hypr/plugins/split-monitor-workspaces
+--   git fetch -Ppft && git checkout release/<hyprland minor>.x && git pull
+
+-- Omarchy's bootstrap puts ~/.config/?.lua on the path; the library is a
+-- directory module, so it also needs ~/.config/?/init.lua.
 package.path = package.path .. ";" .. (os.getenv("HOME") or "") .. "/.config/?/init.lua"
 
 local smw = require("hypr.plugins.split-monitor-workspaces")
@@ -9,6 +21,9 @@ smw.setup({
   enable_persistent_workspaces = false,
 })
 
+-- Move the active window to whatever workspace is showing on another monitor,
+-- without following it. Hyprland's Lua API has no "move window to monitor"
+-- dispatcher, so resolve the monitor's active workspace and move there.
 local function move_window_to_monitor(selector)
   return function()
     local monitor = hl.get_monitor(selector)
@@ -20,6 +35,7 @@ local function move_window_to_monitor(selector)
   end
 end
 
+-- Workspaces: swap Omarchy's global bindings for per-monitor ones.
 for index = 1, 10 do
   local key = "code:" .. tostring(index + 9)
   local workspace = tostring(index)
@@ -37,6 +53,11 @@ for index = 1, 10 do
   )
 end
 
+-- Cycle workspaces on the focused monitor, skipping the empty ones.
+--
+-- smw.cycle_workspaces() walks the monitor's full 1..10 list, so going from 6
+-- to 10 means four presses through three empty workspaces. This stops only on
+-- workspaces that actually hold windows.
 local function cycle_occupied(step)
   return function()
     local monitor = hl.get_active_monitor()
@@ -45,6 +66,7 @@ local function cycle_occupied(step)
       return
     end
 
+    -- This monitor's occupied workspaces, plus wherever we are right now.
     local stops = {}
     for _, workspace in ipairs(hl.get_workspaces()) do
       if
@@ -76,6 +98,7 @@ local function cycle_occupied(step)
       return
     end
 
+    -- Wrap around at both ends.
     index = index + step
     if index < 1 then
       index = #stops
@@ -97,6 +120,12 @@ o.bind("SUPER + SHIFT + TAB", "Previous occupied workspace", cycle_occupied(-1))
 o.bind("SUPER + mouse_down", "Scroll active workspace forward", cycle_occupied(1))
 o.bind("SUPER + mouse_up", "Scroll active workspace backward", cycle_occupied(-1))
 
+-- Logitech M650 side buttons: Forward (mouse:276) / Back (mouse:275).
+--
+-- Apps with real back/forward navigation keep the buttons; everywhere else
+-- they cycle occupied workspaces. The bind is non-consuming, so the focused
+-- app always receives the native button press too; for the apps below we
+-- simply don't switch workspace.
 local side_button_apps = {
   "^zen", "firefox", "chrom", "brave", "vivaldi", -- browsers
   "^jetbrains%-", -- IntelliJ and other JetBrains IDEs
@@ -129,11 +158,16 @@ end
 o.bind("mouse:276", "Next occupied workspace (except browsers/IDE)", side_button(1), { non_consuming = true })
 o.bind("mouse:275", "Previous occupied workspace (except browsers/IDE)", side_button(-1), { non_consuming = true })
 
+-- SUPER + side buttons: take the active window to the next/previous workspace
+-- on this monitor, and follow it.
 o.bind("SUPER + mouse:276", "Move window to next workspace", smw.move_to_workspace("+1"))
 o.bind("SUPER + mouse:275", "Move window to previous workspace", smw.move_to_workspace("-1"))
 
+-- SUPER + middle click: float/tile the window under the cursor. Pairs with
+-- SUPER + left/right drag to move and resize it.
 o.bind("SUPER + mouse:274", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
 
+-- Focus a monitor by position (SUPER + CTRL + 1..5).
 for index = 1, 5 do
   local monitor = index - 1
 
@@ -149,6 +183,7 @@ for index = 1, 5 do
   )
 end
 
+-- Focus / send to the neighbouring monitor.
 hl.unbind("SUPER + CTRL + LEFT")
 hl.unbind("SUPER + CTRL + RIGHT")
 
@@ -157,6 +192,9 @@ o.bind("SUPER + CTRL + RIGHT", "Focus monitor to the right", hl.dsp.focus({ moni
 o.bind("SUPER + CTRL + SHIFT + LEFT", "Send window to left monitor", move_window_to_monitor("l"))
 o.bind("SUPER + CTRL + SHIFT + RIGHT", "Send window to right monitor", move_window_to_monitor("r"))
 
+-- Throw the active window between the laptop panel (eDP-*) and the external
+-- monitor, and follow it: from the laptop it goes to the external monitor,
+-- from anywhere else it comes back to the laptop.
 local function toggle_window_monitor()
   local active = hl.get_active_monitor()
   if not active or not hl.get_active_window() then
@@ -181,8 +219,12 @@ end
 
 o.rebind("SUPER + M", "Move window to other monitor (laptop ⇄ external)", toggle_window_monitor)
 
+-- Collect windows stranded on an unmapped monitor or workspace.
 o.bind("SUPER + CTRL + G", "Grab rogue windows", smw.grab_rogue_windows())
 
+-- After unplugging a monitor, bring any stranded windows onto the laptop.
+-- Wait for the unplug to finish first: moving windows during it can crash
+-- Hyprland, and Omarchy needs a moment to move the workspaces across.
 local grab_rogue_windows = smw.grab_rogue_windows()
 
 hl.on("monitor.removed", function()

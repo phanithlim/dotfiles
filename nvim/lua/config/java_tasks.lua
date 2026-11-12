@@ -1,3 +1,4 @@
+-- <leader>j tasks that work for both Maven and Gradle projects (wrapper preferred)
 local M = {}
 
 local function project()
@@ -15,6 +16,7 @@ local function project()
   end
 
   if has("gradlew") or has("build.gradle") or has("build.gradle.kts") or has("settings.gradle.kts") then
+    -- multi-project builds declare plugins in sub-projects, build-logic or the version catalog
     local files = { root .. "/gradle/libs.versions.toml" }
     for _, pattern in ipairs({ "/*.gradle*", "/*/*.gradle*", "/build-logic/src/main/*/*.gradle*" }) do
       vim.list_extend(files, vim.fn.glob(root .. pattern, false, true))
@@ -44,6 +46,7 @@ local function project()
   }
 end
 
+-- Fully qualified name of the class in the current buffer, e.g. com.example.shop.Main
 local function current_class()
   if vim.bo.filetype ~= "java" then
     return nil
@@ -58,6 +61,8 @@ local function current_class()
   return name
 end
 
+-- re-running a task in the same project replaces its old tab (e.g. stops the old server)
+-- KEY=VALUE pairs from an env file (comments, blank lines and `export ` prefixes allowed)
 local function read_dotenv(file)
   local env = {}
   if not vim.uv.fs_stat(file) then
@@ -75,6 +80,8 @@ local function read_dotenv(file)
   return env
 end
 
+-- <root>/.env, then .secrets/<profile>/.env per active profile (later profiles win, like Spring).
+-- Relative `file:` paths are resolved against the root: bootRun runs in the sub-project directory.
 local function project_env(root, profiles)
   local env = read_dotenv(root .. "/.env")
   for profile in (profiles or ""):gmatch("[^,]+") do
@@ -90,18 +97,45 @@ local function project_env(root, profiles)
 end
 
 local function open_term(cmd, cwd, key, env)
-  key = cwd .. ":" .. (key or table.concat(cmd, " "))
+  local id = cwd .. ":" .. (key or table.concat(cmd, " "))
   for _, t in ipairs(Snacks.terminal.list()) do
-    if vim.b[t.buf].java_task == key then
+    if vim.b[t.buf].java_task == id then
       t:close()
     end
   end
-  local term = require("config.terminal_panel").open(cmd, { cwd = cwd, env = env, interactive = false })
-  if term and term.buf then
-    vim.b[term.buf].java_task = key
+  local panel = require("config.terminal_panel")
+  local term = panel.open(cmd, { cwd = cwd, env = env, interactive = false })
+  if not (term and term.buf) then
+    return
   end
+  local buf = term.buf
+  vim.b[buf].java_task = id
+  vim.b[buf].term_hint = "q close · r again"
+  vim.keymap.set("n", "q", panel.close, { buffer = buf, desc = "Close task" })
+  vim.keymap.set("n", "r", function() open_term(cmd, cwd, key, env) end, { buffer = buf, desc = "Run task again" })
+
+  -- tell when it ends while you look elsewhere
+  local name = vim.fn.fnamemodify(cmd[1], ":t") .. " " .. (key or vim.fn.fnamemodify(cmd[#cmd], ":t"))
+  vim.api.nvim_create_autocmd("TermClose", {
+    buffer = buf,
+    once = true,
+    callback = function()
+      local code = vim.v.event.status
+      vim.schedule(function()
+        if vim.api.nvim_get_current_buf() == buf then
+          return
+        end
+        if code == 0 then
+          Snacks.notify.info("Done: " .. name, { title = "Java" })
+        else
+          Snacks.notify.error(("Failed (exit %d): %s"):format(code, name), { title = "Java" })
+        end
+      end)
+    end,
+  })
 end
 
+-- Spring profiles come from application-<profile>.{properties,yml,yaml}; the choice is per project
 local spring_profile = {}
 
 local function spring_profiles(root)
@@ -120,6 +154,7 @@ local function spring_profiles(root)
   return list
 end
 
+-- Maven args shared by every goal: batch mode + the jdtls profile when the pom defines it
 local function maven_base(p)
   local cmd = { p.bin, "-B" }
   local profile = vim.g.java_maven_profile or "dev"
@@ -209,6 +244,7 @@ local function pick_spring_profile()
   end
   local current = spring_profile[p.root]
   local items = vim.list_extend({ "(default)" }, spring_profiles(p.root))
+  -- a typed combination like "dev,local" stays selectable once used
   if current and not vim.tbl_contains(items, current) then
     table.insert(items, current)
   end
@@ -241,6 +277,7 @@ local function pick_spring_profile()
   end)
 end
 
+-- the Jdt* commands are created by ftplugin/java.lua, i.e. once a Java file was opened
 local function jdt(cmd)
   return function()
     if vim.fn.exists(":" .. cmd) ~= 2 then
@@ -286,6 +323,8 @@ function M.setup()
     { "<leader>jm", maven_profile, desc = "Switch Maven profile", icon = { icon = "", color = "purple" } },
     { "<leader>jv", jdt("JdtJava"), desc = "Switch Java version", icon = { icon = "", color = "red" } },
     { "<leader>js", status, desc = "Java status", icon = { icon = "", color = "azure" } },
+    { "<leader>ja", function() require("config.java_nav").alternate() end, desc = "Class / Test", icon = { icon = "󰙨", color = "yellow" } },
+    { "<leader>je", function() require("config.java_nav").endpoints() end, desc = "Endpoints", icon = { icon = "󰖟", color = "azure" } },
   }
 
   local ok, wk = pcall(require, "which-key")

@@ -1,7 +1,10 @@
+-- Note keys for markdown files. Same keys as .obsidian.vimrc where they overlap.
+
 local function vault_root()
   return vim.fs.root(0, ".obsidian") or vim.fn.expand("%:p:h")
 end
 
+-- Space n b: list notes that link to this one.
 local function backlinks()
   local name = vim.pesc(vim.fn.expand("%:t:r")):gsub("%%", "\\")
   Snacks.picker.grep({
@@ -14,6 +17,7 @@ local function backlinks()
   })
 end
 
+-- Space n n: new note next to the current one.
 local function new_note()
   vim.ui.input({ prompt = "New note: " }, function(name)
     if not name or name == "" then
@@ -29,6 +33,7 @@ local function new_note()
   end)
 end
 
+-- Space n t: tick or untick the checkbox on this line.
 local function toggle_checkbox()
   local line = vim.api.nvim_get_current_line()
   local new, count = line:gsub("^(%s*[-*+] )%[ %]", "%1[x]")

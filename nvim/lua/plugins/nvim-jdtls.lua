@@ -60,6 +60,7 @@ return {
             gradle = {
               enabled = true,
               wrapper = { enabled = true },
+              -- lets Java code resolve classes from Kotlin projects (see jdtls/kotlin-classes.gradle)
               arguments = "--init-script " .. vim.fn.stdpath("config") .. "/jdtls/kotlin-classes.gradle",
               java = { home = vim.uv.fs_realpath(vim.env.JAVA_HOME or "") or jdk("21") },
               annotationProcessing = { enabled = false },

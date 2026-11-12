@@ -1,3 +1,7 @@
+-- Let the status line show the terminal background, like the rest of the
+-- editor. Lualine's auto theme paints its middle sections a solid colour, so
+-- they are cleared on each theme it builds, which it does again on every
+-- colorscheme change. The mode and position sections keep their colours.
 return {
 	"nvim-lualine/lualine.nvim",
 	opts = function(_, opts)

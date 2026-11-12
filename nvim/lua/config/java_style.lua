@@ -1,3 +1,7 @@
+-- Indent width a Java file is written with, guessed from its own lines: 2 spaces (Google Java
+-- Format) or 4 (Eclipse / IntelliJ style). Used for shiftwidth so typing
+-- matches the file until it is formatted. A file without indented code (new or tiny) borrows
+-- the style of the .java files next to it.
 local M = {}
 
 local function count(lines, counts)
@@ -9,6 +13,7 @@ local function count(lines, counts)
   end
 end
 
+---@return 2|4
 function M.indent(buf)
   buf = buf or 0
   local counts = { [2] = 0, [4] = 0 }
@@ -19,6 +24,7 @@ function M.indent(buf)
       count(vim.fn.readfile(file, "", 100), counts)
     end
   end
+  -- Google style files have members at 2 spaces; 4-space files have almost none at 2
   return counts[2] > 0 and counts[2] >= counts[4] / 4 and 2 or 4
 end
 
