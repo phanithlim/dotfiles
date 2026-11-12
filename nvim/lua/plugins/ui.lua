@@ -33,6 +33,7 @@ return {
       },
     },
   },
+  -- The automatic failure popup closes as soon as it opens, so use <leader>to instead.
   {
     "nvim-neotest/neotest",
     opts = { output = { open_on_run = false } },

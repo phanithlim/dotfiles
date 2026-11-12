@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Set the tmux bar palette (@c_*) from the current Omarchy theme.
+# Runs at tmux start and from the Omarchy theme-set hook.
 colors=~/.local/state/omarchy/current/theme/colors.toml
 [[ -f $colors ]] || exit 0
 tmux info >/dev/null 2>&1 || exit 0   # no tmux server: nothing to do

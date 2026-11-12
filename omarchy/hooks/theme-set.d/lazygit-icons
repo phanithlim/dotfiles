@@ -1,0 +1,39 @@
+#!/bin/bash
+# Lazygit file icons (same as Neovim) in the current theme's colors.
+config=~/.config/lazygit/config.yml
+colors=~/.local/state/omarchy/current/theme/colors.toml
+[ -f "$colors" ] || exit 0
+
+color() {
+  for key in "$@"; do
+    value=$(sed -n "s/^$key *= *\"\(#[0-9a-fA-F]*\)\".*/\1/p" "$colors")
+    [ -n "$value" ] && echo "$value" && return
+  done
+}
+orange=$(color orange yellow)
+cyan=$(color cyan blue)
+magenta=$(color magenta blue)
+dim=$(color dark_foreground muted)
+
+sed -i '/^# lazygit-icons:start/,/^# lazygit-icons:end/d' "$config"
+cat >>"$config" <<EOF
+# lazygit-icons:start (written by ~/.config/omarchy/hooks/theme-set.d/lazygit-icons)
+gui:
+  customIcons:
+    filenames:
+      "package-info.java": { icon: "\U000f03d7", color: "$magenta" }
+      "module-info.java": { icon: "\U000f03d7", color: "$magenta" }
+      "build.gradle": { icon: "\ue7f2", color: "$cyan" }
+      "build.gradle.kts": { icon: "\ue7f2", color: "$cyan" }
+      "settings.gradle": { icon: "\ue7f2", color: "$cyan" }
+      "settings.gradle.kts": { icon: "\ue7f2", color: "$cyan" }
+      "gradlew": { icon: "\ue7f2", color: "$dim" }
+      "gradlew.bat": { icon: "\ue7f2", color: "$dim" }
+      "pom.xml": { icon: "\ue82c", color: "$orange" }
+      "mvnw": { icon: "\ue82c", color: "$dim" }
+      "mvnw.cmd": { icon: "\ue82c", color: "$dim" }
+      ".sdkmanrc": { icon: "\U000f06ca", color: "$orange" }
+    extensions:
+      ".java": { icon: "\U000f0b37", color: "$orange" }
+# lazygit-icons:end
+EOF

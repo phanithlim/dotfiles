@@ -20,6 +20,9 @@ return {
       java = { "google-java-format" },
     },
     formatters = {
+      -- LazyVim's sql extra only runs sqlfluff when the project has a .sqlfluff
+      -- (require_cwd). Run it everywhere, defaulting to the postgres dialect;
+      -- a project .sqlfluff still controls the rules.
       sqlfluff = {
         args = { "format", "--dialect=postgres", "-" },
         require_cwd = false,

@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Git branch pill for the tmux bar; prints nothing outside a git repo.
+# Shows the branch plus ●N uncommitted files, ↑N ahead and ↓N behind upstream.
+# usage: git-pill <path> <icon-bg> <icon-fg> <surface> <text> [<warn>]
 status=$(git -C "$1" status --porcelain=v2 --branch 2>/dev/null) || exit 0
 branch=$(sed -n 's/^# branch.head //p' <<<"$status")
 [[ $branch == "(detached)" ]] && branch=$(git -C "$1" rev-parse --short HEAD 2>/dev/null)

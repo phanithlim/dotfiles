@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Open a shell on the first empty workspace (1-9) and switch to it.
 s="${TUIOS_SESSION:?}"
 used=$(tuios list-windows -s "$s" --json | jq -r '.windows[].workspace' | sort -u)
 for i in 1 2 3 4 5 6 7 8 9; do

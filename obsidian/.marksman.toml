@@ -1,2 +1,3 @@
+# Marksman needs this file to link across notes. Links use file names, like Obsidian.
 [completion]
 wiki.style = "file-stem"

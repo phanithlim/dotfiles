@@ -13,6 +13,7 @@ local function active_profile()
   return vim.g.java_maven_profile or DEFAULT_PROFILE
 end
 
+-- JAVA_HOME follows `sdk use` / `sdk env` (.sdkmanrc); the `current` link only follows `sdk default`
 local function java_home()
   return vim.uv.fs_realpath(vim.env.JAVA_HOME or (sdkman_base .. "current"))
 end
@@ -134,6 +135,7 @@ require("dap").listeners.on_config["java_dotenv"] = function(config)
   return config
 end
 
+-- profile ids from the project's pom.xml; falls back to the known profiles
 local function maven_profiles()
   local root = vim.fs.root(0, { "mvnw", "pom.xml" })
   local pom = root and vim.fs.joinpath(root, "pom.xml")
@@ -181,6 +183,7 @@ vim.api.nvim_create_user_command("JdtJava", function(args)
   local cur = sdkman_current_version()
 
   local function switch(ver)
+    -- `sdk use` in a subshell can't change nvim's env, so switch JAVA_HOME/PATH here
     local home = sdkman_base .. ver
     vim.env.JAVA_HOME = home
     vim.env.PATH = home .. "/bin:" .. vim.env.PATH

@@ -25,6 +25,7 @@ return {
     config = function(_, opts)
       local oil = require("oil")
       oil.setup(opts)
+      require("config.java_icons").patch_oil()
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "OilEnter",

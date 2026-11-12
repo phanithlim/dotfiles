@@ -21,7 +21,7 @@ cp "$CONFIG"/hypr/{hyprsunset,xdph}.conf hypr/
 # Omarchy bar, plugins and hooks
 cp "$CONFIG"/omarchy/shell.{json,toml} omarchy/
 cp -r "$CONFIG"/omarchy/plugins/{mlue.workspaces,mlue.keyboard-layout,mlue.menu} omarchy/plugins/
-cp "$CONFIG"/omarchy/hooks/theme-set.d/tmux-colors omarchy/hooks/theme-set.d/
+cp "$CONFIG"/omarchy/hooks/theme-set.d/{tmux-colors,lazygit-icons} omarchy/hooks/theme-set.d/
 
 # Editors and terminals
 rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' "$CONFIG/nvim/" nvim/
@@ -31,6 +31,7 @@ cp -r "$CONFIG"/tmux/tmux.conf "$CONFIG"/tmux/scripts tmux/
 cp -r "$CONFIG"/tuios/{config.toml,glyphs,scripts} tuios/
 cp "$CONFIG"/herdr/config.toml herdr/
 cp "$CONFIG"/lazydocker/config.yml lazydocker/
+cp "$CONFIG"/lazygit/config.yml lazygit/
 cp "$CONFIG"/ghostty/config ghostty/
 cp "$CONFIG"/kitty/kitty.conf kitty/
 cp "$CONFIG"/starship.toml "$CONFIG"/starship-nvim.toml .
@@ -44,7 +45,7 @@ for s in tmux-sessionizer herdr-sessionizer; do
 done
 
 # Keyboard layout (saved from Vial).
-cp "$HOME"/Documents/cornix/mycurrent-cornix-symbols.vil keyboard/cornix/
+cp "$HOME"/Documents/cornix/mycurrent-cornix-alt.vil keyboard/cornix/
 
 # Obsidian: only if the vault is on this computer.
 if [ -d "$VAULT" ]; then

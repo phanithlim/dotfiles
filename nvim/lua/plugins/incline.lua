@@ -25,11 +25,20 @@ local LEFT, RIGHT = "\u{e0b6}", "\u{e0b4}"
 
 local function render(props)
   local p = palette
-  local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+  local path = vim.api.nvim_buf_get_name(props.buf)
+  local name = vim.fn.fnamemodify(path, ":t")
   if name == "" then
     name = "[No Name]"
   end
-  local icon, icon_color = require("nvim-web-devicons").get_icon_color(name)
+  local icon, icon_color
+  -- Java files: the same role / type icon as the explorer (config/java_icons.lua)
+  local java = path ~= "" and require("config.java_icons").icon(path)
+  if java then
+    local fg = vim.api.nvim_get_hl(0, { name = java[2], link = false }).fg
+    icon, icon_color = java[1], fg and string.format("#%06x", fg)
+  else
+    icon, icon_color = require("nvim-web-devicons").get_icon_color(name)
+  end
   local icon_bg = props.focused and (icon_color or p.text) or p.dim
 
   local text = { { " " .. name, gui = props.focused and "bold" or "none" } }
