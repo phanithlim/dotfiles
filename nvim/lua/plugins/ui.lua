@@ -16,8 +16,13 @@ return {
     enabled = false,
   },
 
+  -- Alt+D / Alt+U scroll the side panel (docs, previews) everywhere; <C-b> is the tmux prefix
   {
     "folke/noice.nvim",
+    keys = {
+      { "<a-d>", function() require("noice.lsp").scroll(4) end, mode = { "i", "n", "s" }, desc = "Scroll docs down" },
+      { "<a-u>", function() require("noice.lsp").scroll(-4) end, mode = { "i", "n", "s" }, desc = "Scroll docs up" },
+    },
     opts = {
       lsp = {
         progress = { enabled = false },
@@ -30,6 +35,15 @@ return {
           },
           opts = { skip = true },
         },
+      },
+    },
+  },
+  {
+    "saghen/blink.cmp",
+    opts = {
+      keymap = {
+        ["<A-d>"] = { "scroll_documentation_down", "fallback" },
+        ["<A-u>"] = { "scroll_documentation_up", "fallback" },
       },
     },
   },
