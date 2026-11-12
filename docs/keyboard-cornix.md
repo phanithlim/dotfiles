@@ -18,7 +18,7 @@ Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next age
 | Esc | Q | W | E | R | T | | Y | U | I | O | P | Bksp |
 | Ctrl | A | S | D | F | G | | H | J | K | L | ; | Enter |
 | Shift | Z | X | C | V | B | | N | M | , | . | ↑ | / |
-| Tab | Super | Alt | **L3** | **L1** | Space/Super | | Space/Ctrl | **L4** | **L2** | ← | ↓ | → |
+| Tab | Super | Alt | **L3** | **L1** | Space/Super | | Space/Alt | **L4** | **L2** | ← | ↓ | → |
 
 ### Layer 1
 
@@ -54,7 +54,7 @@ Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next age
 | · | · | Super+W | · | · | · | | · | Super+N | Super+Alt+Enter | · | · | · |
 | · | Alt+1 | Alt+2 | Alt+3 | Alt+4 | Ctrl+Super+L | | Super+Shift+D | Super+Shift+N | Super+Shift+F | Super+Shift+Enter | Super+Alt+Enter | Super+Enter |
 | · | Ctrl+Super+T | · | Ctrl+Super+V | Ctrl+Super+E | · | | Super+Print | Print | Super+Shift+Space | Super+F | Super+T | Super+W |
-| Caps | Super+Alt+Space | · | · | · | · | | Macro 0 | · | · | · | · | · |
+| Caps | Super+Alt+Space | · | · | · | · | | · | · | · | · | · | · |
 
 ### Knobs (turn left / right)
 
@@ -73,7 +73,10 @@ Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next age
 | A + B | Ctrl+B Ctrl+P |
 | S + B | Ctrl+B Ctrl+N |
 | J + K | Esc |
+| D + F | 1×Alt |
+
+Switch language (English / Khmer): Super+I (Omarchy's input language switch).
 
 `·` = empty, `▽` = same as layer 0, `1×` = one-shot modifier.
 
-Load in Vial: File → Load saved layout → `keyboard/cornix/mycurrent-cornix-symbols.vil`. Edit these tables by hand after a change.
+Load in Vial: File → Load saved layout → `keyboard/cornix/mycurrent-cornix-alt.vil` (the previous layout is `mycurrent-cornix-symbols.vil`). Edit these tables by hand after a change.
