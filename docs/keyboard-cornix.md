@@ -1,41 +1,17 @@
-# Cornix LP keyboard
+# Cornix LP
 
-Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-cornix-symbols.vil`
-(the previous layout is still in `keyboard/cornix/mycurrent-cornix.vil`)
-
-## Layers
+Hold a thumb key to switch layer. Layer 2 and 3 are Hyprland, layer 4 is apps.
 
 | Hold | Layer | For |
 |---|---|---|
 | — | 0 | Typing |
-| `L5` thumb | 1 | Numbers, code symbols (no Shift needed), arrows on H/J/K/L |
-| `R3` thumb | 2 | Hyprland: workspaces, focus, swap (+ Shift) |
-| `L4` thumb | 3 | Move window to workspace, one-shot mods, resize |
-| `R2` thumb | 4 | Apps, menus, Harpoon on A/S/D/F, Caps Lock |
+| `L5` thumb | 1 | Numbers, symbols, arrows on H/J/K/L |
+| `R3` thumb | 2 | Workspaces, focus, swap |
+| `L4` thumb | 3 | Send window, one-shot mods, resize |
+| `R2` thumb | 4 | Apps, Harpoon on A/S/D/F |
 
-## Special keys
+Not in the tables: `Ctrl+B` then `U`/`I` previous/next herdr space, `A` next agent, `D`/`V` split, `R` resize.
 
-| Key | Does |
-|---|---|
-| Bottom-left key | Tab |
-| L1 + bottom-left key | Caps Word: capitals until the next space or symbol (`MAX_SIZE`) |
-| L1 + right inner thumb (Macro 3) | Types `->` |
-| L1 + R2 / R3 thumbs | `'` / `\` |
-| L4 + A/S/D/F | Harpoon file 1–4 (Alt+1–4) |
-| L4 + outer left thumb | Caps Lock |
-| L4 + right inner thumb (Macro 0) | English ⇄ Khmer |
-| L2 + M | Window laptop ⇄ external monitor |
-| L2 + / | Open this cheat sheet in a floating window (Ctrl+Super+/, q to close) |
-| L3 + Esc | Hyprland layout dwindle ⇄ scrolling (Super+Alt+L) |
-| L3 + G / H | Window wider / narrower (Super+- / Super+=) |
-| L3 + B / N | Window taller / shorter (Super+Shift+= / Super+Shift+-) |
-| Right inner thumb (Ctrl) + Alt + H/J/K/L | Resize herdr pane (Ctrl+Alt+H/J/K/L) |
-| Ctrl+B, then U / I | Previous / next herdr space |
-| Ctrl+B, then A | Next herdr agent |
-| Ctrl+B, then D / V | Split herdr pane down / side |
-| Ctrl+B, then R | Herdr resize mode |
-| Combo A+B / S+B | Previous / next tmux window, herdr tab or Neovide tab |
-| Combo J+K | Esc |
 ### Layer 0
 | L1 | L2 | L3 | L4 | L5 | L6 | | R1 | R2 | R3 | R4 | R5 | R6 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -100,8 +76,4 @@ Load in Vial: **File → Load saved layout** → `keyboard/cornix/mycurrent-corn
 
 `·` = empty, `▽` = same as layer 0, `1×` = one-shot modifier.
 
-Rebuild these tables after changing the layout:
-
-```bash
-python3 keyboard/cornix/vil2md.py keyboard/cornix/mycurrent-cornix-symbols.vil
-```
+Load in Vial: File → Load saved layout → `keyboard/cornix/mycurrent-cornix-symbols.vil`. Edit these tables by hand after a change.
