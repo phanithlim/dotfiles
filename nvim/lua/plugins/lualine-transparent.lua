@@ -13,5 +13,13 @@ return {
 			end
 			return theme
 		end
+
+		local progress = require("config.lsp_progress")
+		progress.setup()
+		table.insert(opts.sections.lualine_x, 1, {
+			progress.status,
+			cond = progress.active,
+			color = function() return { fg = Snacks.util.color("Special") } end,
+		})
 	end,
 }

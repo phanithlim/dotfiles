@@ -24,7 +24,7 @@ Hold a thumb key to switch layer. Let go to type again.
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Next WS | WS 1 | WS 2 | WS 3 | WS 4 | WS 5 |  | WS 6 | WS 7 | WS 8 | WS 9 | WS 10 | Screenshot |
 | BT 0 |  |  |  |  |  |  | Focus ← | Focus ↓ | Focus ↑ | Focus → |  | Terminal |
-|  |  |  |  |  |  |  |  | Monitor ⇄ |  |  |  | Cheat sheet |
+|  |  |  |  |  |  |  |  | Monitor ⇄ |  |  |  |  |
 
 Add **Shift** to Focus ←↓↑→ to swap windows.
 

@@ -97,6 +97,43 @@ o.bind("SUPER + SHIFT + TAB", "Previous occupied workspace", cycle_occupied(-1))
 o.bind("SUPER + mouse_down", "Scroll active workspace forward", cycle_occupied(1))
 o.bind("SUPER + mouse_up", "Scroll active workspace backward", cycle_occupied(-1))
 
+local side_button_apps = {
+  "^zen", "firefox", "chrom", "brave", "vivaldi", -- browsers
+  "^jetbrains%-", -- IntelliJ and other JetBrains IDEs
+  "nautilus", -- file manager
+}
+
+local function focused_app_uses_side_buttons()
+  local window = hl.get_active_window()
+  local class = ((window and window.class) or ""):lower()
+
+  for _, pattern in ipairs(side_button_apps) do
+    if class:find(pattern) then
+      return true
+    end
+  end
+
+  return false
+end
+
+local function side_button(step)
+  local cycle = cycle_occupied(step)
+
+  return function()
+    if not focused_app_uses_side_buttons() then
+      cycle()
+    end
+  end
+end
+
+o.bind("mouse:276", "Next occupied workspace (except browsers/IDE)", side_button(1), { non_consuming = true })
+o.bind("mouse:275", "Previous occupied workspace (except browsers/IDE)", side_button(-1), { non_consuming = true })
+
+o.bind("SUPER + mouse:276", "Move window to next workspace", smw.move_to_workspace("+1"))
+o.bind("SUPER + mouse:275", "Move window to previous workspace", smw.move_to_workspace("-1"))
+
+o.bind("SUPER + mouse:274", "Toggle window floating/tiling", hl.dsp.window.float({ action = "toggle" }))
+
 for index = 1, 5 do
   local monitor = index - 1
 

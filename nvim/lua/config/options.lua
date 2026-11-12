@@ -12,7 +12,7 @@ vim.opt.title = true
 vim.opt.mouse = "a"
 vim.opt.termguicolors = true
 vim.opt.list = false
-vim.g.snacks_animate = false
+vim.g.snacks_animate = true
 
 vim.opt.cmdheight = 0
 vim.opt.laststatus = 0
@@ -62,6 +62,8 @@ vim.filetype.add({
     [".*%.[jJ]enkinsfile"] = "groovy",
   },
 })
+
+vim.g.omni_sql_no_default_maps = 1
 
 vim.g.lazyvim_eslint_auto_format = true
 vim.g.lazyvim_prettier_needs_config = false

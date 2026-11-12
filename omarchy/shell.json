@@ -4,9 +4,9 @@
     "layout": {
       "center": [
         {
-          "format": "dddd HH:mm",
-          "formatAlt": "d MMMM 'W'ww yyyy",
           "id": "omarchy.clock",
+          "format": "ddd d MMM h:mm AP",
+          "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "h\n—\nmm\nAP"
         }
       ],
@@ -20,15 +20,12 @@
           "id": "mlue.keyboard-layout"
         },
         {
-          "id": "omarchy.weather"
-        },
-        {
           "id": "omarchy.system-update"
         }
       ],
       "left": [
         {
-          "id": "omarchy.menu"
+          "id": "mlue.menu"
         },
         {
           "id": "mlue.workspaces"
@@ -63,10 +60,12 @@
     "position": "top"
   },
   "cloneSourceRestores": [
-    "io.github.sirjul1337.lock-explorer"
+    "io.github.sirjul1337.lock-explorer",
+    "mlue.menu"
   ],
   "disabledPlugins": [
-    "omarchy.lock"
+    "omarchy.lock",
+    "omarchy.menu"
   ],
   "dock": {
     "position": "left"
