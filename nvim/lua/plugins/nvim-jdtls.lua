@@ -1,3 +1,5 @@
+require("config.java_lens").setup()
+
 return {
   "mfussenegger/nvim-jdtls",
   opts = {
@@ -70,6 +72,8 @@ return {
             updateBuildConfiguration = "automatic",
             runtimes = runtimes,
           },
+          referencesCodeLens = { enabled = true },
+          implementationCodeLens = "all",
           inlayHints = {
             parameterNames = { enabled = "all" },
           },

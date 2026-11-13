@@ -38,8 +38,11 @@ vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 
 vim.opt.backup = false
-vim.opt.scrolloff = 10
-vim.opt.mousescroll = "ver:2,hor:6"
+-- 10 lines around the cursor: config/scroll_margin.lua (scrolloff jerks near code lens)
+require("config.scroll_margin").setup()
+-- 1 line per wheel step: snacks.scroll does not animate mouse/touchpad scrolls,
+-- so bigger steps look like jumps. The touchpad then moves text 1:1 with fingers.
+vim.opt.mousescroll = "ver:1,hor:6"
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.wildignore:append({ "*/node_modules/*", "*/.git/*" })
 
@@ -113,4 +116,5 @@ vim.opt.guicursor = "n-v-c-sm:block-blinkwait700-blinkon600-blinkoff600,i-ci-ve:
 require("config.terminal_colors").setup()
 require("config.terminal_panel").setup()
 require("config.kitty_padding").setup()
+require("config.file_badge").setup()
 vim.env.STARSHIP_CONFIG = vim.fn.expand("~/.config/starship-nvim.toml")
