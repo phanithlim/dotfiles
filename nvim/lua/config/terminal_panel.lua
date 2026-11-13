@@ -128,9 +128,43 @@ local function hide_visible()
   end
 end
 
+-- show the newest output; leave a window alone while you select text in it
+local function follow(buf)
+  local cur, mode = vim.api.nvim_get_current_win(), vim.api.nvim_get_mode().mode
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    if not (win == cur and mode:find("^[vV\22]")) then
+      pcall(vim.api.nvim_win_set_cursor, win, { vim.api.nvim_buf_line_count(buf), 0 })
+    end
+  end
+end
+
+-- keep a running terminal at the end of its output, wherever the cursor was moved
+local function auto_follow(buf)
+  local pending = false
+  vim.api.nvim_buf_attach(buf, false, {
+    on_lines = function()
+      if vim.b[buf].term_exit ~= nil then
+        return true -- job ended: stop watching
+      end
+      if not pending then
+        pending = true
+        vim.defer_fn(function()
+          pending = false
+          if vim.api.nvim_buf_is_valid(buf) then
+            follow(buf)
+          end
+        end, 30)
+      end
+    end,
+  })
+end
+
 local function show(t)
   hide_visible()
   t:show():focus()
+  if vim.b[t.buf].term_exit == nil then
+    follow(t.buf) -- still running: back to the newest output
+  end
 end
 
 -- open a terminal as a new tab instead of stacking another split
@@ -268,7 +302,10 @@ function M.setup()
   })
   vim.api.nvim_create_autocmd("TermOpen", {
     group = group,
-    callback = function(args) tab_keys(args.buf) end,
+    callback = function(args)
+      tab_keys(args.buf)
+      auto_follow(args.buf)
+    end,
   })
   vim.api.nvim_create_autocmd({ "TermOpen", "BufWinEnter" }, {
     group = group,

@@ -22,7 +22,8 @@
 hl.config({
 	input = {
 		kb_layout = "us,kh",
-		kb_options = "grp:alt_shift_toggle",
+		-- No layout-switch key (Alt+Shift removed); Khmer kept as a second layout.
+		kb_options = "",
 
 		repeat_rate = 40,
 		repeat_delay = 600,
