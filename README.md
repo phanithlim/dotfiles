@@ -1,6 +1,6 @@
 # Dotfiles
 
-Arch + Omarchy (Hyprland), Neovim, tmux/herdr, kitty, IntelliJ, Cornix LP keyboard.
+My Omarchy + Hyprland setup: Neovim, herdr, kitty, and custom themes.
 
 ![Cornix LP](assets/cornix.webp)
 
