@@ -22,6 +22,7 @@ local function load_palette()
     surface = c.lighter_background or "#313244",
     text = c.foreground or "#cdd6f4",
     dim = c.dark_foreground or "#6c7086",
+    accent = c.accent or "#89b4fa",
     red = c.red or "#f38ba8",
     yellow = c.yellow or "#f9e2af",
   }
@@ -53,16 +54,16 @@ function M.render()
   if name == "" then
     name = "[No Name]"
   end
-  local icon, icon_color
+  local icon
   -- Java files: the same role / type icon as the explorer (config/java_icons.lua)
   local java = path ~= "" and require("config.java_icons").icon(path)
   if java then
-    local fg = vim.api.nvim_get_hl(0, { name = java[2], link = false }).fg
-    icon, icon_color = java[1], fg and string.format("#%06x", fg)
+    icon = java[1]
   else
-    icon, icon_color = require("nvim-web-devicons").get_icon_color(name)
+    icon = require("nvim-web-devicons").get_icon(name)
   end
-  local icon_bg = focused and (icon_color or p.text) or p.dim
+  -- The icon pill takes the theme's accent, not the file type's own colour.
+  local icon_bg = focused and p.accent or p.dim
   local text_fg = focused and p.text or p.dim
 
   local parts = {
