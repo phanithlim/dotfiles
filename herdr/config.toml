@@ -25,7 +25,6 @@ auto_switch = false
 
 [theme.custom]
 panel_bg = "reset"
-overlay0 = "#565f89"
 
 [keys]
 edit_scrollback = ""

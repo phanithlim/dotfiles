@@ -36,6 +36,7 @@ o.bind("SUPER + SHIFT + J", "Swap window down", hl.dsp.window.swap({ direction =
 o.bind("SUPER + SHIFT + K", "Swap window up", hl.dsp.window.swap({ direction = "u" }))
 o.bind("SUPER + SHIFT + L", "Swap window to the right", hl.dsp.window.swap({ direction = "r" }))
 o.rebind("SUPER + ALT + L", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
+o.bind("SUPER + ALT + T", "Hollow Knight light/dark", "~/.local/bin/hollow-knight-mode")
 -- Obsidian needs software rendering and Wayland IME.
 hl.unbind("SUPER + SHIFT + O")
 o.bind("SUPER + SHIFT + O", "Obsidian", {
