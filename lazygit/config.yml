@@ -28,18 +28,18 @@ customCommands:
 gui:
   customIcons:
     filenames:
-      "package-info.java": { icon: "\U000f03d7", color: "#ad8ee6" }
-      "module-info.java": { icon: "\U000f03d7", color: "#ad8ee6" }
-      "build.gradle": { icon: "\ue7f2", color: "#449dab" }
-      "build.gradle.kts": { icon: "\ue7f2", color: "#449dab" }
-      "settings.gradle": { icon: "\ue7f2", color: "#449dab" }
-      "settings.gradle.kts": { icon: "\ue7f2", color: "#449dab" }
-      "gradlew": { icon: "\ue7f2", color: "#565f89" }
-      "gradlew.bat": { icon: "\ue7f2", color: "#565f89" }
-      "pom.xml": { icon: "\ue82c", color: "#eb927b" }
-      "mvnw": { icon: "\ue82c", color: "#565f89" }
-      "mvnw.cmd": { icon: "\ue82c", color: "#565f89" }
-      ".sdkmanrc": { icon: "\U000f06ca", color: "#eb927b" }
+      "package-info.java": { icon: "\U000f03d7", color: "#d48ec9" }
+      "module-info.java": { icon: "\U000f03d7", color: "#d48ec9" }
+      "build.gradle": { icon: "\ue7f2", color: "#6cc4c0" }
+      "build.gradle.kts": { icon: "\ue7f2", color: "#6cc4c0" }
+      "settings.gradle": { icon: "\ue7f2", color: "#6cc4c0" }
+      "settings.gradle.kts": { icon: "\ue7f2", color: "#6cc4c0" }
+      "gradlew": { icon: "\ue7f2", color: "#6b7488" }
+      "gradlew.bat": { icon: "\ue7f2", color: "#6b7488" }
+      "pom.xml": { icon: "\ue82c", color: "#f0954a" }
+      "mvnw": { icon: "\ue82c", color: "#6b7488" }
+      "mvnw.cmd": { icon: "\ue82c", color: "#6b7488" }
+      ".sdkmanrc": { icon: "\U000f06ca", color: "#f0954a" }
     extensions:
-      ".java": { icon: "\U000f0b37", color: "#eb927b" }
+      ".java": { icon: "\U000f0b37", color: "#f0954a" }
 # lazygit-icons:end

@@ -4,11 +4,8 @@ return {
 		lazy = true,
 		priority = 1000,
 	},
-	{
-		"bjarneo/aether.nvim",
-		lazy = true,
-		priority = 1000,
-	},
+	-- aether comes from Omarchy's theme file (lua/plugins/theme.lua) with the theme's colors.
+	-- A second copy here would shadow it and show its default colors instead.
 	{
 		"bjarneo/ethereal.nvim",
 		lazy = true,
