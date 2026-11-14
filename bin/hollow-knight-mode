@@ -1,0 +1,9 @@
+#!/bin/bash
+# Flip between Hollow Knight (dark) and Hollow Knight Light.
+# From any other theme it goes to Hollow Knight.
+current=$(cat ~/.local/state/omarchy/current/theme.name 2>/dev/null)
+if [[ $current == "hollow-knight" ]]; then
+  omarchy-theme-set hollow-knight-light
+else
+  omarchy-theme-set hollow-knight
+fi

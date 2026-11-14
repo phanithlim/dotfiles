@@ -1,0 +1,15 @@
+#!/bin/bash
+# Per-theme screensaver art, which Omarchy themes can't carry on their own.
+# A theme folder may ship a screensaver.txt; themes without one get your normal art back.
+# Your own art is kept in screensaver.own.txt while a theme's art is in use.
+
+theme_dir="$HOME/.local/state/omarchy/current/theme"
+branding="$HOME/.config/omarchy/branding/screensaver.txt"
+own="$HOME/.config/omarchy/branding/screensaver.own.txt"
+
+if [[ -f $theme_dir/screensaver.txt ]]; then
+  [[ -f $own ]] || cp "$branding" "$own"
+  cp "$theme_dir/screensaver.txt" "$branding"
+elif [[ -f $own ]]; then
+  mv "$own" "$branding"
+fi

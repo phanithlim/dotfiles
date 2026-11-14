@@ -1,0 +1,32 @@
+# Hollow Knight inspired: dark Hallownest blues, pale mask white, soul-blue glow
+mode = "dark"
+
+accent = "#8fb8de"        # soul glow
+selection = "#2a3346"
+muted = "#4a5568"
+
+background = "#10131c"         # Hallownest night
+dark_background = "#0b0d14"
+darker_background = "#06070c"  # the Abyss
+lighter_background = "#1c2230"
+
+foreground = "#e6e9ef"         # the Knight's mask
+dark_foreground = "#6b7488"
+light_foreground = "#c5cbd6"
+bright_foreground = "#f4f6fa"
+
+red = "#c8434b"       # Hornet's cloak
+yellow = "#e8c872"    # lumafly lantern
+orange = "#f0954a"    # the Infection
+green = "#7fb069"     # Greenpath
+cyan = "#6cc4c0"      # Fog Canyon
+blue = "#5b9bd5"      # lifeblood
+magenta = "#d48ec9"   # Crystal Peak
+brown = "#8b6f5a"     # Kingdom's Edge
+
+bright_red = "#e06a70"
+bright_yellow = "#f3dc9a"
+bright_green = "#a3cc8f"
+bright_cyan = "#94dcd8"
+bright_blue = "#8fc1ec"
+bright_magenta = "#e8b4df"
