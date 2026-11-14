@@ -23,9 +23,9 @@ cp "$CONFIG"/omarchy/shell.{json,toml} omarchy/
 cp -r "$CONFIG"/omarchy/plugins/{mlue.workspaces,mlue.keyboard-layout,mlue.menu} omarchy/plugins/
 cp "$CONFIG"/omarchy/hooks/theme-set.d/{tmux-colors,lazygit-icons,theme-extras} omarchy/hooks/theme-set.d/
 
-# Hollow Knight themes (dark and light), lock design and light/dark switch.
+# My themes (Hollow Knight dark and light, Cuphead), lock design and light/dark switch.
 # Preview pictures stay out: the repo is public and they may show other people's art.
-for t in hollow-knight hollow-knight-light; do
+for t in hollow-knight hollow-knight-light cuphead; do
   rsync -a --delete --exclude 'preview.*' --exclude '*.bak*' "$CONFIG/omarchy/themes/$t/" "omarchy/themes/$t/"
 done
 cp "$CONFIG"/omarchy/lock-designs/Editorial.qml omarchy/lock-designs/

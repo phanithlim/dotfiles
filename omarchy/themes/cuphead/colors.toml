@@ -1,0 +1,32 @@
+# Cuphead: a 1930s cartoon. Old cream paper, warm black ink, Cuphead red, Mugman blue, gold.
+mode = "light"
+
+accent = "#c8302c"        # Cuphead red
+selection = "#e6d0a8"
+muted = "#b3a283"
+
+background = "#f3e7cf"         # old paper
+dark_background = "#e9dbbd"
+darker_background = "#dccca9"
+lighter_background = "#e4d4b2"
+
+foreground = "#2a2018"         # ink
+dark_foreground = "#8a7a62"
+light_foreground = "#4a3c2c"
+bright_foreground = "#2a2018"
+
+red = "#b8282a"
+yellow = "#9c7414"    # gold
+orange = "#bf5a1e"
+green = "#4f7a2e"
+cyan = "#2c7a78"
+blue = "#2f5f9e"      # Mugman blue
+magenta = "#8e3f7a"
+brown = "#7a4e2a"
+
+bright_red = "#b8282a"
+bright_yellow = "#9c7414"
+bright_green = "#4f7a2e"
+bright_cyan = "#2c7a78"
+bright_blue = "#2f5f9e"
+bright_magenta = "#8e3f7a"
