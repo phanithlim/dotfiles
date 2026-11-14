@@ -42,6 +42,7 @@ copy starship.toml         "$CONFIG/"
 copy starship-nvim.toml    "$CONFIG/"
 copy bin/tmux-sessionizer  "$HOME/.local/bin/"
 copy bin/herdr-sessionizer "$HOME/.local/bin/"
+copy bin/hollow-knight-mode "$HOME/.local/bin/"
 copy ideavim/ideavimrc     "$HOME/.ideavimrc"
 
 # Obsidian: only if the vault is on this computer.

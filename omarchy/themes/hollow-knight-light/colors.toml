@@ -1,0 +1,32 @@
+# Hollow Knight Light: Hallownest in pale mist. Cool blue-gray fog, ink shadows, deep soul blue.
+mode = "light"
+
+accent = "#3f6f9e"        # soul blue, deepened to read on light
+selection = "#cdd8e6"
+muted = "#a3adbd"
+
+background = "#eef1f5"         # mist
+dark_background = "#e2e7ee"
+darker_background = "#d5dce6"
+lighter_background = "#dde3eb"
+
+foreground = "#1e2433"         # ink
+dark_foreground = "#7a8496"
+light_foreground = "#3a4254"
+bright_foreground = "#1e2433"
+
+red = "#a83a44"       # Hornet's cloak
+yellow = "#94711c"    # lumafly lantern
+orange = "#b85a26"    # the Infection
+green = "#4c7a3d"     # Greenpath
+cyan = "#2b7a7a"      # Fog Canyon
+blue = "#3a64a0"      # lifeblood
+magenta = "#8a4a8a"   # Crystal Peak
+brown = "#6e5440"     # Kingdom's Edge
+
+bright_red = "#a83a44"
+bright_yellow = "#94711c"
+bright_green = "#4c7a3d"
+bright_cyan = "#2b7a7a"
+bright_blue = "#3a64a0"
+bright_magenta = "#8a4a8a"

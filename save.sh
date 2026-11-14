@@ -21,7 +21,15 @@ cp "$CONFIG"/hypr/{hyprsunset,xdph}.conf hypr/
 # Omarchy bar, plugins and hooks
 cp "$CONFIG"/omarchy/shell.{json,toml} omarchy/
 cp -r "$CONFIG"/omarchy/plugins/{mlue.workspaces,mlue.keyboard-layout,mlue.menu} omarchy/plugins/
-cp "$CONFIG"/omarchy/hooks/theme-set.d/{tmux-colors,lazygit-icons} omarchy/hooks/theme-set.d/
+cp "$CONFIG"/omarchy/hooks/theme-set.d/{tmux-colors,lazygit-icons,theme-extras} omarchy/hooks/theme-set.d/
+
+# Hollow Knight themes (dark and light), lock design and light/dark switch.
+# Preview pictures stay out: the repo is public and they may show other people's art.
+for t in hollow-knight hollow-knight-light; do
+  rsync -a --delete --exclude 'preview.*' --exclude '*.bak*' "$CONFIG/omarchy/themes/$t/" "omarchy/themes/$t/"
+done
+cp "$CONFIG"/omarchy/lock-designs/Editorial.qml omarchy/lock-designs/
+cp "$HOME"/.local/bin/hollow-knight-mode bin/
 
 # Editors and terminals
 rsync -a --delete --exclude .git --exclude .claude --exclude '*.bak*' "$CONFIG/nvim/" nvim/
