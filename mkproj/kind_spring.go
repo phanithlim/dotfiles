@@ -64,6 +64,7 @@ func makeSpring(p Project) Result {
 	zip.Close()
 	defer os.Remove(zip.Name())
 	run("", "Unzipping", "unzip", "-q", zip.Name(), "-d", p.Dest)
+	writeSdkmanrc(p)
 
 	if p.Get("type") == "Maven" {
 		return Result{Run: "./mvnw spring-boot:run"}

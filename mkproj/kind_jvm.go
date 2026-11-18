@@ -25,12 +25,25 @@ func plainJVM(name, desc string) Kind {
 		},
 		Validate: checkGroupArtifact,
 		Make: func(p Project) Result {
+			var result Result
 			if name == "Java" && p.Get("build") == "Maven" {
-				return makeMaven(p)
+				result = makeMaven(p)
+			} else {
+				result = makeGradle(p, strings.ToLower(name))
 			}
-			return makeGradle(p, strings.ToLower(name))
+			writeSdkmanrc(p)
+			return result
 		},
 	}
+}
+
+// .sdkmanrc with the installed JDK, like java=21.0.9-amzn
+func writeSdkmanrc(p Project) {
+	installed, _ := filepath.Glob(filepath.Join(home, ".sdkman/candidates/java", p.Get("java")+".*"))
+	if len(installed) == 0 {
+		return
+	}
+	writeFile(p.Dest, ".sdkmanrc", "java="+filepath.Base(installed[len(installed)-1])+"\n")
 }
 
 func checkGroupArtifact(p Project) string {
