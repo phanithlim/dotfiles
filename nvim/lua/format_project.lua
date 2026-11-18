@@ -35,10 +35,13 @@ local function formatters(list, buf)
   return names
 end
 
+-- database migrations must never change: Liquibase and Flyway check their content
+local skip = { "-g", "!**/db/changelog/**", "-g", "!**/db/migration/**", "-g", "!**/migrations/**" }
+
 -- project files that have a formatter
 local function find_files(root, only_ft)
   local by_ft = require("conform").formatters_by_ft
-  local out = vim.system({ "rg", "--files" }, { cwd = root, text = true }):wait().stdout or ""
+  local out = vim.system(vim.list_extend({ "rg", "--files" }, skip), { cwd = root, text = true }):wait().stdout or ""
   local files = {}
   for _, rel in ipairs(vim.split(out, "\n", { trimempty = true })) do
     local ft = vim.filetype.match({ filename = rel })
@@ -71,8 +74,9 @@ local function run(files)
     local buf = vim.fn.bufadd(file.path)
     local was_loaded = vim.api.nvim_buf_is_loaded(buf)
     local function next_file()
+      -- unload, not delete: diagnostics and the file tree still point at this buffer
       if not was_loaded then
-        quiet(function() vim.api.nvim_buf_delete(buf, { force = true }) end)
+        vim.api.nvim_buf_delete(buf, { unload = true, force = true })
       end
       vim.schedule(function() step(i + 1) end)
     end

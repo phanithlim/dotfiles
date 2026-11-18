@@ -105,14 +105,113 @@ function M.connections()
   return list
 end
 
--- open the panel with this project's databases
-function M.toggle()
+-- give the panel this project's databases; saved queries go to the project's .sql folder
+function M.load()
+  require("lazy").load({ plugins = { "vim-dadbod-ui" } })
+  -- hide Postgres' own schemas
+  vim.g.db_ui_hide_schemas = { "^pg_", "^information_schema$" }
+  -- extra table actions; :id asks for a value
+  vim.g.db_ui_table_helpers = {
+    postgresql = {
+      ["Last 50"] = 'select * from {optional_schema}"{table}" order by 1 desc limit 50',
+      ["Find by id"] = 'select * from {optional_schema}"{table}" where id = :id',
+    },
+  }
+  M.default_save = M.default_save or vim.g.db_ui_save_location
+  local root = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml", "package.json" }) or vim.fn.getcwd()
+  local save = vim.fn.isdirectory(root .. "/.sql") == 1 and root .. "/.sql" or M.default_save
   local list = M.connections()
-  if not vim.deep_equal(list, vim.g.dbs or {}) then
+  if not vim.deep_equal(list, vim.g.dbs or {}) or save ~= vim.g.db_ui_save_location then
     vim.g.dbs = list
+    vim.g.db_ui_save_location = save
     vim.fn["db_ui#reset_state"]()
   end
-  vim.cmd("DBUIToggle")
+end
+
+-- the database lives in its own tab: open it, or close it and go back to the code
+function M.toggle()
+  if M.tab and vim.api.nvim_tabpage_is_valid(M.tab) then
+    if vim.api.nvim_get_current_tabpage() ~= M.tab then
+      return vim.api.nvim_set_current_tabpage(M.tab)
+    end
+    -- remember the open query so it comes back next time
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(M.tab)) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      if vim.b[buf].dbui_db_key_name then
+        M.last_query = buf
+      end
+    end
+    M.tab = nil
+    return vim.cmd("tabclose")
+  end
+
+  M.load()
+  vim.cmd("tabnew")
+  M.tab = vim.api.nvim_get_current_tabpage()
+  if M.last_query and vim.api.nvim_buf_is_valid(M.last_query) then
+    vim.api.nvim_win_set_buf(0, M.last_query)
+  else
+    vim.bo.bufhidden = "wipe"
+  end
+  vim.cmd("DBUI")
+end
+
+-- first and last line of the SQL statement under the cursor
+local function statement_range()
+  local row = vim.fn.line(".") - 1
+  local ok, parser = pcall(vim.treesitter.get_parser, 0, "sql")
+  if ok and parser then
+    for node in parser:parse()[1]:root():iter_children() do
+      local first, _, last = node:range()
+      if node:type() == "statement" and first <= row and row <= last then
+        return first + 1, last + 1
+      end
+    end
+  end
+  -- no statement found: use the block between blank lines
+  return vim.fn.search("^\\s*$\\|\\%^", "bnW") + 1, vim.fn.search("^\\s*$\\|\\%$", "nW")
+end
+
+-- close the result window, or open the last result again
+function M.toggle_result()
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == "dbout" then
+      -- keep only the newest result
+      if M.last_result and M.last_result ~= buf and vim.api.nvim_buf_is_valid(M.last_result) then
+        vim.api.nvim_buf_delete(M.last_result, { force = true })
+      end
+      M.last_result = buf
+      vim.bo[buf].bufhidden = "hide"
+      return vim.api.nvim_win_close(win, false)
+    end
+  end
+  if M.last_result and vim.api.nvim_buf_is_valid(M.last_result) then
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd("botright sbuffer " .. M.last_result)
+    vim.api.nvim_set_current_win(win)
+  else
+    vim.notify("No result yet", vim.log.levels.INFO)
+  end
+end
+
+-- run the statement under the cursor, or the selected lines
+function M.run(visual)
+  if not vim.b.dbui_db_key_name then
+    -- a plain .sql file: pick which database to run it on
+    M.load()
+    vim.cmd("DBUIFindBuffer")
+    if not vim.b.dbui_db_key_name then
+      return
+    end
+  end
+  if visual then
+    vim.cmd("normal! \27")
+  else
+    local first, last = statement_range()
+    vim.cmd(("normal! %dGV%dG\27"):format(first, last))
+  end
+  vim.api.nvim_feedkeys(vim.keycode("gv<Plug>(DBUI_ExecuteQuery)"), "m", false)
 end
 
 return M

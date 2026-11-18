@@ -134,10 +134,13 @@ local formatting = {
       sqlfluff = {
         args = { "format", "--dialect=postgres", "-" },
         require_cwd = false,
+        -- 1 = formatted, but some lint warnings remain
+        exit_codes = { 0, 1 },
       },
       xmllint = {
         command = "xmllint",
-        args = { "--format", "--indent-spaces", "2", "-" },
+        args = { "--format", "-" },
+        env = { XMLLINT_INDENT = "  " },
         stdin = true,
       },
     },

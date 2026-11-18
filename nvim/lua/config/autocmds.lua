@@ -27,6 +27,16 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
+-- SQL: Enter runs the statement under the cursor, or the selection
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "sql", "mysql", "plsql" },
+  callback = function(args)
+    vim.keymap.set("n", "<CR>", function() require("db").run(false) end, { buffer = args.buf, desc = "Run statement" })
+    vim.keymap.set("x", "<CR>", function() require("db").run(true) end, { buffer = args.buf, desc = "Run selection" })
+    vim.keymap.set("n", "<leader>r", function() require("db").toggle_result() end, { buffer = args.buf, desc = "Show/hide result" })
+  end,
+})
+
 require("java.jdk").setup()
 require("notes")
 require("format_project")
