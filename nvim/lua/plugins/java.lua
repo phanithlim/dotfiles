@@ -92,8 +92,6 @@ local jdtls = {
           inlayHints = {
             parameterNames = { enabled = "all" },
           },
-          -- remove unused imports on save
-          saveActions = { organizeImports = true },
           -- index the JDK and libraries once, shared by all projects
           sharedIndexes = { enabled = "on" },
           -- skip internal JDK classes in autocomplete

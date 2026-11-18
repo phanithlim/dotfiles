@@ -10,6 +10,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Java: on save, remove unused imports and sort them like google-java-format
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.java",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf, formatters = { "java_imports" }, timeout_ms = 3000, quiet = true })
+  end,
+})
+
 -- keep a Java file's errors after closing it, so the file tree still shows them
 vim.api.nvim_create_autocmd("LspDetach", {
   callback = function(args)

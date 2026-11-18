@@ -137,6 +137,12 @@ local formatting = {
         -- 1 = formatted, but some lint warnings remain
         exit_codes = { 0, 1 },
       },
+      -- only remove unused imports and sort them, the way Spotless expects
+      java_imports = {
+        command = "google-java-format",
+        args = { "--fix-imports-only", "-" },
+        stdin = true,
+      },
       xmllint = {
         command = "xmllint",
         args = { "--format", "-" },

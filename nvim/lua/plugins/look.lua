@@ -197,6 +197,9 @@ local status_line = {
 			color = function() return { fg = Snacks.util.color("Special") } end,
 		})
 
+		-- no thin "<" between parts
+		opts.options.component_separators = { left = "", right = "" }
+
 		-- no file %, line:column or clock
 		opts.sections.lualine_y = {}
 		opts.sections.lualine_z = {}
