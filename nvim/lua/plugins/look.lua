@@ -179,6 +179,16 @@ local status_line = {
 			return set(name, val, o)
 		end
 
+		-- Java version in JVM projects, red when it is not the .sdkmanrc one
+		local jdk = require("java.jdk")
+		table.insert(opts.sections.lualine_x, 1, {
+			jdk.status,
+			cond = jdk.show,
+			color = function()
+				return { fg = Snacks.util.color(jdk.mismatch() and "DiagnosticError" or "Special") }
+			end,
+		})
+
 		local progress = require("ui.lsp_progress")
 		progress.setup()
 		table.insert(opts.sections.lualine_x, 1, {

@@ -20,6 +20,32 @@ fi
 
 [[ -z $selected ]] && exit 0
 
+# The command that runs a project, by its files. Empty when unknown.
+run_command() {
+  local dir=$1
+  if [[ -f $dir/gradlew ]]; then
+    # Spring Boot may be set in a sub-project or the version catalog
+    if find "$dir" -maxdepth 2 \( -name 'build.gradle*' -o -name 'libs.versions.toml' \) \
+      -exec grep -qs "org.springframework.boot" {} \; -print -quit | grep -q .; then
+      echo "./gradlew bootRun"
+    else
+      echo "./gradlew run"
+    fi
+  elif [[ -f $dir/mvnw ]] || [[ -f $dir/pom.xml ]]; then
+    local mvn=mvn
+    [[ -f $dir/mvnw ]] && mvn=./mvnw
+    grep -qs "spring-boot" "$dir/pom.xml" && echo "$mvn spring-boot:run" || echo "$mvn package"
+  elif [[ -f $dir/package.json ]]; then
+    if [[ -f $dir/pnpm-lock.yaml ]]; then echo "pnpm dev"
+    elif [[ -f $dir/bun.lock ]] || [[ -f $dir/bun.lockb ]]; then echo "bun dev"
+    else echo "npm run dev"; fi
+  elif [[ -f $dir/go.mod ]]; then
+    echo "go run ."
+  elif [[ -f $dir/pyproject.toml ]]; then
+    [[ -f $dir/main.py ]] && echo "uv run main.py" || echo "uv run"
+  fi
+}
+
 name=$(basename "$selected" | tr . _)
 
 existing=$(herdr workspace list |
@@ -28,6 +54,15 @@ existing=$(herdr workspace list |
 
 if [[ -n $existing ]]; then
   herdr workspace focus "$existing" >/dev/null
-else
-  herdr workspace create --cwd "$selected" --label "$name" --focus >/dev/null
+  exit 0
+fi
+
+pane=$(herdr workspace create --cwd "$selected" --label "$name" --focus | jq -r '.result.root_pane.pane_id')
+command=$(run_command "$selected")
+
+# A code project: Neovim on top, a terminal below with the run command typed (not run).
+if [[ -n $command && -n $pane && $pane != null ]]; then
+  term=$(herdr pane split "$pane" --direction down --cwd "$selected" --no-focus | jq -r '.result.pane.pane_id')
+  herdr pane run "$pane" nvim >/dev/null
+  [[ -n $term && $term != null ]] && herdr pane send-text "$term" "$command" >/dev/null
 fi

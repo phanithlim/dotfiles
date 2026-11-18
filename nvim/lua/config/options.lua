@@ -38,8 +38,9 @@ vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 
 vim.opt.backup = false
--- 10 lines around the cursor: ui/scroll_margin.lua (scrolloff jerks near code lens)
-require("ui.scroll_margin").setup()
+-- keep 10 lines around the cursor
+vim.opt.scrolloff = 10
+require("ui.half_page").setup()
 -- touchpad moves text 1:1 with the fingers
 vim.opt.mousescroll = "ver:1,hor:6"
 vim.opt.backspace = { "start", "eol", "indent" }

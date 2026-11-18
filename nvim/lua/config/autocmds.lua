@@ -27,4 +27,6 @@ vim.api.nvim_create_autocmd("LspDetach", {
   end,
 })
 
+require("java.jdk").setup()
 require("notes")
+require("format_project")

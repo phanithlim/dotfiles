@@ -46,6 +46,12 @@ local jdtls = {
       local function jdk(version)
         return vim.fn.glob(vim.fn.expand("~/.sdkman/candidates/java/") .. version .. ".*", false, true)[1]
       end
+      -- run jdtls itself on Java 21+, whatever JDK the project uses
+      local server_jdk = jdk("25") or jdk("21")
+      if server_jdk then
+        vim.list_extend(opts.cmd, { "--java-executable", server_jdk .. "/bin/java" })
+      end
+
       local runtimes = {}
       for _, v in ipairs({ "17", "21", "25" }) do
         local home = jdk(v)

@@ -176,6 +176,14 @@ local markdown = {
   },
 }
 
+-- database panel with the project's databases
+local database = {
+  "kristijanhusak/vim-dadbod-ui",
+  keys = {
+    { "<leader>D", function() require("db").toggle() end, desc = "Database (project)" },
+  },
+}
+
 -- big files
 local bigfile = {
   "folke/snacks.nvim",
@@ -286,6 +294,7 @@ return {
   formatting,
   treesitter,
   markdown,
+  database,
   bigfile,
   code_tools,
   extras,

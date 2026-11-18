@@ -301,8 +301,7 @@ local function switch_java()
     if not version then
       return
     end
-    vim.env.JAVA_HOME = base .. version
-    vim.env.PATH = base .. version .. "/bin:" .. vim.env.PATH
+    require("java.jdk").use(base .. version)
     if vim.fn.exists(":JdtWipeDataAndRestart") == 2 then
       vim.cmd("JdtWipeDataAndRestart")
     end
