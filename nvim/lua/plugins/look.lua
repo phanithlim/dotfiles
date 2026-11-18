@@ -196,6 +196,12 @@ local status_line = {
 			cond = progress.active,
 			color = function() return { fg = Snacks.util.color("Special") } end,
 		})
+
+		-- no file %, line:column or clock
+		opts.sections.lualine_y = {}
+		opts.sections.lualine_z = {}
+		-- other windows: only the file name
+		opts.inactive_sections = { lualine_c = { "filename" }, lualine_x = {} }
 	end,
 }
 
