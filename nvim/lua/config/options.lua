@@ -1,4 +1,4 @@
-require("config.remote_clipboard").setup()
+require("remote_clipboard").setup()
 
 vim.g.mapleader = " "
 
@@ -38,10 +38,9 @@ vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 
 vim.opt.backup = false
--- 10 lines around the cursor: config/scroll_margin.lua (scrolloff jerks near code lens)
-require("config.scroll_margin").setup()
--- 1 line per wheel step: snacks.scroll does not animate mouse/touchpad scrolls,
--- so bigger steps look like jumps. The touchpad then moves text 1:1 with fingers.
+-- 10 lines around the cursor: ui/scroll_margin.lua (scrolloff jerks near code lens)
+require("ui.scroll_margin").setup()
+-- touchpad moves text 1:1 with the fingers
 vim.opt.mousescroll = "ver:1,hor:6"
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.wildignore:append({ "*/node_modules/*", "*/.git/*" })
@@ -67,8 +66,7 @@ vim.filetype.add({
   },
 })
 
--- The built-in SQL ftplugin maps insert-mode <Left>/<Right> to sqlcomplete
--- drill functions, which breaks arrow keys (and hjkl-as-arrows layouts).
+-- stop the SQL plugin from taking the arrow keys
 vim.g.omni_sql_no_default_maps = 1
 
 vim.g.lazyvim_eslint_auto_format = true
@@ -102,7 +100,7 @@ if vim.g.neovide then
   vim.g.neovide_padding_left = 0
   vim.g.neovide_padding_right = 0
 
-  require("config.neovide_prefix").setup()
+  require("ui.neovide_prefix").setup()
 
   vim.g.neovide_cursor_animation_length = 0.08
   vim.g.neovide_cursor_trail_size = 0.2
@@ -113,8 +111,8 @@ end
 
 vim.opt.guicursor = "n-v-c-sm:block-blinkwait700-blinkon600-blinkoff600,i-ci-ve:ver25-blinkwait700-blinkon600-blinkoff600,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor"
 
-require("config.terminal_colors").setup()
-require("config.terminal_panel").setup()
-require("config.kitty_padding").setup()
-require("config.file_badge").setup()
+require("ui.terminal_colors").setup()
+require("ui.terminal_panel").setup()
+require("ui.kitty_padding").setup()
+require("ui.file_badge").setup()
 vim.env.STARSHIP_CONFIG = vim.fn.expand("~/.config/starship-nvim.toml")

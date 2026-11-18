@@ -91,3 +91,4 @@ echo
 echo "Still to do by hand (see README):"
 echo "  - Source bash/kitty-padding.sh from ~/.bashrc"
 echo "  - Install plugins, load the keyboard layout, set the lock-screen avatar"
+echo "  - Build mkproj: cd mkproj && go build -o ~/.local/bin/mkproj"

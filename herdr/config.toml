@@ -62,3 +62,10 @@ type = "popup"
 command = "/usr/bin/lazydocker"
 width = "90%"
 height = "90%"
+
+[[keys.command]]
+key = "prefix+shift+n"
+type = "popup"
+command = "/home/mlue/.local/bin/mkproj"
+width = "60%"
+height = "60%"
