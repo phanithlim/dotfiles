@@ -37,6 +37,17 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- indent lines: fainter levels, so the teal current-block line stands out; follows the theme
+local function indent_colors()
+  local bg = Snacks.util.color("Normal", "bg") or "#000000"
+  local level = Snacks.util.color("NonText")
+  if level then
+    vim.api.nvim_set_hl(0, "SnacksIndent", { fg = Snacks.util.blend(level, bg, 0.5) })
+  end
+end
+indent_colors()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = indent_colors })
+
 require("java.jdk").setup()
 require("notes")
 require("format_project")

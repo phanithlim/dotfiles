@@ -150,10 +150,21 @@ function M.toggle()
   M.tab = vim.api.nvim_get_current_tabpage()
   if M.last_query and vim.api.nvim_buf_is_valid(M.last_query) then
     vim.api.nvim_win_set_buf(0, M.last_query)
-  else
-    vim.bo.bufhidden = "wipe"
+    return vim.cmd("DBUI")
   end
-  vim.cmd("DBUI")
+
+  -- no query yet: open the project's scratch query, ready to type
+  vim.bo.bufhidden = "wipe"
+  -- not inside the saved-queries folder, or the panel takes the folder name as the database
+  local dir = vim.fn.stdpath("state") .. "/db-scratch"
+  vim.fn.mkdir(dir, "p")
+  local root = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml", "package.json" }) or vim.fn.getcwd()
+  vim.cmd.edit(vim.fn.fnameescape(dir .. "/" .. vim.fn.fnamemodify(root, ":t") .. ".sql"))
+  -- links it to the database (asks which one if there are several) and opens the panel
+  local ok, err = pcall(vim.cmd, "DBUIFindBuffer")
+  if not ok then
+    vim.notify("Can't connect: " .. (tostring(err):match("psql: error: ([^\n]+)") or tostring(err)), vim.log.levels.WARN)
+  end
 end
 
 -- first and last line of the SQL statement under the cursor

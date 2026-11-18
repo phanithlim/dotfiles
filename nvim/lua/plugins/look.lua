@@ -359,6 +359,11 @@ end, vim.api.nvim_create_namespace("snacks_scroll_line_keys"))
 local smooth_scroll = {
   "folke/snacks.nvim",
   opts = {
+    -- thin indent lines
+    indent = {
+      indent = { char = "▏" },
+      scope = { char = "▏" },
+    },
     scroll = {
       enabled = not vim.g.neovide,
       animate = {

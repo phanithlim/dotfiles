@@ -158,6 +158,26 @@ local function filter(buf, lenses)
   return kept
 end
 
+-- hide "0 references": a whole line for nothing; unused names are already grey
+local function drop_zero(lenses)
+  local kept, rows = {}, {}
+  for _, lens in ipairs(lenses) do
+    local title = lens.command and lens.command.title or ""
+    local is_blame = lens.command and lens.command.command == "java_lens.blame"
+    if not title:find("^0 references") and not is_blame then
+      kept[#kept + 1] = lens
+      rows[lens.range.start.line] = true
+    end
+  end
+  -- the author only goes on a line that still has a lens
+  for _, lens in ipairs(lenses) do
+    if lens.command and lens.command.command == "java_lens.blame" and rows[lens.range.start.line] then
+      kept[#kept + 1] = lens
+    end
+  end
+  return kept
+end
+
 -- fill in every lens's text before showing, so old lenses stay until new ones are ready
 local function resolve_all(client, buf, lenses, done)
   local pending = 1
@@ -214,7 +234,7 @@ local function wrap_requests(client)
           end
           local args = { ... }
           return resolve_all(client, buf, result or {}, function()
-            on_result(err, result, ctx, unpack(args))
+            on_result(err, drop_zero(result or {}), ctx, unpack(args))
           end)
         end
         return on_result(err, result, ctx, ...)
