@@ -1,3 +1,13 @@
+-- reload files changed outside Neovim (Claude, git), also while switching herdr panes,
+-- which Neovim doesn't see as a focus change
+local function checktime()
+  if vim.fn.mode() ~= "c" and vim.fn.getcmdwintype() == "" then
+    vim.cmd("silent! checktime")
+  end
+end
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, { callback = checktime })
+vim.fn.timer_start(3000, function() checktime() end, { ["repeat"] = -1 })
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "java",
   callback = function(args)
@@ -10,11 +20,39 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- ESLint projects (like Nuxt): no format on save, ESLint is too slow;
+-- <leader>cf runs it in the background, so Neovim never freezes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "vue", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  callback = function(args)
+    if require("js_style").uses_eslint(args.buf) then
+      vim.b[args.buf].autoformat = false
+      vim.keymap.set({ "n", "x" }, "<leader>cf", function()
+        require("conform").format({ bufnr = args.buf, async = true })
+      end, { buffer = args.buf, desc = "Format (ESLint)" })
+    end
+  end,
+})
+
 -- Java: on save, remove unused imports and sort them like google-java-format
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.java",
   callback = function(args)
     require("conform").format({ bufnr = args.buf, formatters = { "java_imports" }, timeout_ms = 3000, quiet = true })
+  end,
+})
+
+-- no jdtls in popups (like <leader>ghb's code preview): they have no file name
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "jdtls" and vim.api.nvim_buf_get_name(args.buf) == "" then
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(args.buf) and vim.lsp.buf_is_attached(args.buf, client.id) then
+          vim.lsp.buf_detach_client(args.buf, client.id)
+        end
+      end)
+    end
   end,
 })
 

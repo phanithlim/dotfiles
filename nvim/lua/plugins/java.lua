@@ -1,5 +1,6 @@
 -- jdtls: Java language server
 require("java.lens").setup()
+require("java.template").setup()
 
 local jdtls = {
   "mfussenegger/nvim-jdtls",
@@ -103,6 +104,17 @@ local jdtls = {
             ["org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation"] = "ignore",
           },
         },
+      }
+
+      -- jdtls puts main and test in one project, so a test package-info.java for the same
+      -- package as main is reported as a duplicate. Gradle and Maven compile it fine.
+      opts.handlers = {
+        ["textDocument/publishDiagnostics"] = function(err, result, ctx)
+          result.diagnostics = vim.tbl_filter(function(d)
+            return d.message ~= "The type package-info is already defined"
+          end, result.diagnostics)
+          vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx)
+        end,
       }
 
       return opts

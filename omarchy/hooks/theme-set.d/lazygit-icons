@@ -15,10 +15,10 @@ cyan=$(color cyan blue)
 magenta=$(color magenta blue)
 dim=$(color dark_foreground muted)
 
+# the block goes under the gui: key that ends the user's own part of config.yml
 sed -i '/^# lazygit-icons:start/,/^# lazygit-icons:end/d' "$config"
 cat >>"$config" <<EOF
 # lazygit-icons:start (written by ~/.config/omarchy/hooks/theme-set.d/lazygit-icons)
-gui:
   customIcons:
     filenames:
       "package-info.java": { icon: "\U000f03d7", color: "$magenta" }

@@ -213,6 +213,10 @@ local function wrap_requests(client)
       local on_result = handler
       handler = function(err, result, ctx, ...)
         local buf = ctx and ctx.bufnr or bufnr or 0
+        -- the file was closed before jdtls answered
+        if buf ~= 0 and not vim.api.nvim_buf_is_loaded(buf) then
+          return
+        end
         if method == "textDocument/codeLens" and not err then
           vim.api.nvim_buf_clear_namespace(buf, unused_ns, 0, -1)
           update_blame(buf, client.id)

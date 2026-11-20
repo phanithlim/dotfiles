@@ -141,6 +141,33 @@ local function is_package_dir(path)
   return path:find("/src/[^/]+/java/.") or path:find("/src/[^/]+/kotlin/.")
 end
 
+-- the only subfolder of <path>, if it can share a row with it: packages join packages,
+-- other folders join other folders (so "java" never merges into "com.example...")
+local function merge_child(path)
+  local child = single_subdir(path)
+  if child and not is_package_dir(path) == not is_package_dir(path .. "/" .. child) then
+    return child
+  end
+end
+
+-- "com.example" inside a package, "src/main" elsewhere
+local function join(path, name)
+  return (is_package_dir(path) and "." or "/") .. name
+end
+
+-- Gradle/Maven src/main and src/test: hidden, their folders show as "main/java", "test/resources"
+local function is_source_set(path)
+  if not path:find("/src/[^/]+$") then
+    return false
+  end
+  for _, name in ipairs({ "java", "kotlin", "resources" }) do
+    if vim.uv.fs_stat(path .. "/" .. name) then
+      return true
+    end
+  end
+  return false
+end
+
 local opened_by_chain = {} -- folders this code opened, so a later "closed" means the user closed it
 
 local function explorer_finder(opts, ctx)
@@ -155,14 +182,29 @@ local function explorer_finder(opts, ctx)
       local via = item.parent and skipped[item.parent]
       if via then
         item.parent = via.parent
-        item.compact = via.prefix .. "." .. vim.fn.fnamemodify(item.file, ":t")
+        item.compact = via.prefix .. join(item.file, vim.fn.fnamemodify(item.file, ":t"))
         -- the merged row takes the place of the chain's first folder among its siblings
         local head = via.head
         item.last = nil
         setmetatable(item, { __index = function(_, key) return key == "last" and head.last or nil end })
       end
 
-      local child = item.dir and is_package_dir(item.file) and single_subdir(item.file)
+      -- an open folder keeps its source sets open: their rows are hidden, so they can't be opened by hand
+      if item.dir and item.open then
+        local node = Tree:node(item.file)
+        for _, sub in pairs(node and node.children or {}) do
+          if sub.dir and not sub.open and is_source_set(sub.path) then
+            sub.open = true
+          end
+        end
+      end
+      if item.dir and item.open and item.parent and is_source_set(item.file) then
+        local name = item.compact or vim.fn.fnamemodify(item.file, ":t")
+        skipped[item] = { parent = item.parent, prefix = name, head = via and via.head or item }
+        return
+      end
+
+      local child = item.dir and item.parent and merge_child(item.file)
       if not child then
         return cb(item)
       end
@@ -170,13 +212,15 @@ local function explorer_finder(opts, ctx)
 
       if not item.open then
         -- collapsed: label the row with the whole chain
-        local path, label = item.file .. "/" .. child, prefix .. "." .. child
+        local path = item.file .. "/" .. child
+        local label = prefix .. join(path, child)
         while true do
-          local next_dir = single_subdir(path)
+          local next_dir = merge_child(path)
           if not next_dir then
             break
           end
-          path, label = path .. "/" .. next_dir, label .. "." .. next_dir
+          path = path .. "/" .. next_dir
+          label = label .. join(path, next_dir)
         end
         item.compact = label
         return cb(item)
@@ -197,6 +241,42 @@ local function explorer_finder(opts, ctx)
       end
       skipped[item] = { parent = item.parent, prefix = prefix, head = head }
     end)
+  end
+end
+
+-- explorer colours: the editor's background and a soft selected row, only in the explorer's windows
+local explorer_ns = vim.api.nvim_create_namespace("explorer_colors")
+
+local function mix(a, b, amount)
+  local ret = 0
+  for shift = 16, 0, -8 do
+    local x = bit.band(bit.rshift(a, shift), 255)
+    local y = bit.band(bit.rshift(b, shift), 255)
+    ret = ret + bit.lshift(math.floor(x + (y - x) * amount + 0.5), shift)
+  end
+  return ret
+end
+
+local function set_explorer_colors()
+  local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+  if not (normal.bg and normal.fg) then
+    return
+  end
+  for _, group in ipairs({ "NormalFloat", "SnacksNormal", "SnacksNormalNC", "SnacksPickerList", "SnacksPickerInput", "SnacksPickerBox" }) do
+    vim.api.nvim_set_hl(explorer_ns, group, { fg = normal.fg, bg = normal.bg })
+  end
+  local selected = { bg = mix(normal.bg, normal.fg, 0.08) }
+  vim.api.nvim_set_hl(explorer_ns, "CursorLine", selected)
+  vim.api.nvim_set_hl(explorer_ns, "SnacksPickerListCursorLine", selected)
+end
+set_explorer_colors()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = set_explorer_colors })
+
+local function explorer_colors(picker)
+  for _, win in ipairs({ picker.list.win.win, picker.input.win.win, picker.layout.root.win }) do
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_set_hl_ns(win, explorer_ns)
+    end
   end
 end
 
@@ -233,6 +313,23 @@ local file_tree = {
           explorer = {
             hidden = true,
             diagnostics_open = true,
+            -- fewer lines: indent the tree without guide lines
+            icons = { tree = { vertical = "  ", middle = "  ", last = "  " } },
+            on_show = explorer_colors,
+            layout = {
+              layout = {
+                backdrop = false,
+                width = 40,
+                min_width = 40,
+                height = 0,
+                position = "left",
+                border = "none",
+                box = "vertical",
+                { win = "input", height = 1, border = true, title = "{title} {live} {flags}", title_pos = "center" },
+                { win = "list", border = "none" },
+                { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+              },
+            },
             format = explorer_format,
             finder = explorer_finder,
             actions = {
@@ -352,6 +449,13 @@ local oil = {
     "stevearc/oil.nvim",
     lazy = false,
     opts = {
+      -- deleted files can be restored from the trash
+      delete_to_trash = true,
+      -- moving a .java file asks jdtls to fix the package line and imports, then saves them
+      lsp_file_methods = {
+        timeout_ms = 10000,
+        autosave_changes = true,
+      },
       view_options = {
         show_hidden = true,
         -- no "../" row: `-` goes up, and the preview starts on a real entry
@@ -378,9 +482,19 @@ local oil = {
           conf.footer_pos = "center"
           return conf
         end,
+        -- Java folders: "app · com.example.shop" (test code adds "· test"); others: path from the project
         get_win_title = function(win)
-          local dir = require("oil").get_current_dir(vim.api.nvim_win_get_buf(win)) or ""
-          return " " .. vim.fn.pathshorten(vim.fn.fnamemodify(dir, ":~")) .. " "
+          local dir = (require("oil").get_current_dir(vim.api.nvim_win_get_buf(win)) or ""):gsub("/$", "")
+          local module, set, package = dir:match("^(.-)/src/([%w-]+)/java/?(.*)$")
+          if module then
+            local parts = { vim.fn.fnamemodify(module, ":t") }
+            if set ~= "main" then
+              table.insert(parts, set)
+            end
+            table.insert(parts, package ~= "" and package:gsub("/", ".") or "(default package)")
+            return " " .. table.concat(parts, " · ") .. " "
+          end
+          return " " .. vim.fn.fnamemodify(dir, ":~:.") .. " "
         end,
       },
       keymaps = {
@@ -412,7 +526,8 @@ local oil = {
           relative = "editor",
           width = 0,
           height = 0,
-          zindex = (config.zindex or 50) - 1,
+          -- under every float: Neovim draws a float under a blended float as blank, which emptied the explorer
+          zindex = 1,
           wo = { winhighlight = "Normal:OilBackdrop", winblend = 60 },
           bo = { filetype = "snacks_win_backdrop" },
         })

@@ -1,31 +1,69 @@
 customCommands:
+  # writes Claude's message as lazygit's draft; press c and the commit box is already filled in
   - key: '<c-a>'
-    description: 'Generate AI commit message'
-    context: 'files'
-    loadingText: 'Claude is analyzing changes...'
+    description: 'Generate AI commit message (then press c)'
+    context: 'global'
+    loadingText: 'Claude is writing the commit message...'
     command: |
       DIFF=$(git diff --cached)
       if [ -z "$DIFF" ]; then
-        echo "No staged changes found. Stage files with [Space] first."
-        sleep 2
+        echo "No staged changes. Stage files with space first." >&2
         exit 1
       fi
-      COMMIT_MSG=$(echo "$DIFF" | claude -p "Write a short concise conventional commit message based on this git diff. Output ONLY the commit message, no markdown, no explanation, no backticks.")
-      printf "%s" "$COMMIT_MSG" > .git/COMMIT_EDITMSG
-      if [ -n "$NVIM" ]; then
-        nvim --server "$NVIM" --remote-wait .git/COMMIT_EDITMSG
-      else
-        ${EDITOR:-nvim} .git/COMMIT_EDITMSG
+      RECENT=$(git log -15 --no-merges --format=%s)
+      MSG=$(echo "$DIFF" | claude -p "Write a commit message for this git diff: one summary line, and only if really needed a blank line and a short body. Match the style of these recent commit subjects from this repo, including whether they use a prefix like feat: or not:
+      $RECENT
+      Output ONLY the commit message, no markdown, no explanation, no backticks." 2>/dev/null)
+      if [ -z "$MSG" ]; then
+        echo "Claude returned no message. Check that 'claude -p hi' works in a terminal." >&2
+        exit 1
       fi
-      if [ -s .git/COMMIT_EDITMSG ]; then
-        git commit -F .git/COMMIT_EDITMSG
-      else
-        echo "Commit aborted."
-        sleep 1
+      printf '%s\n' "$MSG" > "$(git rev-parse --git-path LAZYGIT_PENDING_COMMIT)"
+    output: log
+  # delete branches that are merged into main, or whose remote branch was deleted (squash-merged PRs)
+  - key: 'C'
+    description: 'Clean up merged and gone branches'
+    context: 'localBranches'
+    command: |
+      git fetch --prune --quiet
+      BASE=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main)
+      CURRENT=$(git branch --show-current)
+      MERGED=$(git branch --format='%(refname:short)' --merged "$BASE")
+      GONE=$(git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | awk '$2 == "[gone]" { print $1 }')
+      BRANCHES=$(printf '%s\n%s\n' "$MERGED" "$GONE" | grep -vxE "main|master|develop|$CURRENT" | grep -v '^$' | sort -u)
+      if [ -z "$BRANCHES" ]; then
+        echo "Nothing to clean up."
+        sleep 2
+        exit 0
+      fi
+      echo "Merged into $BASE or remote deleted:"
+      echo "$BRANCHES" | sed 's/^/  /'
+      printf 'Delete these branches? [y/N] '
+      read -r ANSWER
+      if [ "$ANSWER" = "y" ]; then
+        echo "$BRANCHES" | xargs git branch -D
+        sleep 2
       fi
     output: terminal
-# lazygit-icons:start (written by ~/.config/omarchy/hooks/theme-set.d/lazygit-icons)
+# one line per commit in the log panels
+git:
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --oneline --decorate
+  branchLogCmd: git log --graph --color=always --oneline --decorate {{branchName}} --
+  # delta first; the second one is plain git, switch between them in the diff view
+  diffRenderers:
+    - name: delta
+      type: stdinFilter
+      # no boxes or underlines around file names and hunks
+      command: delta --dark --paging=never --file-decoration-style=none --hunk-header-decoration-style=none
+      colorArg: always
+    - name: git
+      type: rawGit
+# keep gui: last: the theme hook adds the file icons under it
 gui:
+  # press @ to bring the command log back
+  showCommandLog: false
+# lazygit-icons:start (written by ~/.config/omarchy/hooks/theme-set.d/lazygit-icons)
   customIcons:
     filenames:
       "package-info.java": { icon: "\U000f03d7", color: "#d48ec9" }

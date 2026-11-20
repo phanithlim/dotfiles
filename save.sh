@@ -38,6 +38,10 @@ cp "$HOME"/.ideavimrc ideavim/ideavimrc
 cp -r "$CONFIG"/tmux/tmux.conf "$CONFIG"/tmux/scripts tmux/
 cp -r "$CONFIG"/tuios/{config.toml,glyphs,scripts} tuios/
 cp "$CONFIG"/herdr/config.toml herdr/
+mkdir -p nvim-vscode code git
+cp "$CONFIG"/nvim-vscode/init.lua nvim-vscode/
+cp "$CONFIG"/Code/User/{settings,keybindings}.json code/
+cp "$CONFIG"/git/ignore git/
 cp "$CONFIG"/lazydocker/config.yml lazydocker/
 cp "$CONFIG"/lazygit/config.yml lazygit/
 cp "$CONFIG"/ghostty/config ghostty/

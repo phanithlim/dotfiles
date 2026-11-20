@@ -189,6 +189,17 @@ local status_line = {
 			end,
 		})
 
+		-- Node, framework and TypeScript in JS/TS projects; Node red when it is not the .nvmrc one
+		local node = require("ui.node_status")
+		node.setup()
+		table.insert(opts.sections.lualine_x, 1, {
+			node.status,
+			cond = node.show,
+			color = function()
+				return { fg = Snacks.util.color(node.mismatch() and "DiagnosticError" or "Special") }
+			end,
+		})
+
 		local progress = require("ui.lsp_progress")
 		progress.setup()
 		table.insert(opts.sections.lualine_x, 1, {
@@ -200,6 +211,8 @@ local status_line = {
 		-- no thin "<" between parts
 		opts.options.component_separators = { left = "", right = "" }
 
+		-- one status line along the bottom, so the explorer has no "[No Name]" line of its own
+		opts.options.globalstatus = true
 		-- no file %, line:column or clock
 		opts.sections.lualine_y = {}
 		opts.sections.lualine_z = {}
@@ -317,6 +330,39 @@ local quotes = {
 }
 local quote = quotes[vim.uv.hrtime() % #quotes + 1]
 
+-- "camwallet · feat/refund-clawback" under the date
+local function project_line()
+  local cwd = vim.fn.getcwd()
+  if cwd == vim.env.HOME then
+    return { text = { { "" } } } -- keeps the gap above the menu
+  end
+  local text = vim.fn.fnamemodify(cwd, ":t")
+  local ok, result = pcall(function()
+    return vim.system({ "git", "branch", "--show-current" }, { cwd = cwd, text = true }):wait(1000)
+  end)
+  local branch = ok and result.code == 0 and vim.trim(result.stdout) or ""
+  if branch ~= "" then
+    text = text .. " · " .. branch
+  end
+  return { text = { { text, hl = "Comment" } }, align = "center", padding = 2 }
+end
+
+-- "⚡ 63 plugins · 41 ms" at the bottom
+local function startup_line()
+  local stats = require("lazy.stats").stats()
+  if stats.startuptime == 0 then
+    return nil
+  end
+  local ms = math.floor(stats.startuptime + 0.5)
+  return { text = { { "⚡ " .. stats.loaded .. " plugins · " .. ms .. " ms", hl = "Comment" } }, align = "center" }
+end
+-- the startup time is known only after the dashboard is drawn
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LazyVimStarted",
+  once = true,
+  callback = function() Snacks.dashboard.update() end,
+})
+
 local dashboard = {
   {
     "folke/snacks.nvim",
@@ -325,10 +371,12 @@ local dashboard = {
         width = 60,
         sections = {
           logo_sections(),
-          { text = { { "─── " .. os.date("%A, %b %d · %H:%M") .. " ───", hl = "footer" } }, align = "center", padding = 2 },
+          { text = { { "─── " .. os.date("%A, %b %d · %H:%M") .. " ───", hl = "footer" } }, align = "center", padding = 1 },
+          project_line,
           menu_sections(),
           { text = { { "“" .. quote[1] .. "”", hl = "Comment" } }, align = "center" },
-          { text = { { "— " .. quote[2], hl = "Comment" } }, align = "center" },
+          { text = { { "— " .. quote[2], hl = "Comment" } }, align = "center", padding = 1 },
+          startup_line,
         },
       },
     },

@@ -107,20 +107,28 @@ local lsp_fixes = {
   end,
 }
 
+-- JS/TS/Vue: Prettier only if the project uses it; ESLint-styled projects (like Nuxt) use ESLint
+local function prettier_or_eslint(buf)
+  if require("js_style").uses_eslint(buf) then
+    return { "eslint_fix", lsp_format = "never" }
+  end
+  return { "prettier" }
+end
+
 -- formatting
 local formatting = {
   "stevearc/conform.nvim",
   opts = {
     formatters_by_ft = {
-      vue = { "prettier" },
+      vue = prettier_or_eslint,
       html = { "prettier" },
       css = { "prettier" },
       scss = { "prettier" },
       less = { "prettier" },
-      javascript = { "prettier" },
-      javascriptreact = { "prettier" },
-      typescript = { "prettier" },
-      typescriptreact = { "prettier" },
+      javascript = prettier_or_eslint,
+      javascriptreact = prettier_or_eslint,
+      typescript = prettier_or_eslint,
+      typescriptreact = prettier_or_eslint,
       json = { "prettier" },
       jsonc = { "prettier" },
       yaml = { "prettier" },
@@ -136,6 +144,13 @@ local formatting = {
         require_cwd = false,
         -- 1 = formatted, but some lint warnings remain
         exit_codes = { 0, 1 },
+      },
+      -- the project's own ESLint, like `pnpm lint --fix`
+      eslint_fix = {
+        command = "node",
+        args = { vim.fn.stdpath("config") .. "/scripts/eslint-fix.mjs", "$FILENAME" },
+        stdin = true,
+        cwd = function(self, ctx) return require("conform.util").root_file(require("js_style").eslint_files)(self, ctx) end,
       },
       -- only remove unused imports and sort them, the way Spotless expects
       java_imports = {
@@ -269,6 +284,11 @@ local code_tools = {
 
 -- Python venv, completion, tests
 local extras = {
+  -- gsa on a linewise selection puts the new tags on their own lines, indented
+  {
+    "nvim-mini/mini.surround",
+    opts = { respect_selection_type = true },
+  },
   {
     "linux-cultist/venv-selector.nvim",
     cmd = "VenvSelect",

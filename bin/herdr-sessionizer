@@ -46,6 +46,19 @@ run_command() {
   fi
 }
 
+# Java tools don't read .env, so load it first. The ( ) keeps it out of the shell after.
+with_env() {
+  local dir=$1 command=$2 load=""
+  for f in .env .secrets/.env; do
+    [[ -f $dir/$f ]] && load+=". ./$f; "
+  done
+  if [[ -n $load && $command =~ ^(\./gradlew|\./mvnw|mvn) ]]; then
+    echo "(set -a; $load""set +a; $command)"
+  else
+    echo "$command"
+  fi
+}
+
 name=$(basename "$selected" | tr . _)
 
 existing=$(herdr workspace list |
@@ -58,7 +71,7 @@ if [[ -n $existing ]]; then
 fi
 
 pane=$(herdr workspace create --cwd "$selected" --label "$name" --focus | jq -r '.result.root_pane.pane_id')
-command=$(run_command "$selected")
+command=$(with_env "$selected" "$(run_command "$selected")")
 
 # A code project: Neovim on top, a terminal below with the run command typed (not run).
 if [[ -n $command && -n $pane && $pane != null ]]; then

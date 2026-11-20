@@ -350,6 +350,7 @@ function M.setup()
     { "<leader>js", status, desc = "Java status", icon = { icon = "", color = "azure" } },
     { "<leader>ja", function() require("java.nav").alternate() end, desc = "Class / Test", icon = { icon = "󰙨", color = "yellow" } },
     { "<leader>je", function() require("java.nav").endpoints() end, desc = "Endpoints", icon = { icon = "󰖟", color = "azure" } },
+    { "<leader>jx", function() require("java.stacktrace").open() end, desc = "Stack trace (copied)", icon = { icon = "", color = "red" } },
   }
 
   local ok, wk = pcall(require, "which-key")

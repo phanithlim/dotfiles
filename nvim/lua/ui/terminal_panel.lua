@@ -282,10 +282,14 @@ local function style(win)
   if not vim.api.nvim_win_is_valid(win) or vim.api.nvim_win_get_config(win).relative ~= "" then
     return
   end
-  if vim.bo[vim.api.nvim_win_get_buf(win)].buftype ~= "terminal" then
+  local buf = vim.api.nvim_win_get_buf(win)
+  if vim.bo[buf].buftype ~= "terminal" then
     return
   end
-  vim.wo[win].winhighlight = winhighlight
+  -- Claude's split (claudecode.nvim) keeps the editor background; the darker one is for the panel
+  local cmd = (vim.b[buf].snacks_terminal or {}).cmd
+  local is_claude = (type(cmd) == "table" and cmd[1] or cmd) == "claude"
+  vim.wo[win].winhighlight = is_claude and "" or winhighlight
   vim.wo[win].winbar = "%{%v:lua.require'ui.terminal_panel'.title()%}"
   vim.wo[win].signcolumn = "yes:1"
 end

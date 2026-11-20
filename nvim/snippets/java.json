@@ -1,0 +1,75 @@
+{
+  "Log info": {
+    "prefix": "log",
+    "body": ["log.info(\"${1:message} {}\", ${2:value});$0"],
+    "description": "log.info with one value"
+  },
+  "Log error": {
+    "prefix": "loge",
+    "body": ["log.error(\"${1:message}\", ${2:e});$0"],
+    "description": "log.error with the exception"
+  },
+  "Lombok logger": {
+    "prefix": "slf",
+    "body": ["@Slf4j"],
+    "description": "Lombok @Slf4j"
+  },
+  "REST controller": {
+    "prefix": "rest",
+    "body": [
+      "@RestController",
+      "@RequestMapping(\"/${1:path}\")",
+      "@RequiredArgsConstructor",
+      "public class ${TM_FILENAME_BASE} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "REST controller class"
+  },
+  "Service": {
+    "prefix": "service",
+    "body": [
+      "@Service",
+      "@RequiredArgsConstructor",
+      "public class ${TM_FILENAME_BASE} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Service class"
+  },
+  "GET mapping": {
+    "prefix": "get",
+    "body": [
+      "@GetMapping(\"/${1}\")",
+      "public ResponseEntity<${2:Type}> ${3:name}(${4}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "GET endpoint"
+  },
+  "POST mapping": {
+    "prefix": "post",
+    "body": [
+      "@PostMapping(\"/${1}\")",
+      "public ResponseEntity<${2:Type}> ${3:create}(@Valid @RequestBody ${4:Request} request) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "POST endpoint"
+  },
+  "Test": {
+    "prefix": "test",
+    "body": [
+      "@Test",
+      "void ${1:should_do_something}() {",
+      "\t// given",
+      "\t$0",
+      "",
+      "\t// when",
+      "",
+      "\t// then",
+      "}"
+    ],
+    "description": "JUnit test with given/when/then"
+  }
+}

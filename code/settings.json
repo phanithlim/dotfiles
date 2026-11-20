@@ -1,0 +1,78 @@
+{
+  "yaml.schemas": {
+    "file:///home/mlue/.vscode/extensions/continue.continue-2.1.0-linux-x64/config-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ]
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+  },
+  "biome.suggestInstallingGlobally": false,
+  "terminal.integrated.fontFamily": "'JetBrainsMono NF', 'Noto Sans Khmer', monospace",
+  // "editor.fontFamily": "'DepartureMono Nerd Font Mono', 'Droid Sans Mono', 'Noto Sans Khmer', monospace",
+  // "terminal.integrated.fontFamily": "'DepartureMono Nerd Font Mono', 'Noto Sans Khmer', monospace",
+  // "editor.fontFamily": "'DepartureMono Nerd Font Mono', monospace",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "vscode-neovim.neovimClean": false,
+  "vscode-neovim.NVIM_APPNAME": "nvim-vscode",
+  "workbench.colorTheme": "Omarchy",
+  "workbench.iconTheme": "monospace-icons",
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.activityBar.location": "top",
+  "editor.minimap.enabled": false,
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.lockEditorGroups": false,
+  "redhat.telemetry.enabled": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "python.languageServer": "Pylance",
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml",
+  ],
+  "vs-kubernetes": {
+    "vscode-kubernetes.helm-path-linux": "/home/mlue/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
+    "vscode-kubernetes.minikube-path-linux": "/home/mlue/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
+  },
+  "workbench.layoutControl.enabled": false,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "python": true,
+  },
+  "chat.tools.terminal.simpleCollapsible": false,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "python.analysis.typeCheckingMode": "strict",
+  "editor.stickyScroll.enabled": false,
+  "terminal.integrated.initialHint": false,
+  "extensions.supportAgentsWindow": {
+    "monokai.theme-monokai-pro-vscode": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.confirmDelete": false,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "git.enableSmartCommit": true,
+  "js/ts.experimental.useTsgo": true,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "explorer.confirmPasteNative": false,
+  "claudeCode.hideOnboarding": true,
+  "go.toolsManagement.autoUpdate": true,
+  "workbench.startupEditor": "none",
+  "chat.viewSessions.orientation": "stacked",
+  "git.blame.statusBarItem.enabled": false,
+  "chat.disableAIFeatures": true,
+}
